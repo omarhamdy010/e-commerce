@@ -1,0 +1,100 @@
+@extends('dashboard.layouts.master')
+
+@section('content')
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Dashboard</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
+                        <li class="breadcrumb-item active">Category</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <?php
+                $catcount= count($categories);
+                $subcount= count($subcategories);
+                $parcount= count($parentcategories);
+
+                ?>
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Create Category</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form method="post" action="{{route('category.store')}}" enctype="multipart/form-data">
+                        @method('post')
+                        @csrf
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>name</label>
+                                <input type="text" value="{{old('name')}}" class="form-control" name="name"
+                                       placeholder="Enter category name">
+                            </div>
+                            <div class="form-group">
+                                <label>parent category</label>
+                                <select class="form-control select2 parcat" name="parent_id" style="width: 100%;">
+                                    <option selected="selected" value={{0}} >select category</option>
+                                    @foreach($categories as $category)
+                                        <option value="{{$category->id}}">{{$category->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputFile">image</label>
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        <input type="file" id="image" name="image" >
+                                        <br/>
+                                        <img id="frame" src="{{asset('/uploads/category/default.png')}}"
+                                             style=" width:100px;height:100px; border: 1px solid #ddd;border-radius: 8px;padding: 5px;
+">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group" id="pcategory">
+                                <label>category order</label>
+                                <select class="form-control select2" name="parentcategory_order" style="width: 100%;">
+                                    <option selected="selected" value="{{$parcount+1}}">{{$parcount+1}}</option>
+{{--                                    @for($i=1 ; $i<= $parcount ; $i++)--}}
+{{--                                        <option value="{{$i}}">{{$i}}</option>--}}
+{{--                                    @endfor--}}
+                                </select>
+                            </div>
+
+                            <div class="form-group" id="scategory">
+                                <label>sub category order</label>
+                                <select class="form-control select2" name="subcategory_order" style="width: 100%;">
+                                    <option selected="selected" value="{{$subcount+1}}">{{$subcount+1}}</option>
+{{--                                    @for($i=1 ; $i<= $subcount ; $i++)--}}
+{{--                                        <option value="{{$i}}">{{$i}}</option>--}}
+{{--                                    @endfor--}}
+                                </select>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+@endsection
+

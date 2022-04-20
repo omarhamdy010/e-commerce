@@ -6,29 +6,21 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateCategoriesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+
     public function up()
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('parent_id')->default('null');
-            $table->string('image');
-            $table->integer('category_order');
+            $table->integer('parent_id')->unsigned()->nullable();
+            $table->string('image')->default('default.png');
+            $table->integer('category_order')->default(1);
 
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
+
     public function down()
     {
         Schema::dropIfExists('categories');
