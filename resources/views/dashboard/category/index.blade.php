@@ -58,7 +58,12 @@
                                 <td>{{($category->parent_id==null?'null' : $category->parent()->first()->name) }}</td>
                                 <td><img src="{{$category->image_path}}"></td>
                                 <td>
-                                    <a class="btn btn-primary btn-sm" href="{{route('category.edit',['category'=>$category->id])}}">EDIT</a>
+                                    <form method="post" action="{{route('category.destroy',['category'=>$category->id])}}">
+                                        @method('delete')
+                                        @csrf
+                                        <a class="btn btn-primary btn-sm" href="{{route('category.edit',['category'=>$category->id])}}">EDIT</a>
+                                        <button type="submit" class="btn btn-danger btn-sm" >DELETE</button>
+                                    </form>
                                 </td>
                         </tr>
                         @endforeach
@@ -102,7 +107,12 @@
                                 <td>{{($category->parent_id==null?'null' : $category->parent()->first()->name) }}</td>
                                 <td><img src="{{$category->image_path}}"></td>
                                 <td>
+                                    <form method="post" action="{{route('category.destroy',['category'=>$category->id])}}">
+                                        @method('delete')
+                                        @csrf
                                     <a class="btn btn-primary btn-sm" href="{{route('category.edit',['category'=>$category->id])}}">EDIT</a>
+                                        <button type="submit" class="btn btn-danger btn-sm" >DELETE</button>
+                                    </form>
                                 </td>
                         </tr>
                         @endforeach

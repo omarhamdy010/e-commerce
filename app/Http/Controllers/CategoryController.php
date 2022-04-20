@@ -79,9 +79,9 @@ class CategoryController extends Controller
             ]);
             $data = $request->except(['image', 'parentcategory_order']);
             if ($request->image) {
-                if ($category->image_path != 'default.png')
+                if ($category->image != 'default.png')
                 {
-                    Storage::disk('public')->delete(asset("uploads/category/{$category->image}"));
+                    Storage::disk('public_upload')->delete('category/' . $category->image);
                 }
                 $img = Image::make($request->image)->resize(100, 100, function ($constraint) {
                     $constraint->aspectRatio();
@@ -97,9 +97,9 @@ class CategoryController extends Controller
             ]);
             $data = $request->except(['image', 'subcategory_order']);
             if ($request->image) {
-                if ($category->image_path!='default.png')
+                if ($category->image!='default.png')
                 {
-                    Storage::disk('public')->delete(asset("uploads/category/{$category->image}"));
+                    Storage::disk('public_upload')->delete('category/' . $category->image);
                 }
                 $img = Image::make($request->image)->resize(100, 100, function ($constraint) {
                     $constraint->aspectRatio();
@@ -109,6 +109,14 @@ class CategoryController extends Controller
             $data['category_order'] = $request->subcategory_order;
         }
         $category->update($data);
+        return redirect()->back();
+    }
+    public function destroy(Category $category){
+        if ($category->image!='default.png')
+        {
+            Storage::disk('public_upload')->delete('category/' . $category->image);
+        }
+        $category->delete();
         return redirect()->back();
     }
 }
