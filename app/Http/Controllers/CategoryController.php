@@ -119,4 +119,37 @@ class CategoryController extends Controller
         $category->delete();
         return redirect()->back();
     }
+
+    public function ajaxstore(Request $request){
+        dd($request->all());
+//        if ($request->parentcategory_order) {
+            $request->validate([
+                'name' => 'required',
+            ]);
+            $data = $request->except(['image']);
+            if ($request->image) {
+                $img = Image::make($request->image)->resize(100, 100, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->save(public_path('/uploads/category/' . $request->image->hashName()));
+                $data['image'] = $request->image->hashName();
+            }
+//            $data['category_order'] = $request->category_order;
+//        }
+//
+//        if ($request->subcategory_order) {
+//            $request->validate([
+//                'name' => 'required',
+//            ]);
+//            $data = $request->except(['image', 'subcategory_order']);
+//            if ($request->image) {
+//                $img = Image::make($request->image)->resize(100, 100, function ($constraint) {
+//                    $constraint->aspectRatio();
+//                })->save(public_path('/uploads/category/' . $request->image->hashName()));
+//                $data['image'] = $request->image->hashName();
+//            }
+//            $data['category_order'] = $request->subcategory_order;
+//        }
+        Category::create($data);
+        return redirect()->back();
+    }
 }
