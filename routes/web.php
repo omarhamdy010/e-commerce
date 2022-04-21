@@ -20,7 +20,8 @@ Route::get('/', function () {
 Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
 
-    Route::resource('category', \App\Http\Controllers\CategoryController::class);
+    Route::resource('category', \App\Http\Controllers\CategoryController::class)->except(['show']);
+    Route::post('categoryajax', [\App\Http\Controllers\CategoryController::class,'ajaxstore'])->name('category.createcat');
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 });
