@@ -28,20 +28,20 @@
                         <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
                             <li class="nav-item">
                                 <a class="nav-link active" id="custom-tabs-one-home-tab" data-toggle="pill"
-                                   href="#custom-tabs-one-home" role="tab" aria-controls="custom-tabs-one-home"
-                                   aria-selected="true">Create</a>
+                                href="#custom-tabs-one-home" role="tab" aria-controls="custom-tabs-one-home"
+                                aria-selected="true">Create</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="custom-tabs-one-profile-tab" data-toggle="pill"
-                                   href="#custom-tabs-one-profile" role="tab" aria-controls="custom-tabs-one-profile"
-                                   aria-selected="false">Create ajax</a>
+                                href="#custom-tabs-one-profile" role="tab" aria-controls="custom-tabs-one-profile"
+                                aria-selected="false">Create ajax</a>
                             </li>
                         </ul>
                     </div>
                     <div class="card-body">
                         <div class="tab-content" id="custom-tabs-one-tabContent">
                             <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel"
-                                 aria-labelledby="custom-tabs-one-home-tab">
+                                aria-labelledby="custom-tabs-one-home-tab">
                                 <?php
                                 $catcount = count($categories);
                                 $subcount = count($subcategories);
@@ -55,15 +55,14 @@
                                     <!-- /.card-header -->
                                     <!-- form start -->
                                     <form method="post" action="{{route('category.store')}}"
-                                          enctype="multipart/form-data">
+                                        enctype="multipart/form-data">
                                         @method('post')
                                         @csrf
                                         <div class="card-body">
                                             <div class="form-group">
                                                 <label>name</label>
                                                 <input type="text" value="{{old('name')}}" class="form-control"
-                                                       name="name"
-                                                       placeholder="Enter category name">
+                                                    name="name"placeholder="Enter category name">
                                             </div>
                                             <div class="form-group">
                                                 <label>parent category</label>
@@ -82,7 +81,7 @@
                                                         <input type="file" id="image" name="image">
                                                         <br/>
                                                         <img id="frame" src="{{asset('/uploads/category/default.png')}}"
-                                                             style=" width:100px;height:100px; border: 1px solid #ddd;border-radius: 8px;padding: 5px;
+                                                            style=" width:100px;height:100px; border: 1px solid #ddd;border-radius: 8px;padding: 5px;
 ">
                                                     </div>
                                                 </div>
@@ -121,18 +120,17 @@
 {{--                                </div>--}}
                             </div>
                             <div class="tab-pane fade" id="custom-tabs-one-profile" role="tabpanel"
-                                 aria-labelledby="custom-tabs-one-profile-tab">
+                                aria-labelledby="custom-tabs-one-profile-tab">
                                 <form method="post" action="{{route('category.createcat')}}" enctype="multipart/form-data">
-                                    {{ method_field('post') }}
                                     <input type="hidden" name="_token" id="token2"
-                                           value="{{csrf_token()}}">
+                                        value="{{csrf_token()}}">
                                     <div class="card-body">
                                         <div class="form-group">
                                             <label>name</label>
                                             <input type="text" value="{{old('name')}}" class="form-control"
-                                                   name="name" id="nameajax"
-                                                   placeholder="Enter category name">
+                                                    name="name" id="nameajax"placeholder="Enter category name">
                                         </div>
+
                                         <div class="form-group">
                                             <label>parent category</label>
                                             <select class="form-control select2 parcatajax" id="catnameajax" name="parent_id"
@@ -143,6 +141,7 @@
                                                 @endforeach
                                             </select>
                                         </div>
+
                                         <div class="form-group">
                                             <label for="exampleInputFile">image</label>
                                             <div class="input-group">
@@ -150,8 +149,7 @@
                                                     <input type="file" id="imageajax" name="image">
                                                     <br/>
                                                     <img id="frameajax" src="{{asset('/uploads/category/default.png')}}"
-                                                         style=" width:100px;height:100px; border: 1px solid #ddd;border-radius: 8px;padding: 5px;
-">
+                                                            style=" width:100px;height:100px; border: 1px solid #ddd;border-radius: 8px;padding: 5px;">
                                                 </div>
                                             </div>
                                         </div>

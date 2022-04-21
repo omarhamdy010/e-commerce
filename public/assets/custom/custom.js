@@ -71,26 +71,27 @@ $(document).ready(function(){
     $(".btn-submit").click(function(e){
 
         e.preventDefault();
-        // alert();
+
 
         var name = $("#nameajax").val();
         var category = $("#catnameajax").val();
         var image = $('#frameajax').attr('src');
         var parent =$('#pcategoryajax').children('select:first').val();
         var sub = $('#scategoryajax').children('select:first').val();
-        var url = 'categoryajax';
+        var url = '/categoryajax';
         var parentval = 0 ;
         if (catajax.val() == 0){
             parentval = parent;
         }else {
-             parentval =sub;
+            parentval =sub;
         }
 
         $.ajax({
             url:url,
-            method:'PATCH',
+            method:'POST',
             data:{
                 _token: $('#token2').val(),
+                _method:'post',
                 name:name,
                 parent_id:category,
                 image:image,
