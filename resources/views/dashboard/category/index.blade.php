@@ -48,81 +48,84 @@
                             <th>parent category</th>
                             <th>image</th>
                             <th>action</th>
+                            <th>category order</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($parentcategories as $category)
+                        @foreach($categories as $index=>$category)
                             <tr>
-                                <td>{{$category->category_order}}</td>
+                                <td>{{$index+1}}</td>
                                 <td>{{$category->name}}</td>
-                                <td>{{($category->parent_id==null?'null' : $category->parent()->first()->name) }}</td>
-                                <td><img src="{{$category->image_path}}"></td>
+                                <td>{{($category->parent_id==0?'main category' : $category->parent()->first()->name) }}</td>
+                                <td><img src="{{$category->image_path}}" style="height: 100px;width: 100px"></td>
                                 <td>
-                                    <form method="post" action="{{route('category.destroy',['category'=>$category->id])}}">
-                                        @method('delete')
+                                    @if(count($category->children()->get())>0)
+                                        <a class="btn btn-primary btn-sm" href="{{route('category.edit',['category'=>$category->id])}}">EDIT</a>
+                                        <button onclick="deleteConfirmation({{$category->id}})" class="btn btn-danger btn-sm" >DELETE</button>
+                                        <input type="hidden" value="{{csrf_token()}}" id="_token">
+                                        @else
+                                    <form action="{{route('category.destroy',$category->id)}}" method="post">
                                         @csrf
+                                        @method('DELETE')
                                         <a class="btn btn-primary btn-sm" href="{{route('category.edit',['category'=>$category->id])}}">EDIT</a>
                                         <button type="submit" class="btn btn-danger btn-sm" >DELETE</button>
                                     </form>
+                                    @endif
                                 </td>
-                        </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-
-                    <!-- /.card-body -->
-                </div>
-
-
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">sub Category</h3>
-                        <div class="card-tools">
-                            <div class="input-group input-group-sm" style="width: 150px;">
-                                <input type="text" name="search" class="form-control float-right" placeholder="Search">
-
-                                <div class="input-group-append">
-                                    <button type="submit" class="btn btn-default">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <table class="table table-bordered table-hover">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>name</th>
-                            <th>parent category</th>
-                            <th>image</th>
-                            <th>action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($subcategories as $category)
-                            <tr>
                                 <td>{{$category->category_order}}</td>
-                                <td>{{$category->name}}</td>
-                                <td>{{($category->parent_id==null?'null' : $category->parent()->first()->name) }}</td>
-                                <td><img src="{{$category->image_path}}"></td>
-                                <td>
-                                    <form method="post" action="{{route('category.destroy',['category'=>$category->id])}}">
-                                        @method('delete')
-                                        @csrf
-                                    <a class="btn btn-primary btn-sm" href="{{route('category.edit',['category'=>$category->id])}}">EDIT</a>
-                                        <button type="submit" class="btn btn-danger btn-sm" >DELETE</button>
-                                    </form>
-                                </td>
-                        </tr>
+                            </tr>
                         @endforeach
                         </tbody>
                     </table>
-
-                    <!-- /.card-body -->
                 </div>
-                <!-- /.card -->
             </div>
         </div>
     </section>
 @endsection
+
+@section('js')
+    <script type="text/javascript">
+
+        function deleteConfirmation(id) {
+            swal.fire({
+                title: "Delete?",
+                icon: 'question',
+                text: "this category has subcategory!",
+                type: "warning",
+                showCancelButton: !0,
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel!",
+                reverseButtons: !0
+            }).then(function (e) {
+
+                if (e.value === true) {
+
+                    let _url = '/category/'+id;
+
+                    $.ajax({
+                        type: 'DELETE',
+                        url: _url,
+                        data: {_token: $('#_token').val()},
+                        success: function (resp) {
+                            if (resp.success) {
+                                swal.fire("Done!", resp.message, "success");
+                                location.reload();
+                            }
+                        },
+                        error: function (resp) {
+                            location.reload();
+                            console.log("Error!", 'Sumething went wrong.', "error");
+                        }
+
+                    });
+
+                } else {
+                    e.dismiss;
+                }
+
+            }, function (dismiss) {
+                return false;
+            })
+        }
+        </script>
+    @endsection
