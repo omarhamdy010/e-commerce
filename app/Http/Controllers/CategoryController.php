@@ -15,6 +15,13 @@ class CategoryController extends Controller
         $categories = Category::all();
         return view('dashboard.category.index', compact('categories'));
     }
+
+    public function viewRender(Request $request)
+    {
+        $viewRender = view('viewRend')->render();
+	return response()->json(array('success' => true, 'html'=>$viewRender));
+    }
+
     public function create()
     {
         $parentcategories = Category::where('parent_id', 0)->get();
@@ -25,8 +32,6 @@ class CategoryController extends Controller
     }
     public function store(Request $request)
     {
-//            dd($request->all());
-
             $request->validate([
                 'name' => 'required',
             ]);
@@ -64,8 +69,8 @@ class CategoryController extends Controller
         );
     }
     public function getcategoryorder(Request $request){
-        $categories= Category::where('parent_id',$request->category_id)->get();
-        return response()->json(array('success' => true,'order_category'=> count($categories)+1));
+        $categories= Category::where('parent_id',$request->category_id)->count();
+        return response()->json(array('success' => true,'order_category'=> $categories+1));
 
     }
 
@@ -100,7 +105,6 @@ class CategoryController extends Controller
     }
     public function updateAJAX(Request $request , Category $category)
     {
-//            dd($request->all());
             $request->validate([
                 'name' => 'required',
             ]);
