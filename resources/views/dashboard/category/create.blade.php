@@ -69,7 +69,7 @@
                                                     <input type="file" id="image" name="image">
                                                     <br/>
                                                     <img id="frame" src="{{asset('/uploads/category/default.png')}}"
-                                                         style=" width:100px;height:100px; border: 1px solid #ddd;border-radius: 8px;padding: 5px;
+                                                            style=" width:100px;height:100px; border: 1px solid #ddd;border-radius: 8px;padding: 5px;
 ">
                                                 </div>
                                             </div>
@@ -78,7 +78,7 @@
                                         <div class="form-group" id="pcategory">
                                             <label>category order</label>
                                             <input name="category_order" class="form-control" value=""
-                                                   id="category_order_count">
+                                                    id="category_order_count">
                                         </div>
 
                                     </div>
@@ -90,17 +90,17 @@
                                 </form>
                             </div>
                             <div class="tab-pane fade" id="custom-tabs-one-profile" role="tabpanel"
-                                 aria-labelledby="custom-tabs-one-profile-tab">
+                                aria-labelledby="custom-tabs-one-profile-tab">
 
                                 <form method="post" action="{{route('category.createcat')}}"
-                                      enctype="multipart/form-data" id="upload-cat-form">
+                                    enctype="multipart/form-data" id="upload-cat-form">
                                     <input type="hidden" name="_token" id="token2"
-                                           value="{{csrf_token()}}">
+                                        value="{{csrf_token()}}">
                                     <div class="card-body">
                                         <div class="form-group">
                                             <label>name</label>
                                             <input type="text" value="{{old('name')}}" class="form-control"
-                                                   name="name" id="nameajax" placeholder="Enter category name">
+                                                    name="name" id="nameajax" placeholder="Enter category name">
                                         </div>
 
                                         <div class="form-group">
@@ -124,15 +124,15 @@
 
                                                     <br/>
                                                     <img id="frameajax" src="{{asset('/uploads/category/default.png')}}"
-                                                         style=" width:100px;height:100px; border: 1px solid #ddd;border-radius: 8px;padding: 5px;">
+                                                        style=" width:100px;height:100px; border: 1px solid #ddd;border-radius: 8px;padding: 5px;">
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="form-group" id="pcategoryajax">
                                             <label>category order</label>
-                                             <input name="category_order" class="form-control" value=""
-                                                     id="category_order_count_ajax">
+                                            <input name="category_order" class="form-control" value=""
+                                                    id="category_order_count_ajax">
                                         </div>
                                     </div>
                                     <!-- /.card-body -->

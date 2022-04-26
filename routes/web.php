@@ -24,6 +24,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('categoryorder', [\App\Http\Controllers\CategoryController::class,'getcategoryorder'])->name('category.order');
     Route::post('categoryajax', [\App\Http\Controllers\CategoryController::class,'ajaxstore'])->name('category.createcat');
         Route::PUT('updateAJAX/{id}', [\App\Http\Controllers\CategoryController::class,'updateAJAX'])->name('category.updateAJAX');
+        Route::post('view-render', [CategoryController::class, 'viewRender'])->name('view.render');
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
