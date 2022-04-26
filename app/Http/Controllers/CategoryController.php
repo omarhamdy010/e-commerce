@@ -10,19 +10,36 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class CategoryController extends Controller
 {
-    public function index()
-    {
-        $categories = Category::all();
-        return view('dashboard.category.index', compact('categories'));
-    }
-    public function create()
+    public function index(Request $request)
     {
         $parentcategories = Category::where('parent_id', 0)->get();
-        $subcategories = Category::where('parent_id', '!=', 0)->get();
         $categories = Category::all();
+        // return view('dashboard.category.index', compact('categories','parentcategories'));
 
-        return view('dashboard.category.create', compact('parentcategories', 'categories', 'subcategories'));
+        if ($request->ajax()) {
+            $data = Category::all();
+            return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('action', function($row){
+     
+                           $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
+    
+                            return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+        }
+        
+        return view('dashboard.category.index', compact('categories','parentcategories'));
     }
+    // public function create()
+    // {
+    //     $parentcategories = Category::where('parent_id', 0)->get();
+    //     $subcategories = Category::where('parent_id', '!=', 0)->get();
+    //     $categories = Category::all();
+
+    //     return view('dashboard.category.create', compact('parentcategories', 'categories', 'subcategories'));
+    // }
     public function store(Request $request)
     {
 //            dd($request->all());
