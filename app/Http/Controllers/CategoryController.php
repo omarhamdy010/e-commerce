@@ -51,12 +51,10 @@ class CategoryController extends Controller
     public function create()
     {
         $parentcategories = Category::where('parent_id', 0)->get();
-        $subcategories = Category::where('parent_id', '!=', 0)->get();
         $categories = Category::all();
 
         return view('dashboard.category.create', compact('parentcategories', 'categories', 'subcategories'));
     }
-
     public function store(Request $request)
     {
         $request->validate([
