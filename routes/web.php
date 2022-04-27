@@ -21,11 +21,11 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('category', \App\Http\Controllers\CategoryController::class)->except(['show']);
-    Route::get('categoryorder', [\App\Http\Controllers\CategoryController::class,'getcategoryorder'])->name('category.order');
-    Route::post('categoryajax', [\App\Http\Controllers\CategoryController::class,'ajaxstore'])->name('category.createcat');
-        Route::PUT('updateAJAX/{id}', [\App\Http\Controllers\CategoryController::class,'updateAJAX'])->name('category.updateAJAX');
-        Route::post('view-render', [CategoryController::class, 'viewRender'])->name('view.render');
-
+    Route::get('categoryorder', [\App\Http\Controllers\CategoryController::class, 'getcategoryorder'])->name('category.order');
+    Route::post('categoryajax', [\App\Http\Controllers\CategoryController::class, 'ajaxstore'])->name('category.createcat');
+    Route::PUT('updateAJAX/{id}', [\App\Http\Controllers\CategoryController::class, 'updateAJAX'])->name('category.updateAJAX');
+    Route::post('view-render', [\App\Http\Controllers\CategoryController::class, 'viewRender'])->name('view.render');
+    Route::get('category/datatable', [\App\Http\Controllers\CategoryController::class, 'getCategory'])->name('category.getcategory');
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 });

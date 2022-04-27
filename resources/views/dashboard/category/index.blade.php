@@ -40,7 +40,7 @@
                             </div>
                         </div>
                     </div>
-                    <table class="table table-bordered table-hover">
+                    <table class="table table-bordered table-hover yajra-datatable">
                         <thead>
                         <tr>
                             <th>#</th>
@@ -52,29 +52,29 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($categories as $index=>$category)
-                            <tr>
-                                <td>{{$index+1}}</td>
-                                <td>{{$category->name}}</td>
-                                <td>{{($category->parent_id==0?'main category' : $category->parent()->first()->name) }}</td>
-                                <td><img src="{{$category->image_path}}" style="height: 100px;width: 100px"></td>
-                                <td>
-                                    @if(count($category->children()->get())>0)
-                                        <a class="btn btn-primary btn-sm" href="{{route('category.edit',['category'=>$category->id])}}">EDIT</a>
-                                        <button onclick="deleteConfirmation({{$category->id}})" class="btn btn-danger btn-sm" >DELETE</button>
-                                        <input type="hidden" value="{{csrf_token()}}" id="_token">
-                                        @else
-                                    <form action="{{route('category.destroy',$category->id)}}" method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <a class="btn btn-primary btn-sm" href="{{route('category.edit',['category'=>$category->id])}}">EDIT</a>
-                                        <button type="submit" class="btn btn-danger btn-sm" >DELETE</button>
-                                    </form>
-                                    @endif
-                                </td>
-                                <td>{{$category->category_order}}</td>
-                            </tr>
-                        @endforeach
+{{--                        @foreach($categories as $index=>$category)--}}
+{{--                            <tr>--}}
+{{--                                <td>{{$index+1}}</td>--}}
+{{--                                <td>{{$category->name}}</td>--}}
+{{--                                <td>{{($category->parent_id==0?'main category' : $category->parent()->first()->name) }}</td>--}}
+{{--                                <td><img src="{{$category->image_path}}" style="height: 100px;width: 100px"></td>--}}
+{{--                                <td>--}}
+{{--                                    @if(count($category->children()->get())>0)--}}
+{{--                                        <a class="btn btn-primary btn-sm" href="{{route('category.edit',['category'=>$category->id])}}">EDIT</a>--}}
+{{--                                        <button onclick="deleteConfirmation({{$category->id}})" class="btn btn-danger btn-sm" >DELETE</button>--}}
+{{--                                        <input type="hidden" value="{{csrf_token()}}" id="_token">--}}
+{{--                                        @else--}}
+{{--                                    <form action="{{route('category.destroy',$category->id)}}" method="post">--}}
+{{--                                        @csrf--}}
+{{--                                        @method('DELETE')--}}
+{{--                                        <a class="btn btn-primary btn-sm" href="{{route('category.edit',['category'=>$category->id])}}">EDIT</a>--}}
+{{--                                        <button type="submit" class="btn btn-danger btn-sm" >DELETE</button>--}}
+{{--                                    </form>--}}
+{{--                                    @endif--}}
+{{--                                </td>--}}
+{{--                                <td>{{$category->category_order}}</td>--}}
+{{--                            </tr>--}}
+{{--                        @endforeach--}}
                         </tbody>
                     </table>
                 </div>
@@ -84,48 +84,50 @@
 @endsection
 
 @section('js')
+
     <script type="text/javascript">
+        // $(document).ready(function () {
 
-        function deleteConfirmation(id) {
-            swal.fire({
-                title: "Delete?",
-                icon: 'question',
-                text: "this category has subcategory!",
-                type: "warning",
-                showCancelButton: !0,
-                confirmButtonText: "Yes, delete it!",
-                cancelButtonText: "No, cancel!",
-                reverseButtons: !0
-            }).then(function (e) {
+            function deleteConfirmation(id) {
+                swal.fire({
+                    title: "Delete?",
+                    icon: 'question',
+                    text: "this category has subcategory!",
+                    type: "warning",
+                    showCancelButton: !0,
+                    confirmButtonText: "Yes, delete it!",
+                    cancelButtonText: "No, cancel!",
+                    reverseButtons: !0
+                }).then(function (e) {
 
-                if (e.value === true) {
+                    if (e.value === true) {
 
-                    let _url = '/category/'+id;
+                        let _url = '/category/' + id;
 
-                    $.ajax({
-                        type: 'DELETE',
-                        url: _url,
-                        data: {_token: $('#_token').val()},
-                        success: function (resp) {
-                            if (resp.success) {
-                                swal.fire("Done!", resp.message, "success");
+                        $.ajax({
+                            type: 'DELETE',
+                            url: _url,
+                            data: {_token: $('#_token').val()},
+                            success: function (resp) {
+                                if (resp.success) {
+                                    swal.fire("Done!", resp.message, "success");
+                                    location.reload();
+                                }
+                            },
+                            error: function (resp) {
                                 location.reload();
+                                console.log("Error!", 'Sumething went wrong.', "error");
                             }
-                        },
-                        error: function (resp) {
-                            location.reload();
-                            console.log("Error!", 'Sumething went wrong.', "error");
-                        }
 
-                    });
+                        });
 
-                } else {
-                    e.dismiss;
-                }
+                    } else {
+                        e.dismiss;
+                    }
 
-            }, function (dismiss) {
-                return false;
-            })
-        }
+                }, function (dismiss) {
+                    return false;
+                })
+            }
         </script>
     @endsection
