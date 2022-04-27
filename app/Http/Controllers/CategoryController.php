@@ -23,30 +23,45 @@ class CategoryController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $actionBtn = '<form action="' . url('category/' . $row->id) . '" method="POST">
-                 ' . csrf_field() . '
-                  ' . method_field("DELETE") . '
-                  <a href="' . url('category/' . $row->id . '/edit') . '" class="edit btn btn-success btn-sm">Edit</a>
-                    <button type="submit" class="btn btn-danger btn-sm"
-                        onclick="return confirm(\'Are You Sure Want to Delete?\')">Delete</button>
-                    </form>';
+                    $actionBtn =
+//                        '
+//                    <form action="' . url('category/' . $row->id) . '" method="POST">
+//                 ' . csrf_field() . '
+//                  ' . method_field("DELETE") . '
+//                  <a href="' . url('category/' . $row->id . '/edit') . '" class="edit btn btn-success btn-sm">Edit</a>
+//                    <button type="submit" class="btn btn-danger btn-sm"
+//                        onclick="return confirm(\'Are You Sure Want to Delete?\')">Delete</button>
+//                    </form>
+//                    ';
+                        '
+                    <form action="' . url('category/' . $row->id) . '" method="POST">
+
+                            <a data-toggle="modal" id="smallButton" data-target="#smallModal" data-id="'.$row->id.'" class="edit btn btn-success btn-sm"
+                                data-attr="' . url('category/' . $row->id . '/edit') . '" title="show">Edit</a>
+                                    ' . csrf_field() . '
+                                    ' . method_field("DELETE") . '
+                            <button type="submit" title="delete" style="border: none; background-color:transparent;">
+                                <i class="fas fa-trash fa-lg text-danger"></i>
+                            </button>
+                        </form>
+                    ';
                     return $actionBtn;
                 })->addColumn('image', function ($row) {
 
                     return '<img src=" ' . $row->image_path . ' " height="75px" width="75px" />';
                 })->addColumn('parent_id', function ($row) {
-                    return ($row->parent_id==0?'main category' : $row->parent()->first()->name);
+                    return ($row->parent_id == 0 ? 'main category' : $row->parent()->first()->name);
                 })
-                ->rawColumns(['action', 'image','parent_id'])
+                ->rawColumns(['action', 'image', 'parent_id'])
                 ->make(true);
         }
     }
 
-    public function viewRender(Request $request)
-    {
-        $viewRender = view('viewRend')->render();
-        return response()->json(array('success' => true, 'html' => $viewRender));
-    }
+//    public function viewRender(Request $request)
+//    {
+//        $viewRender = view('viewRend')->render();
+//        return response()->json(array('success' => true, 'html' => $viewRender));
+//    }
 
     public function create()
     {
@@ -55,6 +70,7 @@ class CategoryController extends Controller
 
         return view('dashboard.category.create', compact('parentcategories', 'categories', 'subcategories'));
     }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -103,13 +119,18 @@ class CategoryController extends Controller
 
     }
 
-    public function edit(Category $category)
+    public function edit( Request $request)
     {
+
         $parentcategories = Category::where('parent_id', 0)->get();
         $subcategories = Category::where('parent_id', '!=', 0)->get();
         $categories = Category::all();
+        $category =Category::find($request->id);
 
-        return view('dashboard.category.edit', compact('subcategories', 'categories', 'parentcategories', 'category'));
+
+        $editview = view('dashboard.category.edit')->with(['parentcategories'=> $parentcategories,'categories'=>$categories,'subcategories'=>$subcategories,'category'=>$category])->render();
+
+        return response()->json(array('success' => true,'html'=>$editview,'parentcategories'=> $parentcategories,'category'=>$category));
     }
 
     public function update(Request $request, Category $category)

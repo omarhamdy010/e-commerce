@@ -20,7 +20,8 @@ Route::get('/', function () {
 Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
 
-    Route::resource('category', \App\Http\Controllers\CategoryController::class)->except(['show']);
+    Route::resource('category', \App\Http\Controllers\CategoryController::class)->except(['show','edit']);
+    Route::post('edit', [\App\Http\Controllers\CategoryController::class, 'edit'])->name('edit');
     Route::get('categoryorder', [\App\Http\Controllers\CategoryController::class, 'getcategoryorder'])->name('category.order');
     Route::post('categoryajax', [\App\Http\Controllers\CategoryController::class, 'ajaxstore'])->name('category.createcat');
     Route::PUT('updateAJAX/{id}', [\App\Http\Controllers\CategoryController::class, 'updateAJAX'])->name('category.updateAJAX');

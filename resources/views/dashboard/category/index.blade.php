@@ -80,14 +80,57 @@
                 </div>
             </div>
         </div>
+
+
+        <!-- small modal -->
+        <div class="modal fade" id="smallModal" tabindex="-1" role="dialog" aria-labelledby="smallModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="smallBody">
+                        <div>
+                            <div class="row viewRender">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- medium modal -->
+        <div class="modal fade" id="mediumModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="mediumBody">
+                        <div>
+                            <!-- the result to be displayed apply here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
     </section>
 @endsection
 
 @section('js')
 
     <script type="text/javascript">
-        // $(document).ready(function () {
-
             function deleteConfirmation(id) {
                 swal.fire({
                     title: "Delete?",
@@ -129,5 +172,28 @@
                     return false;
                 })
             }
+
+            $(document).on('click', '#smallButton', function(event) {
+                event.preventDefault();
+                $_token = "{{ csrf_token() }}";
+                var id = $(this).data('id');
+                $.ajax({
+                    headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') },
+                    url: "{{ route('edit') }}",
+                    type: 'POST',
+                    cache: false,
+                    data: {'_token': $_token,'id':id },
+                    datatype: 'html',
+                    beforeSend: function() {
+                        //something before send
+                    },
+                    success: function(data) {
+                        console.log(data);
+                        $('.viewRender').html(data.html);
+                    }
+                });
+            });
+
+
         </script>
     @endsection
