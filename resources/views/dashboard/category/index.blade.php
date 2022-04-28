@@ -29,7 +29,10 @@
                         <div class="card-tools">
 
                             <div class="input-group input-group-sm" style="width: 150px;">
-                                <a class="btn btn-primary btn-sm" href="{{route('category.create')}}">Create</a>
+
+                                <a class="btn btn-primary btn-sm" data-toggle="modal" id="mediumButton" data-target="#mediumModal"
+                                       data-attr="{{route('category.create')}}">Create</a>
+
                                 <input type="text" name="search" class="form-control float-right" placeholder="Search">
 
                                 <div class="input-group-append">
@@ -84,20 +87,16 @@
 
         <!-- small modal -->
         <div class="modal fade" id="smallModal" tabindex="-1" role="dialog" aria-labelledby="smallModalLabel"
-             aria-hidden="true">
+             aria-hidden="true" style="width: 1377px">
             <div class="modal-dialog modal-sm" role="document">
-                <div class="modal-content">
+                <div class="modal-content" style="width: 221%;border-radius: 3.3rem;">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+{{--                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
+{{--                            <span aria-hidden="true">&times;</span>--}}
+{{--                        </button>--}}
                     </div>
-                    <div class="modal-body" id="smallBody">
-                        <div>
-                            <div class="row viewRender">
+                    <div class="modal-body viewRender" id="smallBody">
 
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -106,18 +105,16 @@
 
         <!-- medium modal -->
         <div class="modal fade" id="mediumModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel"
-             aria-hidden="true">
+             aria-hidden="true" style="width: 1377px">
             <div class="modal-dialog" role="document">
-                <div class="modal-content">
+                <div class="modal-content" style="width: 170%;border-radius: 3.3rem;">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+{{--                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
+{{--                            <span aria-hidden="true">&times;</span>--}}
+{{--                        </button>--}}
                     </div>
                     <div class="modal-body" id="mediumBody">
-                        <div>
-                            <!-- the result to be displayed apply here -->
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -179,9 +176,10 @@
                 var id = $(this).data('id');
                 $.ajax({
                     headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') },
-                    url: "{{ route('edit') }}",
+                    url: "{{ route('edit.category') }}",
                     type: 'POST',
                     cache: false,
+
                     data: {'_token': $_token,'id':id },
                     datatype: 'html',
                     beforeSend: function() {
@@ -192,6 +190,48 @@
                         $('.viewRender').html(data.html);
                     }
                 });
+            });
+
+            $(document).on('click', '#mediumButton', function(event) {
+                event.preventDefault();
+                $_token = "{{ csrf_token() }}";
+                $.ajax({
+                    headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') },
+                    url: "{{ route('create.category') }}",
+                    type: 'POST',
+                    cache: false,
+
+                    data: {'_token': $_token},
+                    datatype: 'html',
+                    beforeSend: function() {
+                        //something before send
+                    },
+                    success: function(data) {
+                        console.log(data);
+                        $('#mediumBody').html(data.html);
+                    }
+                });
+            });
+
+            $(document).on('click', '.delete', function(event){
+                event.preventDefault();
+                var id = $(this).data("id");
+                var token = $(".token_delete").val();
+                var row = $(this).parent("td").parent("tr");
+
+                $.ajax(
+                    {
+                        url: "category/"+id,
+                        type: 'DELETE',
+                        data: {
+                            "id": id,
+                            "_token": token,
+                        },
+                        success: function (){
+                            jQuery(row).fadeOut('slow');
+                        }
+                    });
+
             });
 
 

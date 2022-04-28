@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -13,6 +14,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::all();
+
         return view('dashboard.category.index', compact('categories'));
     }
 
@@ -24,26 +26,15 @@ class CategoryController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $actionBtn =
-//                        '
-//                    <form action="' . url('category/' . $row->id) . '" method="POST">
-//                 ' . csrf_field() . '
-//                  ' . method_field("DELETE") . '
-//                  <a href="' . url('category/' . $row->id . '/edit') . '" class="edit btn btn-success btn-sm">Edit</a>
-//                    <button type="submit" class="btn btn-danger btn-sm"
-//                        onclick="return confirm(\'Are You Sure Want to Delete?\')">Delete</button>
-//                    </form>
-//                    ';
                         '
-                    <form action="' . url('category/' . $row->id) . '" method="POST">
-
-                            <a data-toggle="modal" id="smallButton" data-target="#smallModal" data-id="'.$row->id.'" class="edit btn btn-success btn-sm"
+                            <a data-toggle="modal" id="smallButton" data-target="#smallModal" data-id="' . $row->id . '" class="edit btn btn-success btn-sm"
                                 data-attr="' . url('category/' . $row->id . '/edit') . '" title="show">Edit</a>
                                     ' . csrf_field() . '
                                     ' . method_field("DELETE") . '
-                            <button type="submit" title="delete" style="border: none; background-color:transparent;">
+                            <a class="delete"  data-id="'.$row->id.'" title="delete" style="border: none; background-color:transparent;">
                                 <i class="fas fa-trash fa-lg text-danger"></i>
-                            </button>
-                        </form>
+                            </a>
+                            <input type="hidden" value="'.csrf_token().'" class="token_delete">
                     ';
                     return $actionBtn;
                 })->addColumn('image', function ($row) {
@@ -57,24 +48,21 @@ class CategoryController extends Controller
         }
     }
 
-//    public function viewRender(Request $request)
-//    {
-//        $viewRender = view('viewRend')->render();
-//        return response()->json(array('success' => true, 'html' => $viewRender));
-//    }
-
     public function create()
     {
         $parentcategories = Category::where('parent_id', 0)->get();
+
         $categories = Category::all();
 
-        return view('dashboard.category.create', compact('parentcategories', 'categories', 'subcategories'));
+        $create = view('dashboard.category.create')->with(['parentcategories' => $parentcategories, 'categories' => $categories])->render();
+
+        return response()->json(array('success' => true, 'html' => $create, 'parentcategories' => $parentcategories, 'categories' => $categories));
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
+        $validatedData = $request->validate([
+            'name' => 'required|unique:categories',
         ]);
         $data = $request->except(['image']);
         if ($request->image) {
@@ -92,8 +80,8 @@ class CategoryController extends Controller
 
     public function ajaxstore(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
+        $validatedData = $request->validate([
+            'name' => 'required|unique:categories',
         ]);
         $data = $request->except('image');
         if ($request->image) {
@@ -119,25 +107,22 @@ class CategoryController extends Controller
 
     }
 
-    public function edit( Request $request)
+    public function edit(Request $request)
     {
 
         $parentcategories = Category::where('parent_id', 0)->get();
-        $subcategories = Category::where('parent_id', '!=', 0)->get();
-        $categories = Category::all();
-        $category =Category::find($request->id);
+        $category = Category::find($request->id);
 
 
-        $editview = view('dashboard.category.edit')->with(['parentcategories'=> $parentcategories,'categories'=>$categories,'subcategories'=>$subcategories,'category'=>$category])->render();
+        $editview = view('dashboard.category.edit')->with(['parentcategories' => $parentcategories, 'category' => $category])->render();
 
-        return response()->json(array('success' => true,'html'=>$editview,'parentcategories'=> $parentcategories,'category'=>$category));
+        return response()->json(array('success' => true, 'html' => $editview, 'parentcategories' => $parentcategories, 'category' => $category));
     }
 
     public function update(Request $request, Category $category)
     {
-        $request->validate([
-            'name' => 'required',
-        ]);
+        $validator  = Validator::make($request->all(), [
+            'name'  => 'required|unique',]);
         $data = $request->except(['image']);
         if ($request->image) {
             if ($category->image != 'default.png') {
@@ -148,6 +133,7 @@ class CategoryController extends Controller
             })->save(public_path('/uploads/category/' . $request->image->hashName()));
             $data['image'] = $request->image->hashName();
         }
+
         $category->update($data);
         toast('Category edited successfully!', 'success');
 
@@ -156,9 +142,8 @@ class CategoryController extends Controller
 
     public function updateAJAX(Request $request, Category $category)
     {
-        $request->validate([
-            'name' => 'required',
-        ]);
+         Validator::make($request->all(), [
+            'name'  => 'required|unique',]);
         $data = $request->except(['image']);
         if ($request->image) {
             if ($category->image != 'default.png') {
@@ -197,6 +182,8 @@ class CategoryController extends Controller
         $category->delete();
         toast('Category deleted successfully!', 'success');
 
-        return redirect()->back();
+        return response()->json([
+            'success' => 'Record deleted successfully!'
+        ]);
     }
 }

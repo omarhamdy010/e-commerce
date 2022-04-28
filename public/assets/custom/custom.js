@@ -78,6 +78,7 @@ $(document).ready(function () {
     });
     $('#upload-cat-form').submit(function (e) {
         e.preventDefault();
+        console.log('dsfsdfasd');
         let formData = new FormData(this);
         $('#image-input-error').text('');
 
@@ -124,5 +125,6 @@ $(document).ready(function () {
             }
         });
     });
+
 
 });

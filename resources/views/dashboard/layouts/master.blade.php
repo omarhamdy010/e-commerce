@@ -826,7 +826,6 @@
 <!-- jQuery -->
 @yield('js')
 <script src="{{asset('assets/plugins/jquery/jquery.min.js')}}"></script>
-<script src="{{asset('assets/custom/custom.js')}}"></script>
 <!-- jQuery UI 1.11.4 -->
 {{--<script>--}}
 {{--    $.widget.bridge('uibutton', $.ui.button)--}}
