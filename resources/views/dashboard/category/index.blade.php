@@ -1,22 +1,22 @@
 @extends('dashboard.layouts.master')
 
 @section('content')
-<div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1 class="m-0">Dashboard</h1>
-            </div><!-- /.col -->
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                    <li class="breadcrumb-item active">Category</li>
-                </ol>
-            </div><!-- /.col -->
-        </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-</div>
-<!-- /.content-header -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Dashboard</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+                        <li class="breadcrumb-item active">Category</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
 
     <!-- Main content -->
     <section class="content">
@@ -30,8 +30,9 @@
 
                             <div class="input-group input-group-sm" style="width: 150px;">
 
-                                <a class="btn btn-primary btn-sm" data-toggle="modal" id="mediumButton" data-target="#mediumModal"
-                                       data-attr="{{route('category.create')}}">Create</a>
+                                <a class="btn btn-primary btn-sm" data-toggle="modal" id="mediumButton"
+                                   data-target="#mediumModal"
+                                   data-attr="{{route('category.create')}}">Create</a>
 
                                 <input type="text" name="search" class="form-control float-right" placeholder="Search">
 
@@ -54,30 +55,30 @@
                             <th>category order</th>
                         </tr>
                         </thead>
-                        <tbody>
-{{--                        @foreach($categories as $index=>$category)--}}
-{{--                            <tr>--}}
-{{--                                <td>{{$index+1}}</td>--}}
-{{--                                <td>{{$category->name}}</td>--}}
-{{--                                <td>{{($category->parent_id==0?'main category' : $category->parent()->first()->name) }}</td>--}}
-{{--                                <td><img src="{{$category->image_path}}" style="height: 100px;width: 100px"></td>--}}
-{{--                                <td>--}}
-{{--                                    @if(count($category->children()->get())>0)--}}
-{{--                                        <a class="btn btn-primary btn-sm" href="{{route('category.edit',['category'=>$category->id])}}">EDIT</a>--}}
-{{--                                        <button onclick="deleteConfirmation({{$category->id}})" class="btn btn-danger btn-sm" >DELETE</button>--}}
-{{--                                        <input type="hidden" value="{{csrf_token()}}" id="_token">--}}
-{{--                                        @else--}}
-{{--                                    <form action="{{route('category.destroy',$category->id)}}" method="post">--}}
-{{--                                        @csrf--}}
-{{--                                        @method('DELETE')--}}
-{{--                                        <a class="btn btn-primary btn-sm" href="{{route('category.edit',['category'=>$category->id])}}">EDIT</a>--}}
-{{--                                        <button type="submit" class="btn btn-danger btn-sm" >DELETE</button>--}}
-{{--                                    </form>--}}
-{{--                                    @endif--}}
-{{--                                </td>--}}
-{{--                                <td>{{$category->category_order}}</td>--}}
-{{--                            </tr>--}}
-{{--                        @endforeach--}}
+                        <tbody id="table_row">
+                        {{--                        @foreach($categories as $index=>$category)--}}
+                        {{--                            <tr>--}}
+                        {{--                                <td>{{$index+1}}</td>--}}
+                        {{--                                <td>{{$category->name}}</td>--}}
+                        {{--                                <td>{{($category->parent_id==0?'main category' : $category->parent()->first()->name) }}</td>--}}
+                        {{--                                <td><img src="{{$category->image_path}}" style="height: 100px;width: 100px"></td>--}}
+                        {{--                                <td>--}}
+                        {{--                                    @if(count($category->children()->get())>0)--}}
+                        {{--                                        <a class="btn btn-primary btn-sm" href="{{route('category.edit',['category'=>$category->id])}}">EDIT</a>--}}
+                        {{--                                        <button onclick="deleteConfirmation({{$category->id}})" class="btn btn-danger btn-sm" >DELETE</button>--}}
+                        {{--                                        <input type="hidden" value="{{csrf_token()}}" id="_token">--}}
+                        {{--                                        @else--}}
+                        {{--                                    <form action="{{route('category.destroy',$category->id)}}" method="post">--}}
+                        {{--                                        @csrf--}}
+                        {{--                                        @method('DELETE')--}}
+                        {{--                                        <a class="btn btn-primary btn-sm" href="{{route('category.edit',['category'=>$category->id])}}">EDIT</a>--}}
+                        {{--                                        <button type="submit" class="btn btn-danger btn-sm" >DELETE</button>--}}
+                        {{--                                    </form>--}}
+                        {{--                                    @endif--}}
+                        {{--                                </td>--}}
+                        {{--                                <td>{{$category->category_order}}</td>--}}
+                        {{--                            </tr>--}}
+                        {{--                        @endforeach--}}
                         </tbody>
                     </table>
                 </div>
@@ -91,9 +92,9 @@
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content" style="width: 221%;border-radius: 3.3rem;">
                     <div class="modal-header">
-{{--                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
-{{--                            <span aria-hidden="true">&times;</span>--}}
-{{--                        </button>--}}
+                        {{--                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
+                        {{--                            <span aria-hidden="true">&times;</span>--}}
+                        {{--                        </button>--}}
                     </div>
                     <div class="modal-body viewRender" id="smallBody">
 
@@ -109,9 +110,9 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content" style="width: 170%;border-radius: 3.3rem;">
                     <div class="modal-header">
-{{--                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
-{{--                            <span aria-hidden="true">&times;</span>--}}
-{{--                        </button>--}}
+                        {{--                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
+                        {{--                            <span aria-hidden="true">&times;</span>--}}
+                        {{--                        </button>--}}
                     </div>
                     <div class="modal-body" id="mediumBody">
 
@@ -121,119 +122,131 @@
         </div>
 
 
-
     </section>
 @endsection
 
 @section('js')
 
     <script type="text/javascript">
-            function deleteConfirmation(id) {
-                swal.fire({
-                    title: "Delete?",
-                    icon: 'question',
-                    text: "this category has subcategory!",
-                    type: "warning",
-                    showCancelButton: !0,
-                    confirmButtonText: "Yes, delete it!",
-                    cancelButtonText: "No, cancel!",
-                    reverseButtons: !0
-                }).then(function (e) {
+        function deleteConfirmation(id) {
+            swal.fire({
+                title: "Delete?",
+                icon: 'question',
+                text: "this category has subcategory!",
+                type: "warning",
+                showCancelButton: !0,
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel!",
+                reverseButtons: !0
+            }).then(function (e) {
 
-                    if (e.value === true) {
+                if (e.value === true) {
 
-                        let _url = '/category/' + id;
+                    let _url = '/category/' + id;
 
-                        $.ajax({
-                            type: 'DELETE',
-                            url: _url,
-                            data: {_token: $('#_token').val()},
-                            success: function (resp) {
-                                if (resp.success) {
-                                    swal.fire("Done!", resp.message, "success");
-                                    location.reload();
-                                }
-                            },
-                            error: function (resp) {
-                                location.reload();
-                                console.log("Error!", 'Sumething went wrong.', "error");
-                            }
-
-                        });
-
-                    } else {
-                        e.dismiss;
-                    }
-
-                }, function (dismiss) {
-                    return false;
-                })
-            }
-
-            $(document).on('click', '#smallButton', function(event) {
-                event.preventDefault();
-                $_token = "{{ csrf_token() }}";
-                var id = $(this).data('id');
-                $.ajax({
-                    headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') },
-                    url: "{{ route('edit.category') }}",
-                    type: 'POST',
-                    cache: false,
-
-                    data: {'_token': $_token,'id':id },
-                    datatype: 'html',
-                    beforeSend: function() {
-                        //something before send
-                    },
-                    success: function(data) {
-                        console.log(data);
-                        $('.viewRender').html(data.html);
-                    }
-                });
-            });
-
-            $(document).on('click', '#mediumButton', function(event) {
-                event.preventDefault();
-                $_token = "{{ csrf_token() }}";
-                $.ajax({
-                    headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') },
-                    url: "{{ route('create.category') }}",
-                    type: 'POST',
-                    cache: false,
-
-                    data: {'_token': $_token},
-                    datatype: 'html',
-                    beforeSend: function() {
-                        //something before send
-                    },
-                    success: function(data) {
-                        console.log(data);
-                        $('#mediumBody').html(data.html);
-                    }
-                });
-            });
-
-            $(document).on('click', '.delete', function(event){
-                event.preventDefault();
-                var id = $(this).data("id");
-                var token = $(".token_delete").val();
-                var row = $(this).parent("td").parent("tr");
-
-                $.ajax(
-                    {
-                        url: "category/"+id,
+                    $.ajax({
                         type: 'DELETE',
-                        data: {
-                            "id": id,
-                            "_token": token,
+                        url: _url,
+                        data: {_token: $('#_token').val()},
+                        success: function (resp) {
+                            if (resp.success) {
+                                swal.fire("Done!", resp.message, "success");
+                                location.reload();
+                            }
                         },
-                        success: function (){
-                            jQuery(row).fadeOut('slow');
+                        error: function (resp) {
+                            location.reload();
+                            console.log("Error!", 'Sumething went wrong.', "error");
                         }
+
                     });
 
+                } else {
+                    e.dismiss;
+                }
+
+            }, function (dismiss) {
+                return false;
+            })
+        }
+
+        $(document).on('click', '#smallButton', function (event) {
+            event.preventDefault();
+            $_token = "{{ csrf_token() }}";
+            var id = $(this).data('id');
+            $.ajax({
+                headers: {'X-CSRF-Token': $('meta[name=_token]').attr('content')},
+                url: "{{ route('edit.category') }}",
+                type: 'POST',
+                cache: false,
+
+                data: {'_token': $_token, 'id': id},
+                datatype: 'html',
+                beforeSend: function () {
+                    //something before send
+                },
+                success: function (data) {
+                    console.log(data);
+                    $('.viewRender').html(data.html);
+                }
             });
+        });
+
+        $(document).on('click', '#mediumButton', function (event) {
+            event.preventDefault();
+            $_token = "{{ csrf_token() }}";
+            $.ajax({
+                headers: {'X-CSRF-Token': $('meta[name=_token]').attr('content')},
+                url: "{{ route('create.category') }}",
+                type: 'POST',
+                cache: false,
+
+                data: {'_token': $_token},
+                datatype: 'html',
+                beforeSend: function () {
+                    //something before send
+                },
+                success: function (data) {
+                    console.log(data);
+                    $('#mediumBody').html(data.html);
+                }
+            });
+        });
 
 
-        </script>
-    @endsection
+        $(document).on('click', '.delete', function (event) {
+            var id = $(this).data("id");
+            var token = $(".token_delete").val();
+            var row = $(this).parent("td").parent("tr");
+            swal.fire({
+                title: "Delete?",
+                text: "Please ensure and then confirm!",
+                type: "warning",
+                showCancelButton: !0,
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel!",
+                reverseButtons: !0
+            }).then(function (e) {
+                if (e.value === true) {
+                    $.ajax(
+                        {
+                            url: "category/" + id,
+                            type: 'DELETE',
+                            data: {
+                                "id": id,
+                                "_token": token,
+                            },
+                            success: function () {
+                                jQuery(row).fadeOut('slow');
+                            }
+                        });
+                } else {
+                    e.dismiss;
+                }
+            }, function (dismiss) {
+                return false;
+            })
+        });
+
+    </script>
+@endsection
