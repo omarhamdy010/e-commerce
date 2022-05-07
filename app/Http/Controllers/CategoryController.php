@@ -31,10 +31,9 @@ class CategoryController extends Controller
                                 data-attr="' . url('category/' . $row->id . '/edit') . '" title="show">Edit</a>
                                     ' . csrf_field() . '
                                     ' . method_field("DELETE") . '
-                            <a class="delete"  data-id="'.$row->id.'" title="delete" style="border: none; background-color:transparent;">
-                                <i class="fas fa-trash fa-lg text-danger"></i>
-                            </a>
-                            <input type="hidden" value="'.csrf_token().'" class="token_delete">
+                            <a class="btn btn-danger btn-sm delete"  data-id="' . $row->id . '" title="delete">
+                            DELETE</a>
+                            <input type="hidden" value="' . csrf_token() . '" class="token_delete">
                     ';
                     return $actionBtn;
                 })->addColumn('image', function ($row) {
@@ -54,33 +53,17 @@ class CategoryController extends Controller
 
         $categories = Category::all();
 
-        $create = view('dashboard.category.create')->with(['parentcategories' => $parentcategories, 'categories' => $categories])->render();
+        $category = Category::latest()->first();
 
-        return response()->json(array('success' => true, 'html' => $create, 'parentcategories' => $parentcategories, 'categories' => $categories));
+        $create = view('dashboard.category.create')->with(['parentcategories' => $parentcategories, 'categories' => $categories , 'category'=>$category])->render();
+
+        return response()->json(array('success' => true, 'html' => $create, 'parentcategories' => $parentcategories, 'categories' => $categories ,'category'=>$category));
     }
 
-    public function store(Request $request)
-    {
-        $validatedData = $request->validate([
-            'name' => 'required|unique:categories',
-        ]);
-        $data = $request->except(['image']);
-        if ($request->image) {
-            $img = Image::make($request->image)->resize(100, 100, function ($constraint) {
-                $constraint->aspectRatio();
-            })->save(public_path('/uploads/category/' . $request->image->hashName()));
-            $data['image'] = $request->image->hashName();
-        }
-
-        Category::create($data);
-        toast('Category created successfully!', 'success');
-
-        return redirect()->back();
-    }
 
     public function ajaxstore(Request $request)
     {
-        $validatedData = $request->validate([
+        $request->validate([
             'name' => 'required|unique:categories',
         ]);
         $data = $request->except('image');
@@ -110,9 +93,8 @@ class CategoryController extends Controller
     public function edit(Request $request)
     {
 
-        $parentcategories = Category::where('parent_id', 0)->get();
+        $parentcategories = Category::where('parent_id', 0)->where('id', '!=', $request->id)->get();
         $category = Category::find($request->id);
-
 
         $editview = view('dashboard.category.edit')->with(['parentcategories' => $parentcategories, 'category' => $category])->render();
 
@@ -121,29 +103,8 @@ class CategoryController extends Controller
 
     public function update(Request $request, Category $category)
     {
-        $validator  = Validator::make($request->all(), [
-            'name'  => 'required|unique',]);
-        $data = $request->except(['image']);
-        if ($request->image) {
-            if ($category->image != 'default.png') {
-                Storage::disk('public_upload')->delete('category/' . $category->image);
-            }
-            $img = Image::make($request->image)->resize(100, 100, function ($constraint) {
-                $constraint->aspectRatio();
-            })->save(public_path('/uploads/category/' . $request->image->hashName()));
-            $data['image'] = $request->image->hashName();
-        }
-
-        $category->update($data);
-        toast('Category edited successfully!', 'success');
-
-        return redirect()->back();
-    }
-
-    public function updateAJAX(Request $request, Category $category)
-    {
-         Validator::make($request->all(), [
-            'name'  => 'required|unique',]);
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|unique',]);
         $data = $request->except(['image']);
         if ($request->image) {
             if ($category->image != 'default.png') {

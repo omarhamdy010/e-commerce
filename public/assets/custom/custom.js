@@ -109,7 +109,7 @@ $(document).ready(function () {
         var id = $('#catid').val();
         $.ajax({
             type: 'POST',
-            url: `/updateAJAX/`+id,
+            url: `/category/`+id,
             data: formData,
             contentType: false,
             processData: false,
