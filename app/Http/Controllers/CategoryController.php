@@ -116,7 +116,7 @@ class CategoryController extends Controller
 
         $editview = view('dashboard.category.edit')->with(['parentcategories' => $parentcategories, 'category' => $category])->render();
 
-        return response()->json(array('success' => true, 'html' => $editview, 'parentcategories' => $parentcategories, 'category' => $category));
+        return response()->json(array('success' => true, 'html' => $editview, 'parentcategories' => $parentcategories));
     }
 
     public function update(Request $request, Category $category)

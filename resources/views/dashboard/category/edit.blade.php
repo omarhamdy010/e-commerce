@@ -54,7 +54,7 @@
                                                    name="name"
                                                    placeholder="Enter category name">
                                         </div>
-                                        {{--                                         name--}}
+                                        {{--name--}}
                                         <div class="form-group">
                                             <label>parent category</label>
                                             <select class="form-control select2 parcat" name="parent_id"
@@ -188,6 +188,7 @@
                     alert('Error' + ' ' + response);
                 }
             });
+
             var cat = $('.parcat').change(function (e) {
 
                 e.preventDefault();
