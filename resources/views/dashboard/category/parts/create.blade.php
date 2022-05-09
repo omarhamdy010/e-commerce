@@ -83,7 +83,7 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary btn-submit">Submit</button>
+                            <button type="submit" class="btn btn-primary btn-submit submit_create">Submit</button>
                         </div>
                     </form>
                 </div>
@@ -93,6 +93,7 @@
 </div>
 
 <script>
+
     $(document).ready(function () {
 
         $.ajax({
@@ -120,70 +121,36 @@
             }
         });
 
-        var catajax = $('.parcatajax').change(function (e) {
-            e.preventDefault();
-            var parent_id = catajax.val();
-            $.ajax({
-                'url': '/categoryorder?category_id=' + parent_id,
-                'type': 'get',
-                'data': {},
-                success: function (response) { // What to do if we succeed
-                    $('#category_order_count_ajax').val(response['order_category']);
-                },
-                error: function (response) {
-                    alert('Error' + ' ' + response);
-                }
-            });
-
-        });
-
-        $('#imageajax').change(function () {
-            $("#frameajax").html('');
-            for (var i = 0; i < $(this)[0].files.length; i++) {
-                $("#frameajax").attr('src', window.URL.createObjectURL(this.files[i]));
-            }
-        });
-
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
 
-        $('#upload-cat-form').submit(function (e) {
-            e.preventDefault();
-            let formData = new FormData(this);
-            $('#image-input-error').text('');
-            var name = $('.nameajax').val();
-            var id = $(this).data('id');
-            var parentId = $('.parcatajax').val();
-            $.ajax({
-                type: 'POST',
-                url: `/categoryajax`,
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: (response) => {
-                    if (response) {
-                        this.reset();
-                        console.log('Image has been uploaded successfully');
-                    }
-                    if (parentId == 0) {
-                        $('#catnameajax').append(`<option  value="${id}" >${name}</option>`);
-                    }
-                },
-                error: function (xhr, status, error) {
-                    console.log(xhr);
-                    $('#image-input-error').text(xhr.responseJSON.errors.file);
-                    $.each(xhr.responseJSON.errors, function (key, item)
-                    {
-                        $(".errors1").append("<span class='text-danger'>"+item+"</span><br>")
-                    });
-
-                }
-            });
+    });
+    var catajax = $('.parcatajax').change(function (e) {
+        e.preventDefault();
+        var parent_id = catajax.val();
+        $.ajax({
+            'url': '/categoryorder?category_id=' + parent_id,
+            'type': 'get',
+            'data': {},
+            success: function (response) { // What to do if we succeed
+                $('#category_order_count_ajax').val(response['order_category']);
+            },
+            error: function (response) {
+                alert('Error' + ' '  + response);
+            }
         });
     });
+
+    $('#imageajax').change(function () {
+        $("#frameajax").html('');
+        for (var i = 0; i < $(this)[0].files.length; i++) {
+            $("#frameajax").attr('src', window.URL.createObjectURL(this.files[i]));
+        }
+    });
+
 
 </script>
 

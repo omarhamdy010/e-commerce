@@ -105,45 +105,6 @@
             }
         });
 
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        $('#update-category-form').submit(function (e) {
-            e.preventDefault();
-            let formData = new FormData(this);
-            $('#image-error').text('');
-            var id = $('#catid').val();
-            var name = $('#name').val();
-            var parent_name = $('#parent_name').val();
-            var image = $('#imageajax').attr('src');
-            var category_order = $('#category_order_count_ajax').val();
-            $.ajax({
-                type: 'POST',
-                url: `/category/` + id,
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: (response) => {
-                    if (response) {
-                        this.reset();
-                        console.log('Image has been uploaded successfully');
-                    }
-                    $('#name').val(name);
-                    $('#parent_name').val(parent_name);
-                    $('#frameajax').attr('src',image);
-                    $('#category_order_count_ajax').val(category_order);
-
-                    },
-                error: function (response) {
-                    console.log(response);
-                    $('#image-input-error').text(response.responseJSON.errors.file);
-                }
-            });
-        });
-
     });
 
 </script>
