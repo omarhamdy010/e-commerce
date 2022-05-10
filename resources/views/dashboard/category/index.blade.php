@@ -172,6 +172,7 @@
 
         $(document).on('click', '#smallButton', function (event) {
             event.preventDefault();
+
             $_token = "{{ csrf_token() }}";
             var id = $(this).data('id');
             $.ajax({
@@ -245,8 +246,6 @@
             var id = $(this).data("id");
             var token = $(".token_delete").val();
             var row = $(this).parent("td").parent("tr");
-
-
             swal.fire({
                 title: "Delete?",
                 text: "Please ensure and then confirm!",
@@ -267,7 +266,7 @@
                             },
                             success: function () {
                                 jQuery(row).fadeOut('slow');
-                                $('#table_row').DataTable().ajax.reload();
+                                $('#yajra-datatable').DataTable().ajax.reload(null, false);
                             }
                         });
                 } else {
@@ -301,7 +300,8 @@
                     }
                     $('#mediumModal').modal('hide');
                     $('.modal-backdrop').hide();
-                    $('#table_row').DataTable().ajax.reload();
+                    $('#yajra-datatable').DataTable().ajax.reload(null, false);
+
                 },
                 error: function (xhr, status, error) {
                     console.log(xhr);
@@ -324,14 +324,6 @@
             var image = $('#imageajax').attr('src');
             var category_order = $('#category_order_count_ajax').val();
 
-            var rData = [
-                name,
-                parent_name,
-                image,
-                category_order,
-            ];
-            var table = $('#table_row').DataTable();
-
             $.ajax({
                 type: 'POST',
                 url: `/category/` + id,
@@ -349,8 +341,7 @@
                     $('#category_order_count_ajax').val(category_order);
                     $('#smallModal').modal('hide');
                     $('.modal-backdrop').removeClass('show');
-                    table.row().data(rData).draw();
-                    runDataTable();
+                    $('#yajra-datatable').DataTable().ajax.reload(null, false);
                 },
                 error: function (response) {
                     console.log(response);
@@ -368,8 +359,6 @@
         });
 
         $(document).ready(function () {
-            runDataTable();
-
             $.ajax({
                 'url': '/categoryorder?category_id=0',
                 'type': 'get',
@@ -395,6 +384,8 @@
                 }
             });
 
+            runDataTable();
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -403,41 +394,25 @@
         });
 
 
-        function runDataTable(){
-            // $(function () {
-                // $(".yajra-datatable").DataTable({
-                //     "responsive": true, "lengthChange": false, "autoWidth": false,
-                //     "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-                // }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-                // $('.yajra-datatable').DataTable({
-                //     "paging": true,
-                //     "lengthChange": false,
-                //     "searching": false,
-                //     "ordering": true,
-                //     "info": true,
-                //     "autoWidth": false,
-                //     "responsive": true,
-                // });
-
-                var table = $('.yajra-datatable').DataTable({
-                    processing: true,
-                    serverSide: true,
-                    ajax: "{{ route('category.getcategory') }}",
-                    columns: [
-                        {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                        {data: 'name', name: 'name'},
-                        {data: 'parent_id', name: 'parent_id'},
-                        {data: 'image', name: 'image'},
-                        {
-                            data: 'action',
-                            name: 'action',
-                            orderable: true,
-                            searchable: true
-                        },
-                        {data: 'category_order', name: 'category_order'},
-                    ]
-                });
-            // });
+        function runDataTable() {
+            var table = $('.yajra-datatable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('category.getcategory') }}",
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'name', name: 'name'},
+                    {data: 'parent_id', name: 'parent_id'},
+                    {data: 'image', name: 'image'},
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: true,
+                        searchable: true
+                    },
+                    {data: 'category_order', name: 'category_order'},
+                ]
+            });
         }
 
     </script>
