@@ -149,40 +149,6 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-
-        $('#upload-cat-form').submit(function (e) {
-            e.preventDefault();
-            let formData = new FormData(this);
-            $('#image-input-error').text('');
-            var name = $('.nameajax').val();
-            var id = $(this).data('id');
-            var parentId = $('.parcatajax').val();
-            $.ajax({
-                type: 'POST',
-                url: `/categoryajax`,
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: (response) => {
-                    if (response) {
-                        this.reset();
-                        console.log('Image has been uploaded successfully');
-                    }
-                    if (parentId == 0) {
-                        $('#catnameajax').append(`<option  value="${id}" >${name}</option>`);
-                    }
-                },
-                error: function (xhr, status, error) {
-                    console.log(xhr);
-                    $('#image-input-error').text(xhr.responseJSON.errors.file);
-                    $.each(xhr.responseJSON.errors, function (key, item)
-                    {
-                        $(".errors1").append("<span class='text-danger'>"+item+"</span><br>")
-                    });
-
-                }
-            });
-        });
     });
 
 </script>

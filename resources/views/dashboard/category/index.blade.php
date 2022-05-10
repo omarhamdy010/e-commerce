@@ -195,6 +195,8 @@
         $(document).on('click', '#mediumButton', function (event) {
             event.preventDefault();
             $_token = "{{ csrf_token() }}";
+            $('#mediumModal').modal('show');
+            $('.modal-backdrop').show();
             $.ajax({
                 headers: {'X-CSRF-Token': $('meta[name=_token]').attr('content')},
                 url: "{{ route('create.category') }}",
@@ -215,6 +217,7 @@
 
 
         $(document).on('click', '.delete', function (event) {
+            event.preventDefault();
             var id = $(this).data("id");
             var token = $(".token_delete").val();
             var row = $(this).parent("td").parent("tr");
@@ -248,5 +251,75 @@
             })
         });
 
+        $(document).on('submit', '#upload-cat-form', function (e) {
+            e.preventDefault();
+            let formData = new FormData(this);
+            $('#image-input-error').text('');
+            var name = $('.nameajax').val();
+            var id = $(this).data('id');
+            var parentId = $('.parcatajax').val();
+            $.ajax({
+                type: 'POST',
+                url: `/categoryajax`,
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: (response) => {
+                    if (response) {
+                        this.reset();
+                        console.log('Image has been uploaded successfully');
+                    }
+                    if (parentId == 0) {
+                        $('#catnameajax').append(`<option  value="${id}" >${name}</option>`);
+                        $('#mediumModal').modal('hide');
+                        $('.modal-backdrop').hide();
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr);
+                    $('#image-input-error').text(xhr.responseJSON.errors.file);
+                    $.each(xhr.responseJSON.errors, function (key, item)
+                    {
+                        $(".errors1").append("<span class='text-danger'>"+item+"</span><br>")
+                    });
+
+                }
+            });
+        });
+
+        $(document).on('submit', '#update-category-form', function (e) {
+            e.preventDefault();
+            let formData = new FormData(this);
+            $('#image-error').text('');
+            var id = $('#catid').val();
+            var name = $('#name').val();
+            var parent_name = $('#parent_name').val();
+            var image = $('#imageajax').attr('src');
+            var category_order = $('#category_order_count_ajax').val();
+            $.ajax({
+                type: 'POST',
+                url: `/category/` + id,
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: (response) => {
+                    if (response) {
+                        this.reset();
+                        console.log('Image has been uploaded successfully');
+                    }
+                    $('#name').val(name);
+                    $('#parent_name').val(parent_name);
+                    $('#frameajax').attr('src', image);
+                    $('#category_order_count_ajax').val(category_order);
+                    $('#smallModal').modal('hide');
+                    $('.modal-backdrop').removeClass('show');
+                },
+                error: function (response) {
+                    console.log(response);
+                    $('#image-input-error').text(response.responseJSON.errors.file);
+                }
+            });
+
+        });
     </script>
 @endsection

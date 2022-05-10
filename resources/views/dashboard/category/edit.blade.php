@@ -32,8 +32,8 @@
                                         style="width: 100%;">
                                     @if( $category->parent_id == 0)
                                         <option value="{{0}}" selected>select category</option>
-                                        @else
-                                        <option value="{{0}}" >select category</option>
+                                    @else
+                                        <option value="{{0}}">select category</option>
                                     @endif
                                     @foreach($parentcategories as $cat)
                                         <option
@@ -77,68 +77,51 @@
 <script>
     $(document).ready(function () {
 
+        $.ajax({
+            'url': '/categoryorder?category_id=0',
+            'type': 'get',
+            'data': {},
+            success: function (response) { // What to do if we succeed
+                $('#category_order_count').val(response['order_category']);
+                $('#category_order_count_ajax').val(response['order_category']);
+            },
+            error: function (response) {
+                alert('Error' + ' ' + response);
+            }
+        });
+        $.ajax({
+            'url': '/categoryorder?category_id=0',
+            'type': 'get',
+            'data': {},
+            success: function (response) { // What to do if we succeed
+                $('#category_order_count_ajax').val(response['order_category']);
+            },
+            error: function (response) {
+                alert('Error' + ' ' + response);
+            }
+        });
+
+        var cat = $('.parcat').change(function (e) {
+
+            e.preventDefault();
+            var parent_id = cat.val();
+
             $.ajax({
-                'url': '/categoryorder?category_id=0',
+                'url': '/categoryorder?category_id=' + parent_id,
                 'type': 'get',
                 'data': {},
                 success: function (response) { // What to do if we succeed
                     $('#category_order_count').val(response['order_category']);
-                    $('#category_order_count_ajax').val(response['order_category']);
-                },
-                error: function (response) {
-                    alert('Error' + ' ' + response);
-                }
-            });
-            $.ajax({
-                'url': '/categoryorder?category_id=0',
-                'type': 'get',
-                'data': {},
-                success: function (response) { // What to do if we succeed
-                    $('#category_order_count_ajax').val(response['order_category']);
                 },
                 error: function (response) {
                     alert('Error' + ' ' + response);
                 }
             });
 
-            var cat = $('.parcat').change(function (e) {
-
-                e.preventDefault();
-                var parent_id = cat.val();
-
-                $.ajax({
-                    'url': '/categoryorder?category_id=' + parent_id,
-                    'type': 'get',
-                    'data': {},
-                    success: function (response) { // What to do if we succeed
-                        $('#category_order_count').val(response['order_category']);
-                    },
-                    error: function (response) {
-                        alert('Error' + ' ' + response);
-                    }
-                });
-
-            });
-            var catajax = $('.parcatajax').change(function (e) {
-                e.preventDefault();
-                var parent_id = catajax.val();
-                $.ajax({
-                    'url': '/categoryorder?category_id=' + parent_id,
-                    'type': 'get',
-                    'data': {},
-                    success: function (response) { // What to do if we succeed
-                        $('#category_order_count_ajax').val(response['order_category']);
-                    },
-                    error: function (response) {
-                        alert('Error' + ' ' + response);
-                    }
-                });
+        });
         var catajax = $('.parcatajax').change(function (e) {
-
             e.preventDefault();
-
             var parent_id = catajax.val();
-
             $.ajax({
                 'url': '/categoryorder?category_id=' + parent_id,
                 'type': 'get',
@@ -150,9 +133,7 @@
                     alert('Error' + ' ' + response);
                 }
             });
-
         });
-
         $('#imageajax').change(function () {
             $("#frameajax").html('');
             for (var i = 0; i < $(this)[0].files.length; i++) {
@@ -167,39 +148,7 @@
             }
         });
 
-        $('#update-category-form').submit(function (e) {
-            e.preventDefault();
-            let formData = new FormData(this);
-            $('#image-error').text('');
-            var id = $('#catid').val();
-            var name = $('#name').val();
-            var parent_name = $('#parent_name').val();
-            var image = $('#imageajax').attr('src');
-            var category_order = $('#category_order_count_ajax').val();
-            $.ajax({
-                type: 'POST',
-                url: `/category/` + id,
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: (response) => {
-                    if (response) {
-                        this.reset();
-                        console.log('Image has been uploaded successfully');
-                    }
-                    $('#name').val(name);
-                    $('#parent_name').val(parent_name);
-                    $('#frameajax').attr('src',image);
-                    $('#category_order_count_ajax').val(category_order);
-
-                    },
-                error: function (response) {
-                    console.log(response);
-                    $('#image-input-error').text(response.responseJSON.errors.file);
-                }
-            });
-        });
-
     });
+
 
 </script>
