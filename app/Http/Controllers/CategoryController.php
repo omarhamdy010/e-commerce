@@ -55,11 +55,10 @@ class CategoryController extends Controller
 
         $category = Category::latest()->first();
 
-        $create = view('dashboard.category.create')->with(['parentcategories' => $parentcategories, 'categories' => $categories , 'category'=>$category])->render();
+        $create = view('dashboard.category.parts.create')->with(['parentcategories' => $parentcategories, 'categories' => $categories , 'category'=>$category])->render();
 
         return response()->json(array('success' => true, 'html' => $create, 'parentcategories' => $parentcategories, 'categories' => $categories ,'category'=>$category));
     }
-
 
     public function ajaxstore(Request $request)
     {
@@ -96,7 +95,7 @@ class CategoryController extends Controller
         $parentcategories = Category::where('parent_id', 0)->where('id', '!=', $request->id)->get();
         $category = Category::find($request->id);
 
-        $editview = view('dashboard.category.edit')->with(['parentcategories' => $parentcategories, 'category' => $category])->render();
+        $editview = view('dashboard.category.parts.edit')->with(['parentcategories' => $parentcategories, 'category' => $category])->render();
 
         return response()->json(array('success' => true, 'html' => $editview, 'parentcategories' => $parentcategories));
     }

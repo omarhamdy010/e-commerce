@@ -120,8 +120,11 @@
 
         });
         var catajax = $('.parcatajax').change(function (e) {
+
             e.preventDefault();
+
             var parent_id = catajax.val();
+
             $.ajax({
                 'url': '/categoryorder?category_id=' + parent_id,
                 'type': 'get',
@@ -142,13 +145,6 @@
             }
         });
 
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
     });
-
 
 </script>
