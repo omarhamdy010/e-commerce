@@ -128,6 +128,28 @@
 @section('js')
 
     <script type="text/javascript">
+
+        function runDataTable() {
+            var table = $('.yajra-datatable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('category.getcategory') }}",
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'name', name: 'name'},
+                    {data: 'parent_id', name: 'parent_id'},
+                    {data: 'image', name: 'image'},
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: true,
+                        searchable: true
+                    },
+                    {data: 'category_order', name: 'category_order'},
+                ]
+            });
+        }
+
         function deleteConfirmation(id) {
             swal.fire({
                 title: "Delete?",
@@ -223,6 +245,7 @@
             $_token = "{{ csrf_token() }}";
             $('#mediumModal').modal('show');
             $('.modal-backdrop').show();
+
             $.ajax({
                 headers: {'X-CSRF-Token': $('meta[name=_token]').attr('content')},
                 url: "{{ route('create.category') }}",
@@ -237,6 +260,7 @@
                 success: function (data) {
                     console.log(data);
                     $('#mediumBody').html(data.html);
+
                 }
             });
         });
@@ -266,7 +290,7 @@
                             },
                             success: function () {
                                 jQuery(row).fadeOut('slow');
-                                $('#yajra-datatable').DataTable().ajax.reload(null, false);
+                                $('.yajra-datatable').DataTable().ajax.reload(null, false);
                             }
                         });
                 } else {
@@ -300,8 +324,7 @@
                     }
                     $('#mediumModal').modal('hide');
                     $('.modal-backdrop').hide();
-                    $('#yajra-datatable').DataTable().ajax.reload(null, false);
-
+                    $('.yajra-datatable').DataTable().ajax.reload(null, false);
                 },
                 error: function (xhr, status, error) {
                     console.log(xhr);
@@ -341,7 +364,7 @@
                     $('#category_order_count_ajax').val(category_order);
                     $('#smallModal').modal('hide');
                     $('.modal-backdrop').removeClass('show');
-                    $('#yajra-datatable').DataTable().ajax.reload(null, false);
+                    $('.yajra-datatable').DataTable().ajax.reload(null, false);
                 },
                 error: function (response) {
                     console.log(response);
@@ -393,27 +416,6 @@
             });
         });
 
-
-        function runDataTable() {
-            var table = $('.yajra-datatable').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: "{{ route('category.getcategory') }}",
-                columns: [
-                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                    {data: 'name', name: 'name'},
-                    {data: 'parent_id', name: 'parent_id'},
-                    {data: 'image', name: 'image'},
-                    {
-                        data: 'action',
-                        name: 'action',
-                        orderable: true,
-                        searchable: true
-                    },
-                    {data: 'category_order', name: 'category_order'},
-                ]
-            });
-        }
 
     </script>
 @endsection
