@@ -339,6 +339,7 @@
                 contentType: false,
                 processData: false,
                 success: (response) => {
+                    runDataTable();
                     if (response) {
                         this.reset();
                         console.log('Image has been uploaded successfully');
@@ -348,9 +349,10 @@
                     $('#frameajax').attr('src', image);
                     $('#category_order_count_ajax').val(category_order);
                     $('#smallModal').modal('hide');
-                    $('.modal-backdrop').removeClass('show');
-                    table.row().data(rData).draw();
-                    runDataTable();
+                    // $('.modal-backdrop').removeClass('show');
+                    $('.modal-backdrop').hide();
+                    // table.row().data(rData).draw();
+
                 },
                 error: function (response) {
                     console.log(response);
@@ -404,6 +406,7 @@
 
 
         function runDataTable(){
+            console.log('wdadwawadwa');
             // $(function () {
                 // $(".yajra-datatable").DataTable({
                 //     "responsive": true, "lengthChange": false, "autoWidth": false,
@@ -419,7 +422,7 @@
                 //     "responsive": true,
                 // });
 
-                var table = $('.yajra-datatable').DataTable({
+               $('.yajra-datatable').DataTable({
                     processing: true,
                     serverSide: true,
                     ajax: "{{ route('category.getcategory') }}",
