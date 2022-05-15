@@ -102,8 +102,6 @@
                 </div>
             </div>
         </div>
-
-
         <!-- medium modal -->
         <div class="modal fade" id="mediumModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel"
              aria-hidden="true" style="width: 1377px">
@@ -243,8 +241,9 @@
             });
 
             $_token = "{{ csrf_token() }}";
-            $('#mediumModal').modal('show');
-            $('.modal-backdrop').show();
+
+            // $('#mediumModal').modal('show');
+            // $('.modal-backdrop').show();
 
             $.ajax({
                 headers: {'X-CSRF-Token': $('meta[name=_token]').attr('content')},
@@ -322,8 +321,12 @@
                     if (parentId == 0) {
                         $('#catnameajax').append(`<option  value="${id}" >${name}</option>`);
                     }
-                    $('#mediumModal').modal('hide');
-                    $('.modal-backdrop').hide();
+                    // $('#mediumModal').modal('hide');
+                    // $('.modal-backdrop').hide();
+                    // $('#mediumModal').modal('hide'); // Hide modal
+                    $('#mediumModal').modal({
+                        show: 'false'
+                    });
                     $('.yajra-datatable').DataTable().ajax.reload(null, false);
                 },
                 error: function (xhr, status, error) {
@@ -362,8 +365,8 @@
                     $('#parent_name').val(parent_name);
                     $('#frameajax').attr('src', image);
                     $('#category_order_count_ajax').val(category_order);
-                    $('#smallModal').modal('hide');
-                    $('.modal-backdrop').removeClass('show');
+                    // $('#smallModal').modal('hide');
+                    // $('.modal-backdrop').removeClass('show');
                     $('.yajra-datatable').DataTable().ajax.reload(null, false);
                 },
                 error: function (response) {
