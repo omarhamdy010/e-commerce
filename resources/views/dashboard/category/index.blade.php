@@ -243,8 +243,8 @@
             });
 
             $_token = "{{ csrf_token() }}";
-            $('#mediumModal').modal('show');
-            $('.modal-backdrop').show();
+            // $('#mediumModal').modal('show');
+            // $('.modal-backdrop').show();
 
             $.ajax({
                 headers: {'X-CSRF-Token': $('meta[name=_token]').attr('content')},
@@ -363,7 +363,7 @@
                     $('#frameajax').attr('src', image);
                     $('#category_order_count_ajax').val(category_order);
                     $('#smallModal').modal('hide');
-                    $('.modal-backdrop').removeClass('show');
+                    $('.modal-backdrop').hide();
                     $('.yajra-datatable').DataTable().ajax.reload(null, false);
                 },
                 error: function (response) {
