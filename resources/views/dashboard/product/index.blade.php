@@ -16,9 +16,6 @@
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
     </div>
-    <!-- /.content-header -->
-
-    <!-- Main content -->
     <section class="content">
         <div class="row">
             <div class="col-12">
@@ -29,11 +26,9 @@
                         <div class="card-tools">
 
                             <div class="input-group input-group-sm" style="width: 150px;">
-
-                                <a class="btn btn-primary btn-sm" data-toggle="modal" id="mediumButton"
-                                    {{--                                   data-target="#mediumModal"--}}
-                                                                       data-attr="{{route('product.create')}}"
-                                >Create</a>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" id="createproduct">
+                                    Create
+                                </button>
 
                                 <input type="text" name="search" class="form-control float-right" placeholder="Search">
 
@@ -45,7 +40,7 @@
                             </div>
                         </div>
                     </div>
-                    <table class="table table-bordered table-hover yajra-datatable">
+                    <table class="table table-bordered table-hover datatable">
                         <thead>
                         <tr>
                             <th>#</th>
@@ -64,6 +59,21 @@
             </div>
         </div>
 
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Create Product</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body renderproduct">
+
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </section>
 @endsection
@@ -72,11 +82,12 @@
 
     <script type="text/javascript">
 
-        function runDataTable() {
-            var table = $('.yajra-datatable').DataTable({
+        $(function () {
+            var table = $('.datatable').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{route('product.getProducts')}}",
+                ajax: "{{ route('product.getProducts') }}",
+                "method": "GET",
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'title', name: 'title'},
@@ -91,7 +102,8 @@
                     },
                 ]
             });
-        }
+
+        });
 
         function deleteConfirmation(id) {
             swal.fire({
@@ -134,6 +146,29 @@
                 return false;
             })
         }
+
+        $(document).on('click', '#createproduct', function (event) {
+                event.preventDefault();
+
+                $_token = "{{ csrf_token() }}";
+                $.ajax({
+                    headers: {'X-CSRF-Token': $('meta[name=_token]').attr('content')},
+                    url: "{{ route('product.create') }}",
+                    type: 'get',
+                    cache: false,
+
+                    data: {'_token': $_token},
+                    beforeSend: function () {
+                        //something before send
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        $('.renderproduct').html(data.html);
+
+                    }
+                });
+            });
+
 
     </script>
 @endsection

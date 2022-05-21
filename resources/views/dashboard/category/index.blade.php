@@ -56,29 +56,7 @@
                         </tr>
                         </thead>
                         <tbody id="table_row">
-                        {{--                        @foreach($categories as $index=>$category)--}}
-                        {{--                            <tr>--}}
-                        {{--                                <td>{{$index+1}}</td>--}}
-                        {{--                                <td>{{$category->name}}</td>--}}
-                        {{--                                <td>{{($category->parent_id==0?'main category' : $category->parent()->first()->name) }}</td>--}}
-                        {{--                                <td><img src="{{$category->image_path}}" style="height: 100px;width: 100px"></td>--}}
-                        {{--                                <td>--}}
-                        {{--                                    @if(count($category->children()->get())>0)--}}
-                        {{--                                        <a class="btn btn-primary btn-sm" href="{{route('category.edit',['category'=>$category->id])}}">EDIT</a>--}}
-                        {{--                                        <button onclick="deleteConfirmation({{$category->id}})" class="btn btn-danger btn-sm" >DELETE</button>--}}
-                        {{--                                        <input type="hidden" value="{{csrf_token()}}" id="_token">--}}
-                        {{--                                        @else--}}
-                        {{--                                    <form action="{{route('category.destroy',$category->id)}}" method="post">--}}
-                        {{--                                        @csrf--}}
-                        {{--                                        @method('DELETE')--}}
-                        {{--                                        <a class="btn btn-primary btn-sm" href="{{route('category.edit',['category'=>$category->id])}}">EDIT</a>--}}
-                        {{--                                        <button type="submit" class="btn btn-danger btn-sm" >DELETE</button>--}}
-                        {{--                                    </form>--}}
-                        {{--                                    @endif--}}
-                        {{--                                </td>--}}
-                        {{--                                <td>{{$category->category_order}}</td>--}}
-                        {{--                            </tr>--}}
-                        {{--                        @endforeach--}}
+
                         </tbody>
                     </table>
                 </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
 class ProductController extends Controller
@@ -11,16 +12,16 @@ class ProductController extends Controller
     public function index()
     {
         $product = Product::all();
-        return view('dashboard.product.index',compact('product'));
+        return view('dashboard.product.index', compact('product'));
     }
 
     public function getProducts(Request $request)
     {
         if ($request->ajax()) {
             $data = Product::all();
-            return \Yajra\DataTables\Facades\DataTables::of($data)
+            return Datatables::of($data)
                 ->addIndexColumn()
-                ->addColumn('action', function ($row) {
+                ->addColumn('action', function($row){
                     $actionBtn =
                         '
                             <a data-toggle="modal" id="smallButton" data-target="#smallModal" data-id="' . $row->id . '" class="edit btn btn-success btn-sm"
@@ -32,9 +33,27 @@ class ProductController extends Controller
                             <input type="hidden" value="' . csrf_token() . '" class="token_delete">
                     ';
                     return $actionBtn;
-                })->rawColumns(['action'])
+                })
+                ->rawColumns(['action'])
                 ->make(true);
         }
+    }
+
+    public function create()
+    {
+        $Categories = Category::all();
+        $create = view('dashboard.product.parts.create', compact('Categories'))->render();
+        return response()->json(array('success' => true, 'html' => $create, 'Categories' => $Categories));
+    }
+
+    public function store(Request $request)
+    {
+        $data = $request->except('categories');
+
+        $product= Product::create($data);
+        $product->categories()->attach($request->categories);
+
+        return redirect()->back();
     }
 
 }
