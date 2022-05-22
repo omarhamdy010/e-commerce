@@ -56,7 +56,7 @@
                                             value="{{$category->id}}" {{old('category_id') == $category->id? 'selected' : ''}}>{{$category->name}}</option>
                                     @endforeach
                                 </select>
-                                @error('category_id')
+                                @error('categories')
                                 <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -71,8 +71,36 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label>offer</label>
-                                <input name="offer"  type="checkbox">
+                                <label>offer
+                                <input name="offer" class="offer"  type="checkbox">
+                                </label>
+                            </div>
+
+                            <div class="form-group" id="page" style="display: none">
+                                <label>offer type</label>
+                                <input name="offer_type" type="text"
+                                       class="@error('offer_type') is-invalid @enderror form-control"
+                                       value="{{old('offer_type')}}"
+                                       id="offer_type">
+                                @error('offer_type')
+                                <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                                @enderror
+                                <label>discount value</label>
+                                <input name="discount_value" type="number"
+                                       class="@error('discount_value') is-invalid @enderror form-control"
+                                       value="{{old('discount_value')}}"
+                                       id="discount_value">
+                                @error('discount_value')
+                                <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                                @enderror
+                                <label>bounce</label>
+                                <input name="bounce" type="number"
+                                       class="@error('bounce') is-invalid @enderror form-control"
+                                       value="{{old('bounce')}}"
+                                       id="offer_type">
+                                @error('bounce')
+                                <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                                @enderror
                             </div>
 
                         </div>
@@ -101,6 +129,14 @@
             tokenSeparators: [',', ' ']
         });
     });
+
+    $('.offer').on('click',function () {
+        var x = document.getElementById("page");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }    })
 
 </script>
 

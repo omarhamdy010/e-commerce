@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\product_offer;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
@@ -48,9 +49,25 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->except('categories');
-
-        $product= Product::create($data);
+//        dd($request->all());;
+        $product= Product::create([
+            'title'=>$request->title,
+            'description'=>$request->description,
+            'quantity'=>$request->quantity,
+            'price'=>$request->price
+        ]);
+        if($request->offer){
+            $data = [
+                'offer_type'=>$request->offer_type,
+                'discount_value'=>$request->discount_value,
+            ];
+            if ($request->bounce){
+                $data =['bounce'=>$request->bounce];
+                product_offer::create($data);
+            }else{
+                product_offer::create($data);
+            }
+        }
         $product->categories()->attach($request->categories);
 
         return redirect()->back();
