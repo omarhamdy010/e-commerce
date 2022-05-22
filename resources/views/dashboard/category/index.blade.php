@@ -301,7 +301,10 @@
                     if (parentId == 0) {
                         $('#catnameajax').append(`<option  value="${id}" >${name}</option>`);
                     }
-                    // $('#mediumModal').modal('hide');
+                    $('#mediumModal').toggleClass('show');
+                    $('#mediumModal').toggleClass('in');
+                    $('.modal-backdrop').css('display','none');
+
                     // $('.modal-backdrop').hide();
                     // $('#mediumModal').modal('hide'); // Hide modal
 

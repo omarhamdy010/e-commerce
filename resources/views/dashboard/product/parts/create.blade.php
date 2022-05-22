@@ -70,6 +70,10 @@
                                 <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                                 @enderror
                             </div>
+                            <div class="form-group">
+                                <label>offer</label>
+                                <input name="offer"  type="checkbox">
+                            </div>
 
                         </div>
                         <div class="card-footer">
