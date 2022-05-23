@@ -14,4 +14,12 @@ class Product extends Model
     {
         return $this->belongsToMany(Category::class,'category_product');
     }
+
+    public function offer(){
+        return $this->hasOne(product_offer::class);
+    }
+
+    public function images(){
+        return $this->hasMany(product_image::class);
+    }
 }

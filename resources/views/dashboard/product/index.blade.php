@@ -75,6 +75,21 @@
             </div>
         </div>
 
+        <div class="modal fade editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editModalLabel">Create Product</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body rendereditproduct">
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 @endsection
 
@@ -168,6 +183,29 @@
                     }
                 });
             });
+
+        $(document).on('click', '.editProduct', function (event) {
+            event.preventDefault();
+            var id = $('.editProduct').data('id');
+            $_token = "{{ csrf_token() }}";
+            var url ='product/'+id+'/edit';
+            $.ajax({
+                headers: {'X-CSRF-Token': $('meta[name=_token]').attr('content')},
+                url: url,
+                type: 'get',
+                cache: false,
+
+                data: {'_token': $_token , 'id':id},
+                beforeSend: function () {
+                    //something before send
+                },
+                success: function (data) {
+                    console.log(data);
+                    $('.rendereditproduct').html(data.html);
+
+                }
+            });
+        });
 
 
     </script>

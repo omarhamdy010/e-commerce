@@ -35,8 +35,15 @@
                             </span>
 
                             <div class="form-group">
-                                <textarea name="description" style="height: 200px;width: 670px" id="description" placeholder="description"></textarea>
+                                <textarea name="description" style="height: 200px;width: 670px" id="description"
+                                          class="form-control" placeholder="description"></textarea>
                             </div>
+
+                            <div class="form-group">
+                                <input required type="file" class="form-control" name="images[]" placeholder="address"
+                                       multiple>
+                            </div>
+
                             <div class="form-group">
                                 <label>quantity</label>
                                 <input name="quantity"
@@ -49,7 +56,8 @@
                             </div>
                             <div class="form-group">
                                 <label>category</label>
-                                <select name="categories[]" multiple="multiple" class="form-control js-example-basic-single">
+                                <select name="categories[]" multiple="multiple"
+                                        class="form-control js-example-basic-single">
                                     <option selected="selected" value={{0}} >select category</option>
                                     @foreach($Categories as $category)
                                         <option
@@ -72,7 +80,7 @@
                             </div>
                             <div class="form-group">
                                 <label>offer
-                                <input name="offer" class="offer"  type="checkbox">
+                                    <input name="offer" class="offer" type="checkbox">
                                 </label>
                             </div>
 
@@ -118,7 +126,7 @@
 <script>
     $(document).ready(function () {
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('.js-example-basic-single').select2();
         });
 
@@ -130,13 +138,14 @@
         });
     });
 
-    $('.offer').on('click',function () {
+    $('.offer').on('click', function () {
         var x = document.getElementById("page");
         if (x.style.display === "none") {
             x.style.display = "block";
         } else {
             x.style.display = "none";
-        }    })
+        }
+    });
 
 </script>
 
