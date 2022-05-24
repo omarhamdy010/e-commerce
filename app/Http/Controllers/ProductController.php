@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\product_image;
 use App\Models\product_offer;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -25,7 +26,7 @@ class ProductController extends Controller
                 ->addColumn('action', function($row){
                     $actionBtn =
                         '
-                            <a data-toggle="modal" id="smallButton" data-target="#smallModal" data-id="' . $row->id . '" class="edit btn btn-success btn-sm"
+                            <a data-toggle="modal" data-target=".editModal" data-id="' . $row->id . '" class="edit btn btn-success btn-sm editProduct"
                                 data-attr="' . url('product/' . $row->id . '/edit') . '" title="show">Edit</a>
                                     ' . csrf_field() . '
                                     ' . method_field("DELETE") . '
@@ -57,20 +58,53 @@ class ProductController extends Controller
             'price'=>$request->price
         ]);
         if($request->offer){
-            $data = [
-                'offer_type'=>$request->offer_type,
-                'discount_value'=>$request->discount_value,
-            ];
             if ($request->bounce){
-                $data =['bounce'=>$request->bounce];
+                $data =[
+                    'bounce'=>$request->bounce,
+                    'offer_type'=>$request->offer_type,
+                    'discount_value'=>$request->discount_value,
+                    'product_id'=>$product->id,
+                    ];
                 product_offer::create($data);
-            }else{
-                product_offer::create($data);
+            }
+
+            if (!$request->bounce)
+                {
+                product_offer::create([
+                    'bounce'=>$request->bounce,
+                    'offer_type'=>$request->offer_type,
+                    'discount_value'=>$request->discount_value,
+                    'product_id'=>$product->id,
+                ]);
+            }
+        }
+        if ($request->hasfile('images')) {
+            $images = $request->file('images');
+
+            foreach($images as $image) {
+                $name = $image->getClientOriginalName();
+                $path = $image->storeAs('uploads/products', $name, 'public');
+
+                product_image::create([
+                    'image' => $name,
+                    'product_id'=>$product->id,
+                ]);
             }
         }
         $product->categories()->attach($request->categories);
 
         return redirect()->back();
     }
+
+    public function edit(Product $product)
+    {
+        $categories = Category::all();
+        $offers = product_offer::where('product_id',$product->id)->first();
+//        dd($product);
+        $edit = view('dashboard.product.parts.edit', compact('product','categories','offers'))->render();
+        return response()->json(array('success' => true, 'html' => $edit, 'product' => $product,'categories'=>$categories ,'offers'=>$offers));
+    }
+
+
 
 }
