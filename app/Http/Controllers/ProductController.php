@@ -105,7 +105,56 @@ class ProductController extends Controller
         $edit = view('dashboard.product.parts.edit', compact('product','categories','offers'))->render();
         return response()->json(array('success' => true, 'html' => $edit, 'product' => $product,'categories'=>$categories ,'offers'=>$offers));
     }
-
+//
+//    public function update(Request $request ,Product $product){
+//
+//        dd($request->all());
+//        $product= $product->update([
+//            'title'=>$request->title,
+//            'description'=>$request->description,
+//            'quantity'=>$request->quantity,
+//            'price'=>$request->price
+//        ]);
+//        if($request->offer){
+//            $offer = product_offer::where('product_id',$product->id)->first();
+//            if ($request->bounce){
+//                $data =[
+//                    'bounce'=>$request->bounce,
+//                    'offer_type'=>$request->offer_type,
+//                    'discount_value'=>$request->discount_value,
+//                    'product_id'=>$product->id,
+//                ];
+//                product_offer::create($data);
+//            }
+//
+//            if (!$request->bounce)
+//            {
+//                product_offer::create([
+//                    'bounce'=>$request->bounce,
+//                    'offer_type'=>$request->offer_type,
+//                    'discount_value'=>$request->discount_value,
+//                    'product_id'=>$product->id,
+//                ]);
+//            }
+//        }
+//        if ($request->hasfile('images')) {
+//            $images = $request->file('images');
+//
+//            foreach($images as $image) {
+//                $name = $image->getClientOriginalName();
+//                $path = $image->storeAs('uploads/products', $name, 'public');
+//
+//                product_image::create([
+//                    'image' => $name,
+//                    'product_id'=>$product->id,
+//                ]);
+//            }
+//        }
+//        $product->categories()->attach($request->categories);
+//
+//        return redirect()->back();
+//    }
+//
 
 
 }

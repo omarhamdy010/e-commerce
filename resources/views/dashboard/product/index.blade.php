@@ -188,7 +188,8 @@
 
         $(document).on('click', '.editProduct', function (event) {
             event.preventDefault();
-            var id = $('.editProduct').data('id');
+
+            var id = $(this).data('id');
             $_token = "{{ csrf_token() }}";
             var url ='product/'+id+'/edit';
             $.ajax({
