@@ -96,14 +96,14 @@ class ProductController extends Controller
         return redirect()->back();
     }
 
-    public function edit(Product $product)
+    public function edit(Request $request)
     {
+//        dd($request->all());
         $categories = Category::all();
+        $product = Product::find($request->id);
         $offers = product_offer::where('product_id',$product->id)->first();
-//        $categories_ids = $categories->products();
-//        dd($categories_ids);
-        $edit = view('dashboard.product.parts.edit', compact('product','categories','offers','categories_ids'))->render();
-        return response()->json(array('success' => true, 'html' => $edit, 'product' => $product,'categories'=>$categories ,'offers'=>$offers,'categories_ids'=>$categories_ids));
+        $edit = view('dashboard.product.parts.edit', compact('product','categories','offers'))->render();
+        return response()->json(array('success' => true, 'html' => $edit, 'product' => $product,'categories'=>$categories ,'offers'=>$offers));
     }
 
 
