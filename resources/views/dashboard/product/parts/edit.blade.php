@@ -55,16 +55,14 @@
                                 <label>category</label>
                                 <select name="categories[]" multiple="multiple"
                                         class="form-control js-example-basic-single">
-                                    @foreach($product->categories as $category_product)
                                         @foreach($categories as $category)
 
                                             <option value="{{$category->id}}"
-                                                {{$category_product->id == $category->id ?'selected':''}}
+{{--                                                {{ == $category->id ?'selected':''}}--}}
                                             >{{$category->name}}</option>
 
 
                                         @endforeach
-                                    @endforeach
                                 </select>
                                 @error('categories')
                                 <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>

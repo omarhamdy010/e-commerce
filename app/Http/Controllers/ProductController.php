@@ -50,7 +50,7 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
+//        dd($request->all());
         $product= Product::create([
             'title'=>$request->title,
             'description'=>$request->description,
@@ -100,9 +100,10 @@ class ProductController extends Controller
     {
         $categories = Category::all();
         $offers = product_offer::where('product_id',$product->id)->first();
-//        dd($product);
-        $edit = view('dashboard.product.parts.edit', compact('product','categories','offers'))->render();
-        return response()->json(array('success' => true, 'html' => $edit, 'product' => $product,'categories'=>$categories ,'offers'=>$offers));
+//        $categories_ids = $categories->products();
+//        dd($categories_ids);
+        $edit = view('dashboard.product.parts.edit', compact('product','categories','offers','categories_ids'))->render();
+        return response()->json(array('success' => true, 'html' => $edit, 'product' => $product,'categories'=>$categories ,'offers'=>$offers,'categories_ids'=>$categories_ids));
     }
 
 
