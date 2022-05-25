@@ -24,6 +24,7 @@ class ProductController extends Controller
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
+
                     $actionBtn =
                         '
                             <a data-toggle="modal" data-target=".editModal" data-id="' . $row->id . '" class="edit btn btn-success btn-sm editProduct"
@@ -96,11 +97,12 @@ class ProductController extends Controller
         return redirect()->back();
     }
 
-    public function edit(Product $product)
+    public function edit(Request $request)
     {
+//        dd($request->all());
         $categories = Category::all();
+        $product = Product::find($request->id);
         $offers = product_offer::where('product_id',$product->id)->first();
-//        dd($product);
         $edit = view('dashboard.product.parts.edit', compact('product','categories','offers'))->render();
         return response()->json(array('success' => true, 'html' => $edit, 'product' => $product,'categories'=>$categories ,'offers'=>$offers));
     }

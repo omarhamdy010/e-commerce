@@ -86,7 +86,7 @@
                                     <input name="offer" class="offer" {{$offers ?'checked':''}} type="checkbox">
                                 </label>
                             </div>
-                            @if($offers)
+                            @if($offers!=null)
                                 <div class="form-group" id="page" style="display: none" >
                                     <label>offer type</label>
                                     <input name="offer_type" type="text"
