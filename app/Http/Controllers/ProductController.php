@@ -58,22 +58,22 @@ class ProductController extends Controller
             'price'=>$request->price
         ]);
         if($request->offer){
-            if ($request->bounce){
+            if ($request->amount){
                 $data =[
-                    'bounce'=>$request->bounce,
-                    'offer_type'=>$request->offer_type,
-                    'discount_value'=>$request->discount_value,
+                    'amount'=>$request->amount,
                     'product_id'=>$product->id,
                     ];
                 product_offer::create($data);
-            }
-
-            if (!$request->bounce)
+            }elseif ($request->value){
+                $data =[
+                    'value'=>$request->value,
+                    'product_id'=>$product->id,
+                    ];
+                product_offer::create($data);
+            }elseif($request->percentage)
                 {
                 product_offer::create([
-                    'bounce'=>$request->bounce,
-                    'offer_type'=>$request->offer_type,
-                    'discount_value'=>$request->discount_value,
+                    'percentage'=>$request->percentage,
                     'product_id'=>$product->id,
                 ]);
             }

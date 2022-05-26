@@ -15,8 +15,9 @@ class CreateProductOffersTable extends Migration
     {
         Schema::create('product_offers', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum('offer_type', ['percentage', 'fixed'])->default('percentage');
-            $table->integer('discount_value')->nullable();
+            $table->integer('amount')->nullable();
+            $table->integer('value')->nullable();
+            $table->integer('percentage')->nullable();
             $table->integer('bounce')->nullable();
             $table->integer('product_id')->unsigned()->nullable();
 

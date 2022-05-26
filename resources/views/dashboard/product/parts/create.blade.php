@@ -73,7 +73,7 @@
                                 <input name="price"
                                        class="@error('price') is-invalid @enderror form-control"
                                        value="{{old('price')}}"
-                                       id="quantity">
+                                       id="price">
                                 @error('price')
                                 <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                                 @enderror
@@ -85,30 +85,43 @@
                             </div>
 
                             <div class="form-group" id="page" style="display: none">
-                                <label>offer type</label>
-                                <input name="offer_type" type="text"
-                                       class="@error('offer_type') is-invalid @enderror form-control"
-                                       value="{{old('offer_type')}}"
-                                       id="offer_type">
-                                @error('offer_type')
-                                <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                                @enderror
-                                <label>discount value</label>
-                                <input name="discount_value" type="number"
-                                       class="@error('discount_value') is-invalid @enderror form-control"
-                                       value="{{old('discount_value')}}"
-                                       id="discount_value">
-                                @error('discount_value')
-                                <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                                @enderror
-                                <label>bounce</label>
-                                <input name="bounce" type="number"
-                                       class="@error('bounce') is-invalid @enderror form-control"
-                                       value="{{old('bounce')}}"
-                                       id="offer_type">
-                                @error('bounce')
-                                <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                                @enderror
+                                <div class="form-control-sm">
+                                    <label>offer type</label>
+                                </div>
+                                <div class="btn-group btn-group-toggle form-group" data-toggle="buttons">
+                                    <label class="btn btn-outline-primary active" id="option1">
+                                        <input type="radio" id="amount" checked> amount
+                                    </label>
+                                    <label class="btn btn-outline-primary " id="option2">
+                                        <input type="radio" id="value"> value
+                                    </label>
+                                    <label class="btn btn-outline-primary" id="option3">
+                                        <input type="radio" id="percentage"> percentage
+                                    </label>
+                                </div>
+
+                                <div>
+                                    <input type="number" class="form-control" min="1" name="amount"
+                                           style="display: none" id="amount_value"
+                                           placeholder="amount">
+                                    <input type="number" class="form-control" min="1" name="bounce"
+                                           style="display: none" id="amount_bounce"
+                                           placeholder="bounce amount">
+                                    <input type="number" name="value" min="1" class="form-control" style="display: none"
+                                           id="value_discount"
+                                           placeholder="value">
+                                    <input type="number" name="percentage" min="1" class="form-control"
+                                           style="display: none"
+                                           id="percentage_discount" placeholder="percentage">
+                                </div>
+
+                                <div>
+                                    <input type="text" class="form-control" style="display: none"
+                                           id="percentage_discount_price" placeholder="percentage price">
+                                    <input type="text" class="form-control" style="display: none"
+                                           id="value_discount_price" placeholder="value price">
+                                </div>
+
                             </div>
 
                         </div>
@@ -146,7 +159,82 @@
             x.style.display = "none";
         }
     });
+    //offer
+    $(document).ready(function () {
+        var x = document.getElementById("amount_value");
+        var y = document.getElementById("value_discount");
+        var z = document.getElementById("percentage_discount");
+        var a = document.getElementById("amount_bounce");
+        var b = document.getElementById("value_discount_price");
+        var c = document.getElementById("percentage_discount_price");
+        if ($('#option1').hasClass('active')) {
+            x.style.display = "block";
+            a.style.display = "block";
+            y.style.display = "none";
+            b.style.display = "none";
+            z.style.display = "none";
+            c.style.display = "none";
+        }
+        if ($('#option2').hasClass('active')) {
+            x.style.display = "none";
+            a.style.display = "none";
+            y.style.display = "block";
+            b.style.display = "block";
+            z.style.display = "none";
+            c.style.display = "none";
+        }
+        if ($('#option3').hasClass('active')) {
+            x.style.display = "none";
+            a.style.display = "none";
+            y.style.display = "none";
+            b.style.display = "none";
+            z.style.display = "block";
+            c.style.display = "block";
+        }
+        $('#option1').on('click', function () {
+            x.style.display = "block";
+            a.style.display = "block";
+            y.style.display = "none";
+            b.style.display = "none";
+            z.style.display = "none";
+            c.style.display = "none";
+        });
+        $('#option2').on('click', function () {
+            x.style.display = "none";
+            a.style.display = "none";
+            y.style.display = "block";
+            b.style.display = "block";
+            z.style.display = "none";
+            c.style.display = "none";
+        });
+        $('#option3').on('click', function () {
+            x.style.display = "none";
+            a.style.display = "none";
+            y.style.display = "none";
+            b.style.display = "none";
+            z.style.display = "block";
+            c.style.display = "block";
+        });
+    });
+    $(document).ready(function () {
 
+
+        $('#value_discount').on('change', function () {
+            var quantity = $('#quantity').val();
+            var price = $('#price').val();
+            var value_discount = $('#value_discount').val();
+
+            $('#value_discount_price').val((quantity * price) - value_discount);
+        });
+
+        $('#percentage_discount').on('change', function () {
+            var quantity = $('#quantity').val();
+            var price = $('#price').val();
+            var percentage_discount = $('#percentage_discount').val();
+
+            $('#percentage_discount_price').val((quantity * price) - (quantity * price*percentage_discount/100));
+        });
+    });
 </script>
 
 
