@@ -2,18 +2,25 @@
 
 namespace App\Models;
 
+use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
+use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class Category extends Model implements TranslatableContract
 {
+    use Translatable;
     use HasFactory;
     protected $guarded = [];
-    protected $appends =['image_path'];
+    protected $appends = ['image_path'];
 
-    public function getImagePathAttribute(){
-        return asset('uploads/category/'.$this->image);
+    public $translatedAttributes = ['name'];
+
+    public function getImagePathAttribute()
+    {
+        return asset('uploads/category/' . $this->image);
     }
+
     public function parent()
     {
         return $this->belongsTo(Category::class, 'parent_id');
@@ -27,6 +34,6 @@ class Category extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Product::class,'category_product');
+        return $this->belongsToMany(Product::class, 'category_product');
     }
 }

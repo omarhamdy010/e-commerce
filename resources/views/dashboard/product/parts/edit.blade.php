@@ -20,25 +20,29 @@
                         @csrf
                         <input type="hidden" name="_token" id="token2"
                                value="{{csrf_token()}}">
+                        <input type="hidden" name="id" id="porduct_id"
+                               value="{{$product->id}}">
+
                         <div class="card-body">
-                            <div class="form-group">
-                                <label>title</label>
-                                <input type="text" value="{{$product->title}}" class="form-control title"
-                                       name="title" id="title" placeholder="Enter product name">
-                            </div>
-                            <span class="errors1">
+                            @foreach(config('translatable.locales') as $local)
+                                <div class="form-group">
+                                    <label>{{$local=='ar'?'arabic title':'english title'}}</label>
+                                    <input type="text" value="{{$product->translate($local)->title}}"
+                                           class="form-control title"
+                                           name="{{$local}}[title]" id="title"
+                                           placeholder="Enter product {{$local=='ar'?'arabic name':'english name'}}">
+                                </div>
+                                <span class="errors1"></span>
 
-                            </span>
+                                <textarea name="{{$local}}[description]" style="height: 200px;width: 670px"
+                                          id="description" class="form-control"
+                                          placeholder="{{$local=='ar'?'arabic description':'english description'}}">
+                                          {{$product->translate($local)->description}}</textarea>
+                            @endforeach
 
+                            <?php $image = $product->images->where('is_default', 1)->first()?>
                             <div class="form-group">
-                                <textarea name="description" style="height: 200px;width: 670px" id="description"
-                                          class="form-control"
-                                          placeholder="description">{{$product->description}}</textarea>
-                            </div>
-
-                            <div class="form-group">
-                                <input required type="file" class="form-control" name="images[]" placeholder="address"
-                                       multiple>
+                                <input required type="file" class="form-control" name="images[]" placeholder="address" value="{{$image->image}}" multiple>
                             </div>
 
                             <div class="form-group">
@@ -55,13 +59,10 @@
                                 <label>category</label>
                                 <select name="categories[]" multiple="multiple"
                                         class="form-control js-example-basic-single">
+                                    <option selected="selected" value={{0}} >select category</option>
                                     @foreach($categories as $category)
-
-                                        <option value="{{$category->id}}"
-                                            {{--                                                {{ == $category->id ?'selected':''}}--}}
-                                        >{{$category->name}}</option>
-
-
+                                        <option
+                                            value="{{$category->id}}" {{old('category_id') == $category->id? 'selected' : ''}}>{{$category->name}}</option>
                                     @endforeach
                                 </select>
                                 @error('categories')
@@ -73,46 +74,61 @@
                                 <input name="price"
                                        class="@error('price') is-invalid @enderror form-control"
                                        value="{{$product->price}}"
-                                       id="quantity">
+                                       id="price">
                                 @error('price')
                                 <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                                 @enderror
                             </div>
-
                             <div class="form-group">
                                 <label>offer
-                                    <input name="offer" class="offer {{$offers ?'checked':''}}" type="checkbox">
+                                    <input name="offer" class="{{$product->offer!=null?'checked':''}} offer"
+                                           {{$product->offer!=null?'checked':''}}
+                                           type="checkbox">
                                 </label>
                             </div>
-                                <div class="form-group" id="page">
+                            <div class="form-group"
+                                 id="page">
+                                <div class="form-control-sm">
                                     <label>offer type</label>
-                                    <input name="offer_type" type="text"
-                                           class="@error('offer_type') is-invalid @enderror form-control"
-                                           value="{{optional($offers)->offer_type}}"
-                                           id="offer_type">
-                                    @error('offer_type')
-                                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                                    @enderror
-                                    <label>discount value</label>
-                                    <input name="discount_value" type="number"
-                                           class="@error('discount_value') is-invalid @enderror form-control"
-                                           value="{{optional($offers)->discount_value}}"
-                                           id="discount_value">
-                                    @error('discount_value')
-                                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                                    @enderror
-                                    <label>bounce</label>
-                                    <input name="bounce" type="number"
-                                           class="@error('bounce') is-invalid @enderror form-control"
-                                           value="{{optional($offers)->bounce}}"
-                                           id="offer_type">
-                                    @error('bounce')
-                                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                                    @enderror
                                 </div>
+                                <div class="btn-group btn-group-toggle form-group" data-toggle="buttons">
+                                    <label class="btn btn-outline-primary active" id="option1">
+                                        <input type="radio" id="amount" checked> amount
+                                    </label>
+                                    <label class="btn btn-outline-primary " id="option2">
+                                        <input type="radio" id="value"> value
+                                    </label>
+                                    <label class="btn btn-outline-primary" id="option3">
+                                        <input type="radio" id="percentage"> percentage
+                                    </label>
+                                </div>
+                                <div>
+                                    <input type="number" class="form-control" min="1" name="amount"
+                                           style="display: none" id="amount_value"
+                                           value="{{optional($product->offer)->amount}}"
+                                           placeholder="amount">
+                                    <input type="number" class="form-control" min="1" name="bounce"
+                                           style="display: none" id="amount_bounce"
+                                           value="{{optional($product->offer)->bounce}}"
+                                           placeholder="bounce amount">
+                                    <input type="number" name="value" min="1" class="form-control" style="display: none"
+                                           id="value_discount" value="{{optional($product->offer)->value}}"
+                                           placeholder="value">
+                                    <input type="number" name="percentage" min="1" class="form-control"
+                                           style="display: none" value="{{optional($product->offer)->percentage}}"
+                                           id="percentage_discount" placeholder="percentage">
+                                </div>
+                                <div>
+                                    <input type="text" class="form-control" style="display: none"
+                                           id="percentage_discount_price" placeholder="percentage price">
+                                    <input type="text" class="form-control" style="display: none"
+                                           id="value_discount_price" placeholder="value price">
+                                </div>
+                            </div>
+
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary btn-submit">Submit</button>
                         </div>
                     </form>
                 </div>
@@ -144,22 +160,105 @@
         });
     });
     $(document).ready(function () {
-
-        var x = document.getElementById("page");
         if ($('.offer').hasClass('checked')) {
-            x.style.display = "block";
+            var xx = document.getElementById("page");
+            xx.style.display = "block";
         } else {
-            x.style.display = "none";
+            var xy = document.getElementById("page");
+            xy.style.display = "none";
         }
 
+        $('.offer').on('click', function () {
+            var x = document.getElementById("page");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        });
     });
-    // document.querySelector('.offer').addEventListener('click',function () {
-    //     var x = document.getElementById("page");
-    //     if (x.style.display === "none") {
-    //         x.style.display = "block";
-    //
-    //     } else {
-    //         x.style.display = "none";
-    //     }
-    // });
+
+    $(document).ready(function () {
+        var x = document.getElementById("amount_value");
+        var y = document.getElementById("value_discount");
+        var z = document.getElementById("percentage_discount");
+        var a = document.getElementById("amount_bounce");
+        var b = document.getElementById("value_discount_price");
+        var c = document.getElementById("percentage_discount_price");
+        if ($('#option1').hasClass('active')) {
+            x.style.display = "block";
+            a.style.display = "block";
+            y.style.display = "none";
+            b.style.display = "none";
+            z.style.display = "none";
+            c.style.display = "none";
+        }
+        if ($('#option2').hasClass('active')) {
+            x.style.display = "none";
+            a.style.display = "none";
+            y.style.display = "block";
+            b.style.display = "block";
+            z.style.display = "none";
+            c.style.display = "none";
+        }
+        if ($('#option3').hasClass('active')) {
+            x.style.display = "none";
+            a.style.display = "none";
+            y.style.display = "none";
+            b.style.display = "none";
+            z.style.display = "block";
+            c.style.display = "block";
+        }
+        $('#option1').on('click', function () {
+            x.style.display = "block";
+            a.style.display = "block";
+            y.style.display = "none";
+            b.style.display = "none";
+            z.style.display = "none";
+            c.style.display = "none";
+        });
+        $('#option2').on('click', function () {
+            x.style.display = "none";
+            a.style.display = "none";
+            y.style.display = "block";
+            b.style.display = "block";
+            z.style.display = "none";
+            c.style.display = "none";
+        });
+        $('#option3').on('click', function () {
+            x.style.display = "none";
+            a.style.display = "none";
+            y.style.display = "none";
+            b.style.display = "none";
+            z.style.display = "block";
+            c.style.display = "block";
+        });
+    });
+
+    $(document).ready(function () {
+        var quantity = $('#quantity').val();
+        var price = $('#price').val();
+        var value_discount = $('#value_discount').val();
+        var percentage_discount = $('#percentage_discount').val();
+
+        $('#value_discount_price').val((quantity * price) - value_discount);
+
+        $('#percentage_discount_price').val((quantity * price) - (quantity * price * percentage_discount / 100));
+
+        $('#value_discount').on('change', function () {
+            var quantity = $('#quantity').val();
+            var price = $('#price').val();
+            var value_discount = $('#value_discount').val();
+
+            $('#value_discount_price').val((quantity * price) - value_discount);
+        });
+
+        $('#percentage_discount').on('change', function () {
+            var quantity = $('#quantity').val();
+            var price = $('#price').val();
+            var percentage_discount = $('#percentage_discount').val();
+
+            $('#percentage_discount_price').val((quantity * price) - (quantity * price * percentage_discount / 100));
+        });
+    });
 </script>

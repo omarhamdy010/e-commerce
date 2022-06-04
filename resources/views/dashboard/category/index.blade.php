@@ -303,7 +303,7 @@
                     }
                     $('#mediumModal').toggleClass('show');
                     $('#mediumModal').toggleClass('in');
-                    $('.modal-backdrop').css('display','none');
+                    $('.modal-backdrop').css('display', 'none');
 
                     // $('.modal-backdrop').hide();
                     // $('#mediumModal').modal('hide'); // Hide modal
@@ -346,8 +346,6 @@
                     $('#parent_name').val(parent_name);
                     $('#frameajax').attr('src', image);
                     $('#category_order_count_ajax').val(category_order);
-                    // $('#smallModal').modal('hide');
-                    // $('.modal-backdrop').removeClass('show');
                     $('.yajra-datatable').DataTable().ajax.reload(null, false);
                 },
                 error: function (response) {

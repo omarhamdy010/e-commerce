@@ -62,9 +62,10 @@ class CategoryController extends Controller
 
     public function ajaxstore(Request $request)
     {
-        $request->validate([
-            'name' => 'required|unique:categories',
-        ]);
+            $request->validate([
+            'translations.en.name' => ['required_with:translations.en.name', 'string'],
+            'translations.ar.name' => ['required_with:translations.ar.name', 'string'],
+            ]);
         $data = $request->except('image');
         if ($request->image) {
             $data['image'] = $request->image->hashName();

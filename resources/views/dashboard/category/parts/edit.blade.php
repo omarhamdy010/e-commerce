@@ -19,13 +19,15 @@
                         @method('PUT')
                         @csrf
                         <div class="card-body">
-                            <div class="form-group">
-                                <label>name</label>
-                                <input type="text" value="{{$category->name}}" class="form-control"
-                                       name="name" id="name"
-                                       placeholder="Enter category name">
-
-                            </div>
+                            @foreach(config('translatable.locales') as $local)
+                                <div class="form-group">
+                                    <label>{{$local=='ar'?'arabic name':'english name'}}</label>
+                                    <input type="text" value="{{$category->translate($local)->name}}" class="form-control"
+                                           name="{{$local}}[name]" id="name"
+                                           placeholder="Enter category {{$local=='ar'?'arabic name':'english name'}}">
+                                </div>
+                                <span class="errors1"></span>
+                            @endforeach
                             <div class="form-group">
                                 <label>parent category</label>
                                 <select class="form-control select2 parcatajax" id="parent_name" name="parent_id"

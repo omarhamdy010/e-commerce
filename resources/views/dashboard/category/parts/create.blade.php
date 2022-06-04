@@ -33,14 +33,15 @@
                         <input type="hidden" name="_token" id="token2"
                                value="{{csrf_token()}}">
                         <div class="card-body">
-                            <div class="form-group">
-                                <label>name</label>
-                                <input type="text" value="{{old('name')}}" class="form-control nameajax"
-                                       name="name" id="nameajax" placeholder="Enter category name">
-                            </div>
-                            <span class="errors1">
-
-                            </span>
+                            @foreach(config('translatable.locales') as $local)
+                                <div class="form-group">
+                                    <label>{{$local=='ar'?'arabic name':'english name'}}</label>
+                                    <input type="text" value="{{old($local.'[.name]')}}" class="form-control nameajax"
+                                           name="{{$local}}[name]" id="nameajax"
+                                           placeholder="Enter category {{$local=='ar'?'arabic name':'english name'}}">
+                                </div>
+                                <span class="errors1"></span>
+                            @endforeach
                             <div class="form-group">
                                 <label>parent category</label>
                                 <select class="form-control select2 parcatajax"

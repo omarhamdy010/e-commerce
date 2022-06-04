@@ -25,49 +25,50 @@
                         <input type="hidden" name="_token" id="token2"
                                value="{{csrf_token()}}">
                         <div class="card-body">
-                            <div class="form-group">
-                                <label>title</label>
-                                <input type="text" value="{{old('title')}}" class="form-control title"
-                                       name="title" id="title" placeholder="Enter product name">
-                            </div>
-                            <span class="errors1">
 
-                            </span>
+                            @foreach(config('translatable.locales') as $local)
+                                <div class="form-group">
+                                    <label>{{$local=='ar'?'arabic title':'english title'}}</label>
+                                    <input type="text" value="{{old($local.'[.title]')}}" class="form-control title"
+                                           name="{{$local}}[title]" id="title"
+                                           placeholder="Enter product {{$local=='ar'?'arabic name':'english name'}}">
+                                </div>
+                                <span class="errors1"></span>
+
+                                <textarea name="{{$local}}[description]" style="height: 200px;width: 670px"
+                                          id="description"
+                                          value="{{old($local.'[.description]')}}"
+                                          class="form-control"
+                                          placeholder="{{$local=='ar'?'arabic description':'english description'}}"></textarea>
+                            @endforeach
 
                             <div class="form-group">
-                                <textarea name="description" style="height: 200px;width: 670px" id="description"
-                                          class="form-control" placeholder="description"></textarea>
-                            </div>
-
-                            <div class="form-group">
-                                <input required type="file" class="form-control" name="images[]" placeholder="address"
+                                <input required type="file" class="form-control" name="images[]" placeholder="address" id="images"
+                                       value="{{old('images[]')}}"
                                        multiple>
                             </div>
-
                             <div class="form-group">
                                 <label>quantity</label>
-                                <input name="quantity"
-                                       class="@error('quantity') is-invalid @enderror form-control"
-                                       value="{{old('quantity')}}"
-                                       id="quantity">
+                                <input name="quantity" class="@error('quantity') is-invalid @enderror form-control"
+                                       value="{{old('quantity')}}" id="quantity">
                                 @error('quantity')
                                 <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label>category</label>
-                                <select name="categories[]" multiple="multiple"
-                                        class="form-control js-example-basic-single">
-                                    <option selected="selected" value={{0}} >select category</option>
+                                <label for="category">category</label>
+                                <select name="categories[]" multiple="multiple" id="category" class="form-control">
                                     @foreach($Categories as $category)
                                         <option
                                             value="{{$category->id}}" {{old('category_id') == $category->id? 'selected' : ''}}>{{$category->name}}</option>
                                     @endforeach
                                 </select>
+
                                 @error('categories')
                                 <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                                 @enderror
                             </div>
+
                             <div class="form-group">
                                 <label>price</label>
                                 <input name="price"
@@ -78,6 +79,7 @@
                                 <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                                 @enderror
                             </div>
+
                             <div class="form-group">
                                 <label>offer
                                     <input name="offer" class="offer" type="checkbox">
@@ -137,19 +139,6 @@
 
 
 <script>
-    $(document).ready(function () {
-
-        $(document).ready(function () {
-            $('.js-example-basic-single').select2();
-        });
-
-        $('.js-example-basic-single').select2({
-            placeholder: "Select a state",
-            allowClear: true,
-            tags: true,
-            tokenSeparators: [',', ' ']
-        });
-    });
 
     $('.offer').on('click', function () {
         var x = document.getElementById("page");
@@ -216,9 +205,8 @@
             c.style.display = "block";
         });
     });
+
     $(document).ready(function () {
-
-
         $('#value_discount').on('change', function () {
             var quantity = $('#quantity').val();
             var price = $('#price').val();
@@ -226,15 +214,32 @@
 
             $('#value_discount_price').val((quantity * price) - value_discount);
         });
-
         $('#percentage_discount').on('change', function () {
             var quantity = $('#quantity').val();
             var price = $('#price').val();
             var percentage_discount = $('#percentage_discount').val();
 
-            $('#percentage_discount_price').val((quantity * price) - (quantity * price*percentage_discount/100));
+            $('#percentage_discount_price').val((quantity * price) - (quantity * price * percentage_discount / 100));
         });
     });
+
+    $(document).ready(function (e) {
+        $('#images').change(function () {
+            let reader = new FileReader();
+            reader.onload = (e) => {
+                $('#preview-image-before-upload').attr('src', e.target.result);
+            };
+            reader.readAsDataURL(this.files[0]);
+        });
+    });
+
+    $(document).ready(function () {
+        $("#category").select2({
+            multiple: true
+        })
+    });
+
+
 </script>
 
 
