@@ -12,8 +12,8 @@ class Product extends Model implements TranslatableContract
     use Translatable;
     use HasFactory;
     protected $guarded = [];
-
-    public $translatedAttributes = ['title','description'];
+    protected $appends = ['image_path'];
+    public $translatedAttributes = ['title', 'description'];
 
     public function categories()
     {
@@ -28,5 +28,10 @@ class Product extends Model implements TranslatableContract
     public function images()
     {
         return $this->hasMany(product_image::class);
+    }
+
+    public function getImagePathAttribute()
+    {
+        return asset('uploads/products/' . $this->images()->where('is_default',1)->get());
     }
 }

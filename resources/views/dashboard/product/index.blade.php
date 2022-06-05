@@ -112,9 +112,7 @@
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'title', name: 'title'},
                     {data: 'description', name: 'description'},
-                    {data: "images[]",
-                        "render": function (data, type, full, meta) {return "<img src=\"/path/" + data + "\" height=\"50\"/>";},
-                        name: 'images[]'},
+                    {data: "images", name: 'images'},
                     {data: 'quantity', name: 'quantity'},
                     {data: 'price', name: 'price'},
                     {

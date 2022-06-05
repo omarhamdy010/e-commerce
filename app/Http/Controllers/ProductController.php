@@ -8,6 +8,7 @@ use App\Models\product_image;
 use App\Models\product_offer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 use Yajra\DataTables\DataTables;
 
 class ProductController extends Controller
@@ -23,23 +24,25 @@ class ProductController extends Controller
     public function getProducts(Request $request)
     {
         if ($request->ajax()) {
-            $data = Product::with('offer')->get();
+            $data = Product::with('offer','images')->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $actionBtn =
-                        '
-                            <a data-toggle="modal" data-target=".editModal" data-id="' . $row->id . '" data-offer="' . $row->offer . '" class="edit btn btn-success btn-sm editProduct"
+                        '<a data-toggle="modal" data-target=".editModal" data-id="' . $row->id . '" data-offer="' . $row->offer . '" class="edit btn btn-success btn-sm editProduct"
                                 data-attr="' . url('product/' . $row->id . '/edit') . '" title="show">Edit</a>
                                     ' . csrf_field() . '
                                     ' . method_field("DELETE") . '
                             <a class="btn btn-danger btn-sm delete"  data-id="' . $row->id . '" title="delete">
                             DELETE</a>
-                            <input type="hidden" value="' . csrf_token() . '"  class="token_delete">
-                    ';
+                            <input type="hidden" value="' . csrf_token() . '"  class="token_delete">';
                     return $actionBtn;
-                })
-                ->rawColumns(['action'])
+                })->addColumn('images', function ($artist) {
+                    foreach ($artist->images as $image){
+                        $url= asset($image->path);
+                        return '<img src="'.$url.'" border="0" width="40" class="img-rounded" align="center" />';
+                    }
+                })->rawColumns(['images','action'])
                 ->make(true);
         }
     }
@@ -84,19 +87,20 @@ class ProductController extends Controller
                 ]);
             }
         }
-
         if ($request->hasfile('images')) {
             foreach ($request->file('images') as $key => $file) {
-                $path = $file->store('public/uploads/products');
-                $name = $file->getClientOriginalName();
-                ($key == 0) ? $default = 1 : $default = 0;
-                $insert['name'] = $name;
+                Image::make($file)->resize(100, 100, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->save(public_path('/uploads/products/' . $file->hashName()));
+                $path = $file->store('/uploads/products');
+                $insert['name'] = $file->hashName();
                 $insert['path'] = $path;
+                $insert['product_id'] = $product->id;
+                $insert['is_default'] =  ($key == 0) ? 1 :  0;;
+                product_image::create($insert);
             }
-            $insert['product_id'] = $product->id;
-            $insert['is_default'] = $default;
         }
-        product_image::create($insert);
+
         $product->categories()->attach($request->categories);
 
         toast('product created successfully!', 'success');
@@ -163,12 +167,9 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
-
-
         foreach ($product->images()->get() as $image) {
-            Storage::disk('public_upload')->delete('product/' . $image->image);
+            Storage::disk('public_upload')->delete('products/' . $image->name);
         }
-
         $product->delete();
         toast('product deleted successfully!', 'success');
         return response()->json([
