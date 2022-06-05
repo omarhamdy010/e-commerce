@@ -40,9 +40,10 @@
                                           {{$product->translate($local)->description}}</textarea>
                             @endforeach
 
-                            <?php $image = $product->images->where('is_default', 1)->first()?>
+
                             <div class="form-group">
-                                <input required type="file" class="form-control" name="images[]" placeholder="address" value="{{$image->image}}" multiple>
+                                <input required type="file" class="form-control" name="images[]" placeholder="address"
+                                        multiple>
                             </div>
 
                             <div class="form-group">

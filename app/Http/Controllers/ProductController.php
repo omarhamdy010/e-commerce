@@ -84,31 +84,17 @@ class ProductController extends Controller
                 ]);
             }
         }
-//        if ($request->images) {
-//            $images = $request->file('images');
-//
-//            foreach ($images as $index => $image) {
-//                $name = $image->hashName();
-//                ($index == 0) ? $default = 1 : $default = 0;
-//                $image->storeAs('/uploads/products/', $name, 'public');
-//                product_image::create([
-//                    'image' => $name,
-//                    'product_id' => $product->id,
-//                    'is_default' => $default,
-//                ]);
-//            }
-//        }
 
         if ($request->hasfile('images')) {
             foreach ($request->file('images') as $key => $file) {
                 $path = $file->store('public/uploads/products');
                 $name = $file->getClientOriginalName();
                 ($key == 0) ? $default = 1 : $default = 0;
-                $insert[$key]['name'] = $name;
-                $insert[$key]['path'] = $path;
-                $insert[$key]['product_id'] = $product->id;
-                $insert[$key]['is_default'] = $default;
+                $insert['name'] = $name;
+                $insert['path'] = $path;
             }
+            $insert['product_id'] = $product->id;
+            $insert['is_default'] = $default;
         }
         product_image::create($insert);
         $product->categories()->attach($request->categories);
@@ -136,10 +122,10 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $product->update([
-            'title' => $request->title,
-            'description' => $request->description,
-            'quantity' => $request->quantity,
-            'price' => $request->price
+            'en' => ['title' => $request->en['title'], 'description' => $request->en['description']],
+            'ar' => ['title' => $request->ar['title'], 'description' => $request->ar['description']],
+            'quantity' => $request->get('quantity'),
+            'price' => $request->get('price'),
         ]);
         if ($request->offer) {
             $product->offer()->updateOrCreate(
@@ -153,18 +139,17 @@ class ProductController extends Controller
             );
         }
         if ($request->hasfile('images')) {
-            $images = $request->file('images');
-            foreach ($images as $index => $image) {
-                $name = $image->hashName();
-                $image->storeAs('/uploads/products/', $name, 'public');
-                ($index == 0) ? $default = 1 : $default = 0;
-                $product->images()->update([
-                    'image' => $name,
-                    'product_id' => $product->id,
-                    'is_default' => $default,
-                ]);
+            foreach ($request->file('images') as $key => $file) {
+                $path = $file->store('public/uploads/products');
+                $name = $file->getClientOriginalName();
+                ($key == 0) ? $default = 1 : $default = 0;
+                $insert['name'] = $name;
+                $insert['path'] = $path;
             }
+            $insert['product_id'] = $product->id;
+            $insert['is_default'] = $default;
         }
+        $product->images()->update($insert);
         $product->categories()->attach($request->categories);
         toast('product updated successfully!', 'success');
 
