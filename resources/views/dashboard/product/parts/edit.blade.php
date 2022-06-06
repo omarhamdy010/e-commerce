@@ -40,12 +40,10 @@
                                           {{$product->translate($local)->description}}</textarea>
                             @endforeach
 
-
                             <div class="form-group">
-                                <input required type="file" class="form-control" name="images[]" placeholder="address"
-                                        multiple>
+                                <input type="file" class="form-control" name="images[]" placeholder="address"
+                                       value="{{$images[0]}}" multiple>
                             </div>
-
                             <div class="form-group">
                                 <label>quantity</label>
                                 <input name="quantity"
@@ -61,7 +59,12 @@
                                 <select name="categories[]" multiple="multiple"
                                         class="form-control js-example-basic-single">
                                     @foreach($categories as $category)
+<<<<<<< HEAD
                                         <option value="{{$category->id}}" {{in_array($category->id,$ids)? 'selected' : ''}}>{{$category->name}}</option>
+=======
+                                        <option
+                                            value="{{$category->id}}" {{'category_id'== $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+>>>>>>> 3aa03afd107943efc6bab22f3da3188a48fba72f
                                     @endforeach
                                 </select>
                                 @error('categories')
