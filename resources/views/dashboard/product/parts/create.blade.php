@@ -57,7 +57,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="category">category</label>
-                                <select name="categories[]" multiple="multiple" id="category_SELECT2" class="form-control">
+                                <select name="categories[]" multiple="multiple" id="category_SELECT2" class="select2-multiple form-control">
 
                                     @foreach($Categories as $category)
                                         <option
@@ -137,7 +137,6 @@
         </div>
     </div>
 </div>
-
 
 <script>
 

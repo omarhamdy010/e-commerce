@@ -5,5 +5,6 @@ return[
     'quantity'=>'الكميه',
     'description'=>'الوصف',
     'title'=>'العنوان',
+    'image'=>'صور',
 
 ];

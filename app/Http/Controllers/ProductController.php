@@ -117,25 +117,17 @@ class ProductController extends Controller
     {
 //        dd($request->all());
         $categories = Category::all();
-<<<<<<< HEAD
         $product = Product::with('categories', 'offer', 'images')->where('id', $request->id)->first();
         $offers = product_offer::where('product_id', $product->id)->first();
         $ids = $product->categories->pluck('id')->toArray();
 
 
-        $edit = view('dashboard.product.parts.edit', compact('product', 'categories', 'offers', 'ids'))->render();
-        return response()->json(array('success' => true, 'html' => $edit, 'product' => $product, 'categories' => $categories, 'offers' => $offers, 'ids' => $ids));
-=======
-        $product = Product::with('categories', 'offer', 'images')->find($request->get('id'));
-        $offers = product_offer::where('product_id', $product->id)->first();
-
-        foreach ($product->images as $image){
+        foreach ($product->images as $image) {
             $images[] = $image->name;
         }
+        $edit = view('dashboard.product.parts.edit', compact('product', 'categories', 'offers', 'ids','images'))->render();
+        return response()->json(array('success' => true, 'html' => $edit, 'product' => $product, 'categories' => $categories,'images'=>$images ,'offers' => $offers, 'ids' => $ids));
 
-        $edit = view('dashboard.product.parts.edit', compact('product', 'categories', 'offers', 'images'))->render();
-        return response()->json(array('success' => true, 'html' => $edit, 'product' => $product, 'categories' => $categories, 'images' => $images, 'offers' => $offers));
->>>>>>> 3aa03afd107943efc6bab22f3da3188a48fba72f
     }
 
     public function update(Request $request, Product $product)
@@ -160,7 +152,6 @@ class ProductController extends Controller
         }
 
         if ($request->hasfile('images')) {
-<<<<<<< HEAD
             foreach ($product->images()->get() as $image) {
                 Storage::disk('public_upload')->delete('products/' . $image->name);
             }
@@ -179,29 +170,9 @@ class ProductController extends Controller
                 }
             }
         }
-        $product->categories()->attach($request->categories);
-=======
-
-            foreach ($product->images()->get() as $image) {
-                Storage::disk('public_upload')->delete('products/' . $image->name);
-            }
-
-            foreach ($request->file('images') as $key => $file) {
-                Image::make($file)->resize(100, 100, function ($constraint) {
-                    $constraint->aspectRatio();
-                })->save(public_path('/uploads/products/' . $file->hashName()));
-                $path = $file->store('/uploads/products');
-                $insert['name'] = $file->hashName();
-                $insert['path'] = $path;
-                $insert['product_id'] = $product->id;
-                $insert['is_default'] = ($key == 0) ? 1 : 0;;
-                $product->images()->create($insert);
-            }
-        }
 
         if ($request->get('categories')) $product->categories()->attach($request->get('categories'));
 
->>>>>>> 3aa03afd107943efc6bab22f3da3188a48fba72f
         toast('product updated successfully!', 'success');
 
         return response()->json(['success' => true, 'message' => 'Data updated successfully']);

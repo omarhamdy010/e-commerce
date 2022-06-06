@@ -59,12 +59,7 @@
                                 <select name="categories[]" multiple="multiple"
                                         class="form-control js-example-basic-single">
                                     @foreach($categories as $category)
-<<<<<<< HEAD
                                         <option value="{{$category->id}}" {{in_array($category->id,$ids)? 'selected' : ''}}>{{$category->name}}</option>
-=======
-                                        <option
-                                            value="{{$category->id}}" {{'category_id'== $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
->>>>>>> 3aa03afd107943efc6bab22f3da3188a48fba72f
                                     @endforeach
                                 </select>
                                 @error('categories')

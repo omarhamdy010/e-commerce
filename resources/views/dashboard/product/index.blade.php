@@ -185,16 +185,13 @@
                 success: function (data) {
                     console.log(data);
                     $('.renderproduct').html(data.html);
-                    $("#category_SELECT2").select2({
-                        multiple: true
-                    });
                 }
             });
         });
 
+
         $(document).on('click', '.editProduct', function (event) {
             event.preventDefault();
-
             var id = $(this).data('id');
             var offer = $(this).data('offer');
             $_token = "{{ csrf_token() }}";
@@ -213,10 +210,15 @@
                 success: function (data) {
                     console.log(data);
                     $('.rendereditproduct').html(data.html);
-
+                    // $('.js-example-basic-single').select2({
+                    //     width: '100%',
+                    //     placeholder: "Select an Option",
+                    //     allowClear: true
+                    // });
                 }
             });
         });
+
 
         $(document).on('click', '.delete', function (event) {
             event.preventDefault();

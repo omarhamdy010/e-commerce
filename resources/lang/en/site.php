@@ -5,5 +5,6 @@ return[
     'quantity'=>'quantity',
     'description'=>'description',
     'title'=>'title',
+    'image'=>'image',
 
 ];
