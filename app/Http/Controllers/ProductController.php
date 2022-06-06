@@ -24,7 +24,7 @@ class ProductController extends Controller
     public function getProducts(Request $request)
     {
         if ($request->ajax()) {
-            $data = Product::with('offer','images')->get();
+            $data = Product::with('offer', 'images')->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
@@ -38,11 +38,11 @@ class ProductController extends Controller
                             <input type="hidden" value="' . csrf_token() . '"  class="token_delete">';
                     return $actionBtn;
                 })->addColumn('images', function ($artist) {
-                    foreach ($artist->images as $image){
-                        $url= asset($image->path);
-                        return '<img src="'.$url.'" border="0" width="40" class="img-rounded" align="center" />';
+                    foreach ($artist->images as $image) {
+                        $url = asset($image->path);
+                        return '<img src="' . $url . '" border="0" width="40" class="img-rounded" align="center" />';
                     }
-                })->rawColumns(['images','action'])
+                })->rawColumns(['images', 'action'])
                 ->make(true);
         }
     }
@@ -96,7 +96,7 @@ class ProductController extends Controller
                 $insert['name'] = $file->hashName();
                 $insert['path'] = $path;
                 $insert['product_id'] = $product->id;
-                $insert['is_default'] =  ($key == 0) ? 1 :  0;;
+                $insert['is_default'] = ($key == 0) ? 1 : 0;;
                 product_image::create($insert);
             }
         }
@@ -117,10 +117,15 @@ class ProductController extends Controller
     {
 //        dd($request->all());
         $categories = Category::all();
-        $product = Product::with('categories', 'offer', 'images')->find($request->id);
+        $product = Product::with('categories', 'offer', 'images')->find($request->get('id'));
         $offers = product_offer::where('product_id', $product->id)->first();
-        $edit = view('dashboard.product.parts.edit', compact('product', 'categories', 'offers'))->render();
-        return response()->json(array('success' => true, 'html' => $edit, 'product' => $product, 'categories' => $categories, 'offers' => $offers));
+
+        foreach ($product->images as $image){
+            $images[] = $image->name;
+        }
+
+        $edit = view('dashboard.product.parts.edit', compact('product', 'categories', 'offers', 'images'))->render();
+        return response()->json(array('success' => true, 'html' => $edit, 'product' => $product, 'categories' => $categories, 'images' => $images, 'offers' => $offers));
     }
 
     public function update(Request $request, Product $product)
@@ -131,6 +136,7 @@ class ProductController extends Controller
             'quantity' => $request->get('quantity'),
             'price' => $request->get('price'),
         ]);
+
         if ($request->offer) {
             $product->offer()->updateOrCreate(
                 ['product_id' => $product->id,
@@ -142,27 +148,31 @@ class ProductController extends Controller
                 ]
             );
         }
+
         if ($request->hasfile('images')) {
-            foreach ($request->file('images') as $key => $file) {
-                $path = $file->store('public/uploads/products');
-                $name = $file->getClientOriginalName();
-                ($key == 0) ? $default = 1 : $default = 0;
-                $insert['name'] = $name;
-                $insert['path'] = $path;
+
+            foreach ($product->images()->get() as $image) {
+                Storage::disk('public_upload')->delete('products/' . $image->name);
             }
-            $insert['product_id'] = $product->id;
-            $insert['is_default'] = $default;
+
+            foreach ($request->file('images') as $key => $file) {
+                Image::make($file)->resize(100, 100, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->save(public_path('/uploads/products/' . $file->hashName()));
+                $path = $file->store('/uploads/products');
+                $insert['name'] = $file->hashName();
+                $insert['path'] = $path;
+                $insert['product_id'] = $product->id;
+                $insert['is_default'] = ($key == 0) ? 1 : 0;;
+                $product->images()->create($insert);
+            }
         }
-        $product->images()->update($insert);
-        $product->categories()->attach($request->categories);
+
+        if ($request->get('categories')) $product->categories()->attach($request->get('categories'));
+
         toast('product updated successfully!', 'success');
 
-        return response()->json(
-            [
-                'success' => true,
-                'message' => 'Data updated successfully'
-            ]
-        );
+        return response()->json(['success' => true, 'message' => 'Data updated successfully']);
     }
 
     public function destroy(Product $product)
