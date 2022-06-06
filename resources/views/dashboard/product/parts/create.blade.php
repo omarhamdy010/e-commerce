@@ -57,7 +57,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="category">category</label>
-                                <select name="categories[]" multiple="multiple" id="category" class="form-control">
+                                <select name="categories[]" multiple="multiple" id="category_SELECT2" class="form-control">
+
                                     @foreach($Categories as $category)
                                         <option
                                             value="{{$category->id}}" {{old('category_id') == $category->id? 'selected' : ''}}>{{$category->name}}</option>
@@ -232,13 +233,6 @@
             reader.readAsDataURL(this.files[0]);
         });
     });
-
-    $(document).ready(function () {
-        $("#category").select2({
-            multiple: true
-        })
-    });
-
 
 </script>
 

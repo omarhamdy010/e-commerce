@@ -185,7 +185,9 @@
                 success: function (data) {
                     console.log(data);
                     $('.renderproduct').html(data.html);
-
+                    $("#category_SELECT2").select2({
+                        multiple: true
+                    });
                 }
             });
         });

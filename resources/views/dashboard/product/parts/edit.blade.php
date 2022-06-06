@@ -60,10 +60,8 @@
                                 <label>category</label>
                                 <select name="categories[]" multiple="multiple"
                                         class="form-control js-example-basic-single">
-                                    <option selected="selected" value={{0}} >select category</option>
                                     @foreach($categories as $category)
-                                        <option
-                                            value="{{$category->id}}" {{old('category_id') == $category->id? 'selected' : ''}}>{{$category->name}}</option>
+                                        <option value="{{$category->id}}" {{in_array($category->id,$ids)? 'selected' : ''}}>{{$category->name}}</option>
                                     @endforeach
                                 </select>
                                 @error('categories')
@@ -160,6 +158,7 @@
             });
         });
     });
+
     $(document).ready(function () {
         if ($('.offer').hasClass('checked')) {
             var xx = document.getElementById("page");
