@@ -33,4 +33,5 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     });
+    Route::resource('site',\App\Http\Controllers\SiteController::class);
 });

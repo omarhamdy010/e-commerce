@@ -61,7 +61,7 @@
             </div>
         </div>
 
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="exampleModal"  aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content" id="model_create">
                     <div class="modal-header">
@@ -185,6 +185,7 @@
                 success: function (data) {
                     console.log(data);
                     $('.renderproduct').html(data.html);
+                    $('#category_SELECT2').select2();
                 }
             });
         });

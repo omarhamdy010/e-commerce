@@ -55,16 +55,15 @@
                                 <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                                 @enderror
                             </div>
+
                             <div class="form-group">
                                 <label for="category">category</label>
                                 <select name="categories[]" multiple="multiple" id="category_SELECT2" class="select2-multiple form-control">
-
                                     @foreach($Categories as $category)
                                         <option
                                             value="{{$category->id}}" {{old('category_id') == $category->id? 'selected' : ''}}>{{$category->name}}</option>
                                     @endforeach
                                 </select>
-
                                 @error('categories')
                                 <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                                 @enderror
@@ -139,6 +138,10 @@
 </div>
 
 <script>
+
+    // $(document).ready(function (){
+    //     $('#category_SELECT2').select2();
+    // })
 
     $('.offer').on('click', function () {
         var x = document.getElementById("page");
