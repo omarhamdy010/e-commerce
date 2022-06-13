@@ -104,18 +104,21 @@
                                 </div>
 
                                 <div>
-                                    <input type="number" class="form-control" min="1" name="amount"
-                                           style="display: none" id="amount_value"
-                                           placeholder="amount">
-                                    <input type="number" class="form-control" min="1" name="bounce"
-                                           style="display: none" id="amount_bounce"
-                                           placeholder="bounce amount">
-                                    <input type="number" name="value" min="1" class="form-control" style="display: none"
-                                           id="value_discount"
-                                           placeholder="value">
-                                    <input type="number" name="percentage" min="1" class="form-control"
-                                           style="display: none"
-                                           id="percentage_discount" placeholder="percentage">
+{{--                                    <input type="number" class="form-control" min="1" name="amount"--}}
+{{--                                           style="display: none" id="amount_value"--}}
+{{--                                           placeholder="amount">--}}
+{{--                                    <input type="number" class="form-control" min="1" name="bounce"--}}
+{{--                                           style="display: none" id="amount_bounce"--}}
+{{--                                           placeholder="bounce amount">--}}
+{{--                                    <input type="number" name="value" min="1" class="form-control" style="display: none"--}}
+{{--                                           id="value_discount"--}}
+{{--                                           placeholder="value">--}}
+{{--                                    <input type="number" name="percentage" min="1" class="form-control"--}}
+{{--                                           style="display: none"--}}
+{{--                                           id="percentage_discount" placeholder="percentage">--}}
+                                    @foreach($type['type'] as $contact)
+                                        <option value="{{$contact}}" >{{ $contact}}</option>
+                                    @endforeach
                                 </div>
 
                                 <div>
