@@ -15,8 +15,11 @@ class CreateProductOffersTable extends Migration
     {
         Schema::create('product_offers', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum('type', ['percentage', 'amount', 'value']);
-            $table->integer('bounce')->nullable();
+            $table->enum('type', ['percentage', 'amount', 'fixed']);
+            $table->integer('value')->nullable();
+            $table->integer('bounce')->nullable()->default(0);
+            $table->date('start_date')->default(\Illuminate\Support\Carbon::now());
+            $table->date('end_date')->default(\Illuminate\Support\Carbon::now());
             $table->integer('product_id')->unsigned()->nullable();
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->timestamps();

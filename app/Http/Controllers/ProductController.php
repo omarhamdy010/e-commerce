@@ -7,8 +7,10 @@ use App\Models\Product;
 use App\Models\product_image;
 use App\Models\product_offer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use phpDocumentor\Reflection\Type;
 use Yajra\DataTables\DataTables;
 
 class ProductController extends Controller
@@ -50,7 +52,6 @@ class ProductController extends Controller
     public function create()
     {
         $Categories = Category::all();
-
         $create = view('dashboard.product.parts.create', compact('Categories'))->render();
         return response()->json(array('success' => true, 'html' => $create, 'Categories' => $Categories));
     }
@@ -68,26 +69,37 @@ class ProductController extends Controller
             'quantity' => $request->get('quantity'),
             'price' => $request->get('price'),
         ]);
+
         if ($request->get('offer')) {
-            if ($request->get('value')) {
+            if ($request->get('type')=='fixed'||$request->get('type')=='percentage')
+            {
                 $data = [
+                    'start_date'=>$request->get('start_date'),
+                    'end_date'=>$request->get('end_date'),
+                    'type'=>$request->get('type'),
                     'value' => $request->get('value'),
                     'product_id' => $product->id,
                 ];
                 product_offer::create($data);
-            } elseif ($request->get('amount')) {
+            } elseif ($request->get('type')=='amount') {
                 $data = [
-                    'amount' => $request->get('amount'),
+                    'start_date'=>$request->get('start_date'),
+                    'end_date'=>$request->get('end_date'),
+                    'type'=>$request->get('type'),
+                    'bounce' => $request->get('bounce'),
+                    'value' => $request->get('value'),
                     'product_id' => $product->id,
                 ];
                 product_offer::create($data);
-            } elseif ($request->get('percentage')) {
-                product_offer::create([
-                    'percentage' => $request->get('percentage'),
-                    'product_id' => $product->id,
-                ]);
             }
         }
+
+//        $start_date = Carbon::parse($request->get('start_date')." 00:00:00")->format('Y-m-d H:i:s');
+//        $end_date=  Carbon::parse($request->get('end_date')." 23:59:59")->format('Y-m-d H:i:s');
+//        $offers= $product->whereBetween('start_date', [$start_date->DatetoString() ,
+//            $end_date->DatetoString()])->orWhereBetween('end_date', [$start_date->DatetoString() ,
+//            $end_date->DatetoString()])->get();
+
         if ($request->hasfile('images')) {
             foreach ($request->file('images') as $key => $file) {
                 Image::make($file)->resize(100, 100, function ($constraint) {
@@ -106,6 +118,7 @@ class ProductController extends Controller
 
         toast('product created successfully!', 'success');
 
+//        dd($offers);
         return response()->json(
             [
                 'success' => true,

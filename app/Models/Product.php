@@ -15,7 +15,7 @@ class Product extends Model implements TranslatableContract
     protected $appends = ['image_path'];
     public $translatedAttributes = ['title', 'description'];
 
-    protected $type = ['percentage', 'amount', 'value'];
+//    protected $type = ['percentage', 'amount', 'fixed'];
 
     public function categories()
     {
