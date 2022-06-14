@@ -47,7 +47,7 @@
                             <div class="form-group">
                                 <label>quantity</label>
                                 <input name="quantity"
-                                       class="@error('quantity') is-invalid @enderror form-control"
+                                       class="@error('quantity') is-invalid @enderror form-control value"
                                        value="{{$product->quantity}}"
                                        id="quantity">
                                 @error('quantity')
@@ -59,7 +59,8 @@
                                 <select name="categories[]" multiple="multiple"
                                         class="form-control js-example-basic-single">
                                     @foreach($categories as $category)
-                                        <option value="{{$category->id}}" {{in_array($category->id,$ids)? 'selected' : ''}}>{{$category->name}}</option>
+                                        <option
+                                            value="{{$category->id}}" {{in_array($category->id,$ids)? 'selected' : ''}}>{{$category->name}}</option>
                                     @endforeach
                                 </select>
                                 @error('categories')
@@ -69,7 +70,7 @@
                             <div class="form-group">
                                 <label>price</label>
                                 <input name="price"
-                                       class="@error('price') is-invalid @enderror form-control"
+                                       class="@error('price') is-invalid @enderror form-control value"
                                        value="{{$product->price}}"
                                        id="price">
                                 @error('price')
@@ -83,46 +84,45 @@
                                            type="checkbox">
                                 </label>
                             </div>
-                            <div class="form-group"
-                                 id="page">
+
+                            @php  $types =['amount', 'fixed','percentage'];   @endphp
+
+                            <div class="form-group" id="page" style="display: none">
                                 <div class="form-control-sm">
                                     <label>offer type</label>
                                 </div>
                                 <div class="btn-group btn-group-toggle form-group" data-toggle="buttons">
-                                    <label class="btn btn-outline-primary active" id="option1">
-                                        <input type="radio" id="amount" checked> amount
-                                    </label>
-                                    <label class="btn btn-outline-primary " id="option2">
-                                        <input type="radio" id="value"> value
-                                    </label>
-                                    <label class="btn btn-outline-primary" id="option3">
-                                        <input type="radio" id="percentage"> percentage
-                                    </label>
+                                    @foreach($types as $key=>$type )
+                                        <label class="btn btn-outline-primary {{$type == optional($product->offer)->type?'active':''}}" id="option{{$key+1}}">
+                                            <input type="radio" name="type" value="{{$type}}" id="{{$type}}"> {{$type}}
+                                        </label>
+                                    @endforeach
                                 </div>
+
                                 <div>
-                                    <input type="number" class="form-control" min="1" name="amount"
-                                           style="display: none" id="amount_value"
-                                           value="{{optional($product->offer)->amount}}"
-                                           placeholder="amount">
-                                    <input type="number" class="form-control" min="1" name="bounce"
-                                           style="display: none" id="amount_bounce"
+                                    <input type="number" class="form-control value"
+                                           value="{{optional($product->offer)->value}}" min="1" name="value" id="value" placeholder="value">
+                                    <input type="number" class="form-control" min="0" name="bounce" id="bounce_value"
                                            value="{{optional($product->offer)->bounce}}"
                                            placeholder="bounce amount">
-                                    <input type="number" name="value" min="1" class="form-control" style="display: none"
-                                           id="value_discount" value="{{optional($product->offer)->value}}"
-                                           placeholder="value">
-                                    <input type="number" name="percentage" min="1" class="form-control"
-                                           style="display: none" value="{{optional($product->offer)->percentage}}"
-                                           id="percentage_discount" placeholder="percentage">
                                 </div>
+
                                 <div>
-                                    <input type="text" class="form-control" style="display: none"
+                                    <input type="number" class="form-control" style="display: none"
                                            id="percentage_discount_price" placeholder="percentage price">
-                                    <input type="text" class="form-control" style="display: none"
+                                    <input type="number" class="form-control" style="display: none"
                                            id="value_discount_price" placeholder="value price">
                                 </div>
-                            </div>
 
+                                <div>
+                                    <input type="date" class="form-control"
+                                           value="{{optional($product->offer)->start_date}}" name="start_date"
+                                           placeholder="start Date">
+                                    <input type="date" class="form-control"
+                                           value="{{optional($product->offer)->end_date}}" name="end_date"
+                                           placeholder="end Date">
+                                </div>
+                            </div>
                         </div>
                         <div class="card-footer">
                             <button type="submit" class="btn btn-primary btn-submit">Submit</button>
@@ -177,86 +177,68 @@
     });
 
     $(document).ready(function () {
-        var x = document.getElementById("amount_value");
-        var y = document.getElementById("value_discount");
-        var z = document.getElementById("percentage_discount");
-        var a = document.getElementById("amount_bounce");
+
+        var a = document.getElementById("bounce_value");
         var b = document.getElementById("value_discount_price");
         var c = document.getElementById("percentage_discount_price");
+
         if ($('#option1').hasClass('active')) {
-            x.style.display = "block";
             a.style.display = "block";
-            y.style.display = "none";
             b.style.display = "none";
-            z.style.display = "none";
             c.style.display = "none";
         }
         if ($('#option2').hasClass('active')) {
-            x.style.display = "none";
             a.style.display = "none";
-            y.style.display = "block";
             b.style.display = "block";
-            z.style.display = "none";
             c.style.display = "none";
         }
         if ($('#option3').hasClass('active')) {
-            x.style.display = "none";
             a.style.display = "none";
-            y.style.display = "none";
             b.style.display = "none";
-            z.style.display = "block";
             c.style.display = "block";
         }
         $('#option1').on('click', function () {
-            x.style.display = "block";
             a.style.display = "block";
-            y.style.display = "none";
             b.style.display = "none";
-            z.style.display = "none";
             c.style.display = "none";
         });
         $('#option2').on('click', function () {
-            x.style.display = "none";
             a.style.display = "none";
-            y.style.display = "block";
             b.style.display = "block";
-            z.style.display = "none";
             c.style.display = "none";
         });
         $('#option3').on('click', function () {
-            x.style.display = "none";
             a.style.display = "none";
-            y.style.display = "none";
             b.style.display = "none";
-            z.style.display = "block";
             c.style.display = "block";
         });
     });
 
+
     $(document).ready(function () {
         var quantity = $('#quantity').val();
         var price = $('#price').val();
-        var value_discount = $('#value_discount').val();
-        var percentage_discount = $('#percentage_discount').val();
+        var value = $('#value').val();
 
-        $('#value_discount_price').val((quantity * price) - value_discount);
+        $('#value_discount_price').val((quantity * price) - value);
 
-        $('#percentage_discount_price').val((quantity * price) - (quantity * price * percentage_discount / 100));
+        $('#percentage_discount_price').val((quantity * price) - (quantity * price * value / 100));
 
-        $('#value_discount').on('change', function () {
+
+        $('.value').on('keyup', function () {
             var quantity = $('#quantity').val();
             var price = $('#price').val();
-            var value_discount = $('#value_discount').val();
+            var value = $('#value').val();
 
-            $('#value_discount_price').val((quantity * price) - value_discount);
+            $('#value_discount_price').val((quantity * price) - value);
         });
-
-        $('#percentage_discount').on('change', function () {
+        $('.value').on('keyup', function () {
             var quantity = $('#quantity').val();
             var price = $('#price').val();
-            var percentage_discount = $('#percentage_discount').val();
+            var value = $('#value').val();
 
-            $('#percentage_discount_price').val((quantity * price) - (quantity * price * percentage_discount / 100));
+            $('#percentage_discount_price').val((quantity * price) - (quantity * price * value / 100));
         });
+
     });
 </script>
