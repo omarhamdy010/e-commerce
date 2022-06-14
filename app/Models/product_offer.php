@@ -10,6 +10,7 @@ class product_offer extends Model
     use HasFactory;
     protected $guarded = [];
 
+
     public function product()
     {
         return $this->belongsTo(product_offer::class);

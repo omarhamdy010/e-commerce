@@ -50,6 +50,7 @@ class ProductController extends Controller
     public function create()
     {
         $Categories = Category::all();
+
         $create = view('dashboard.product.parts.create', compact('Categories'))->render();
         return response()->json(array('success' => true, 'html' => $create, 'Categories' => $Categories));
     }
