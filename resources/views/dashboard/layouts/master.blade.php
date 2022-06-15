@@ -854,6 +854,10 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.all.min.js"></script>
 
+<script src="{{asset('assets/js/jquery.form-validator.min.js')}}"></script>
+<script src="{{asset('assets/js/jquery.additional-method.js')}}"></script>
+
+
 <!-- Bootstrap 4 -->
 <script src="{{asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- Sparkline -->

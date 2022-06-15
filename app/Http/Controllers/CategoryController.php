@@ -6,6 +6,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\Unique;
 use Intervention\Image\Facades\Image;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -62,10 +63,12 @@ class CategoryController extends Controller
 
     public function ajaxstore(Request $request)
     {
-            $request->validate([
-            'translations.en.name' => ['required_with:translations.en.name', 'string'],
-            'translations.ar.name' => ['required_with:translations.ar.name', 'string'],
-            ]);
+
+//        dd($request->all());
+        request()->validate([
+        'ar.name' => ['required', Unique::class],
+        'en.name' => ['required', Unique::class]
+        ]);
         $data = $request->except('image');
         if ($request->image) {
             $data['image'] = $request->image->hashName();

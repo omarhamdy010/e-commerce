@@ -283,7 +283,6 @@
         $(document).on('submit', '#upload-cat-form', function (e) {
             e.preventDefault();
             let formData = new FormData(this);
-            $('#image-input-error').text('');
             var name = $('.nameajax').val();
             var id = $(this).data('id');
             var parentId = $('.parcatajax').val();
@@ -312,7 +311,6 @@
                 },
                 error: function (xhr, status, error) {
                     console.log(xhr);
-                    $('#image-input-error').text(xhr.responseJSON.errors.file);
                     $.each(xhr.responseJSON.errors, function (key, item) {
                         $(".errors1").append("<span class='text-danger'>" + item + "</span><br>")
                     });
@@ -350,7 +348,6 @@
                 },
                 error: function (response) {
                     console.log(response);
-                    $('#image-input-error').text(response.responseJSON.errors.file);
                 }
             });
 
