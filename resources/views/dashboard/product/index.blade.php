@@ -283,7 +283,8 @@
                 error: function (xhr, status, error) {
                     console.log(xhr);
                     $.each(xhr.responseJSON.errors, function (key, item) {
-                        $(".errors1").append("<span class='text-danger'>" + item + "</span><br>")
+                        // $("." + key).append("<span class='text-danger'>" + item + "</span><br>");
+                        $('.error1').append("<span class='text-danger'>" + item + "</span><br>")
                     });
 
                 }
@@ -322,8 +323,13 @@
                     $('.modal-backdrop').css('display', 'none');
                     $('.datatable').DataTable().ajax.reload(null, false);
                 },
-                error: function (response) {
-                    console.log(response);
+                error: function (xhr, status, error) {
+                    console.log(xhr);
+                    $.each(xhr.responseJSON.errors, function (key, item) {
+                        // $("." + key).append("<span class='text-danger'>" + item + "</span><br>");
+                        $('.error1').append("<span class='text-danger'>" + item + "</span><br>")
+                    });
+
                 }
             });
 

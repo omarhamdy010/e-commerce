@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 use Intervention\Image\Facades\Image;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -61,12 +62,11 @@ class CategoryController extends Controller
 
     public function ajaxstore(Request $request)
     {
-
-        $validated = $request->validate([
-            'ar.name' => 'required|unique:categories|max:255',
-            'en.name' => 'required|unique:categories|max:255',
+//dd($request->all());
+          $request->validate([
+              'ar.name' => 'required|unique:category_translations,name',
+              'en.name' => 'required|unique:category_translations,name',
         ]);
-
         $data = $request->except('image');
         if ($request->image) {
             $data['image'] = $request->image->hashName();
@@ -105,9 +105,9 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
 
-        $validated = $request->validate([
-            'ar.name' => 'required:unique',
-            'en.name' => 'required:unique',
+        $request->validate([
+            'ar.name' => 'required|unique:category_translations,name',
+            'en.name' => 'required|unique:category_translations,name',
         ]);
 
         $data = $request->except(['image']);

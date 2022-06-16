@@ -1,59 +1,46 @@
 <div class="col-12">
     <div class="card card-primary card-tabs">
 
+        <span class="error1"></span>
         <div class="card-body">
-            @if(\Illuminate\Support\Facades\Session::has('success'))
-
-                <div class="alert alert-success">
-
-                    {{ \Illuminate\Support\Facades\Session::get('success') }}
-
-                    @php
-
-                        \Illuminate\Support\Facades\Session::forget('success');
-
-                    @endphp
-
-                </div>
-
-            @endif
             <div class="tab-content" id="custom-tabs-one-tabContent">
                 <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel"
                      aria-labelledby="custom-tabs-one-home-tab">
                     <form method="post" action="{{route('product.store')}}"
                           enctype="multipart/form-data" id="upload-cat-form">
                         <input type="hidden" name="_token" id="token2"
-                               value="{{csrf_token()}}">
+                        value="{{csrf_token()}}">
                         <div class="card-body">
 
-                            @foreach(config('translatable.locales') as $local)
+                        @foreach(config('translatable.locales') as$key=>$local)
                                 <div class="form-group">
                                     <label>{{$local=='ar'?'arabic title':'english title'}}</label>
                                     <input type="text" value="{{old($local.'[.title]')}}" class="form-control title"
                                            name="{{$local}}[title]" id="title"
-                                           placeholder="Enter product {{$local=='ar'?'arabic name':'english name'}}">
+                                    placeholder="Enter product {{$local=='ar'?'arabic name':'english name'}}">
                                 </div>
-                                <span class="errors1"></span>
 
+                                <div class="form-group">
                                 <textarea name="{{$local}}[description]" style="height: 200px;width: 670px"
                                           id="description"
                                           value="{{old($local.'[.description]')}}" class="form-control"
                                           placeholder="{{$local=='ar'?'arabic description':'english description'}}"></textarea>
+                                </div>
                             @endforeach
 
                             <div class="form-group">
-                                <input required type="file" class="form-control" name="images[]" placeholder="address" id="images"
+                                <input  type="file" class="form-control" name="images[]" placeholder="address" id="images"
                                        value="{{old('images[]')}}"
                                        multiple>
                             </div>
+                            <span class="images"></span>
+
                             <div class="form-group">
                                 <label>quantity</label>
-                                <input name="quantity" class="@error('quantity') is-invalid @enderror form-control value"
-                                       value="{{old('quantity')}}" id="quantity">
-                                @error('quantity')
-                                <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                                @enderror
+                                <input name="quantity" class="form-control value"
+                                  type="number" value="{{old('quantity')}}" id="quantity">
                             </div>
+                            <span class="quantity"></span>
 
                             <div class="form-group">
                                 <label for="category">category</label>
@@ -63,21 +50,17 @@
                                             value="{{$category->id}}" {{old('category_id') == $category->id? 'selected' : ''}}>{{$category->name}}</option>
                                     @endforeach
                                 </select>
-                                @error('categories')
-                                <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                                @enderror
                             </div>
+                            <span class="categories"></span>
 
                             <div class="form-group">
                                 <label>price</label>
-                                <input name="price"
-                                       class="@error('price') is-invalid @enderror form-control value"
+                                <input name="price" type="number"
+                                       class="form-control value"
                                        value="{{old('price')}}"
                                        id="price">
-                                @error('price')
-                                <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                                @enderror
                             </div>
+                            <span class="price"></span>
 
                             <div class="form-group">
                                 <label>offer

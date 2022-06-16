@@ -314,7 +314,6 @@
                     $.each(xhr.responseJSON.errors, function (key, item) {
                         $(".errors1").append("<span class='text-danger'>" + item + "</span><br>")
                     });
-
                 }
             });
         });
@@ -346,8 +345,11 @@
                     $('#category_order_count_ajax').val(category_order);
                     $('.yajra-datatable').DataTable().ajax.reload(null, false);
                 },
-                error: function (response) {
-                    console.log(response);
+                error: function (xhr, status, error) {
+                    console.log(xhr);
+                    $.each(xhr.responseJSON.errors, function (key, item) {
+                        $(".errors1").append("<span class='text-danger'>" + item + "</span><br>")
+                    });
                 }
             });
 

@@ -1,138 +1,131 @@
 <div class="col-12">
-    <div class="card card-primary card-tabs">
-        <div class="card-header p-0 pt-1">
-            <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" id="custom-tabs-one-home-tab" data-toggle="pill"
-                       href="#custom-tabs-one-home" role="tab" aria-controls="custom-tabs-one-home"
-                       aria-selected="true">Edit</a>
-                </li>
-            </ul>
-        </div>
-        <div class="card-body">
-            <div class="tab-content" id="custom-tabs-one-tabContent">
-                <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel"
-                     aria-labelledby="custom-tabs-one-home-tab">
-                    <form method="post" action="{{route('product.update',['product'=>$product->id])}}"
-                          id="update-category-form"
-                          enctype="multipart/form-data">
-                        @method('PUT')
-                        @csrf
-                        <input type="hidden" name="_token" id="token2"
-                               value="{{csrf_token()}}">
-                        <input type="hidden" name="id" id="porduct_id"
-                               value="{{$product->id}}">
+    <span class="error1"></span>
+    <div class="card-body">
 
-                        <div class="card-body">
-                            @foreach(config('translatable.locales') as $local)
-                                <div class="form-group">
-                                    <label>{{$local=='ar'?'arabic title':'english title'}}</label>
-                                    <input type="text" value="{{$product->translate($local)->title}}"
-                                           class="form-control title"
-                                           name="{{$local}}[title]" id="title"
-                                           placeholder="Enter product {{$local=='ar'?'arabic name':'english name'}}">
-                                </div>
-                                <span class="errors1"></span>
+        <div class="tab-content" id="custom-tabs-one-tabContent">
+            <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel"
+                 aria-labelledby="custom-tabs-one-home-tab">
+                <form method="post" action="{{route('product.update',['product'=>$product->id])}}"
+                      id="update-category-form"
+                      enctype="multipart/form-data">
+                    @method('PUT')
+                    @csrf
+                    <input type="hidden" name="_token" id="token2"
+                           value="{{csrf_token()}}">
+                    <input type="hidden" name="id" id="porduct_id"
+                           value="{{$product->id}}">
 
-                                <textarea name="{{$local}}[description]" style="height: 200px;width: 670px"
-                                          id="description" class="form-control"
-                                          placeholder="{{$local=='ar'?'arabic description':'english description'}}">
-                                          {{$product->translate($local)->description}}</textarea>
-                            @endforeach
-
+                    <div class="card-body">
+                        @foreach(config('translatable.locales') as $local)
                             <div class="form-group">
-                                <input type="file" class="form-control" name="images[]" placeholder="address"
-                                       value="{{$images[0]}}" multiple>
-                            </div>
-                            <div class="form-group">
-                                <label>quantity</label>
-                                <input name="quantity"
-                                       class="@error('quantity') is-invalid @enderror form-control value"
-                                       value="{{$product->quantity}}"
-                                       id="quantity">
-                                @error('quantity')
-                                <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label>category</label>
-                                <select name="categories[]" multiple="multiple"
-                                        class="form-control js-example-basic-single">
-                                    @foreach($categories as $category)
-                                        <option
-                                            value="{{$category->id}}" {{in_array($category->id,$ids)? 'selected' : ''}}>{{$category->name}}</option>
-                                    @endforeach
-                                </select>
-                                @error('categories')
-                                <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label>price</label>
-                                <input name="price"
-                                       class="@error('price') is-invalid @enderror form-control value"
-                                       value="{{$product->price}}"
-                                       id="price">
-                                @error('price')
-                                <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label>offer
-                                    <input name="offer" class="{{$product->offer!=null?'checked':''}} offer"
-                                           {{$product->offer!=null?'checked':''}}
-                                           type="checkbox">
-                                </label>
+                                <label>{{$local=='ar'?'arabic title':'english title'}}</label>
+                                <input type="text" value="{{$product->translate($local)->title}}"
+                                       class="form-control title"
+                                       name="{{$local}}[title]" id="title"
+                                       placeholder="Enter product {{$local=='ar'?'arabic name':'english name'}}">
                             </div>
 
-                            @php  $types =['amount', 'fixed','percentage'];   @endphp
+                            <div class="form-group">
+                                    <textarea name="{{$local}}[description]" style="height: 200px;width: 670px"
+                                              id="description" class="form-control"
+                                              placeholder="{{$local=='ar'?'arabic description':'english description'}}">
+                                              {{$product->translate($local)->description}}</textarea>
+                            </div>
+                        @endforeach
 
-                            <div class="form-group" id="page" style="display: none">
-                                <div class="form-control-sm">
-                                    <label>offer type</label>
-                                </div>
-                                <div class="btn-group btn-group-toggle form-group" data-toggle="buttons">
-                                    @foreach($types as $key=>$type )
-                                        <label class="btn btn-outline-primary {{$type == optional($product->offer)->type?'active':''}}" id="option{{$key+1}}">
-                                            <input type="radio" name="type" value="{{$type}}" id="{{$type}}"> {{$type}}
-                                        </label>
-                                    @endforeach
-                                </div>
+                        <div class="form-group">
+                            <input type="file" class="form-control" name="images[]" placeholder="address"
+                                   value="{{$images[0]}}" multiple>
+                        </div>
+                        <span class="images"></span>
 
-                                <div>
-                                    <input type="number" class="form-control value"
-                                           value="{{optional($product->offer)->value}}" min="1" name="value" id="value" placeholder="value">
-                                    <input type="number" class="form-control" min="0" name="bounce" id="bounce_value"
-                                           value="{{optional($product->offer)->bounce}}"
-                                           placeholder="bounce amount">
-                                </div>
+                        <div class="form-group">
+                            <label>quantity</label>
+                            <input name="quantity"
+                                   class="form-control value"
+                                   value="{{$product->quantity}}"
+                                   id="quantity">
+                        </div>
+                        <span class="quantity"></span>
 
-                                <div>
-                                    <input type="number" class="form-control" style="display: none"
-                                           id="percentage_discount_price" placeholder="percentage price">
-                                    <input type="number" class="form-control" style="display: none"
-                                           id="value_discount_price" placeholder="value price">
-                                </div>
+                        <div class="form-group">
+                            <label>category</label>
+                            <select name="categories[]" multiple="multiple"
+                                    class="form-control js-example-basic-single">
+                                @foreach($categories as $category)
+                                    <option
+                                        value="{{$category->id}}" {{in_array($category->id,$ids)? 'selected' : ''}}>{{$category->name}}</option>
+                                @endforeach
+                            </select>
+                            <span class="categories"></span>
 
-                                <div>
-                                    <input type="date" class="form-control"
-                                           value="{{optional($product->offer)->start_date}}" name="start_date"
-                                           placeholder="start Date">
-                                    <input type="date" class="form-control"
-                                           value="{{optional($product->offer)->end_date}}" name="end_date"
-                                           placeholder="end Date">
-                                </div>
+                        </div>
+                        <div class="form-group">
+                            <label>price</label>
+                            <input name="price"
+                                   class="form-control value"
+                                   value="{{$product->price}}"
+                                   id="price">
+                        </div>
+                        <span class="price"></span>
+
+                        <div class="form-group">
+                            <label>offer
+                                <input name="offer" class="{{$product->offer!=null?'checked':''}} offer"
+                                       {{$product->offer!=null?'checked':''}}
+                                       type="checkbox">
+                            </label>
+                        </div>
+
+                        @php  $types =['amount', 'fixed','percentage'];   @endphp
+
+                        <div class="form-group" id="page" style="display: none">
+                            <div class="form-control-sm">
+                                <label>offer type</label>
+                            </div>
+                            <div class="btn-group btn-group-toggle form-group" data-toggle="buttons">
+                                @foreach($types as $key=>$type )
+                                    <label
+                                        class="btn btn-outline-primary {{$type == optional($product->offer)->type?'active':''}}"
+                                        id="option{{$key+1}}">
+                                        <input type="radio" name="type" value="{{$type}}" id="{{$type}}"> {{$type}}
+                                    </label>
+                                @endforeach
+                            </div>
+
+                            <div>
+                                <input type="number" class="form-control value"
+                                       value="{{optional($product->offer)->value}}" min="1" name="value" id="value"
+                                       placeholder="value">
+                                <input type="number" class="form-control" min="0" name="bounce" id="bounce_value"
+                                       value="{{optional($product->offer)->bounce}}"
+                                       placeholder="bounce amount">
+                            </div>
+
+                            <div>
+                                <input type="number" class="form-control" style="display: none"
+                                       id="percentage_discount_price" placeholder="percentage price">
+                                <input type="number" class="form-control" style="display: none"
+                                       id="value_discount_price" placeholder="value price">
+                            </div>
+
+                            <div>
+                                <input type="date" class="form-control"
+                                       value="{{optional($product->offer)->start_date}}" name="start_date"
+                                       placeholder="start Date">
+                                <input type="date" class="form-control"
+                                       value="{{optional($product->offer)->end_date}}" name="end_date"
+                                       placeholder="end Date">
                             </div>
                         </div>
-                        <div class="card-footer">
-                            <button type="submit" class="btn btn-primary btn-submit">Submit</button>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary btn-submit">Submit</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-
 </div>
 
 <script>

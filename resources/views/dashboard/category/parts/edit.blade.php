@@ -1,19 +1,37 @@
+<style>
+    .parsley-errors-list li{
+        color: red;
+        list-style: none;
+    }
+</style>
 <div class="col-12">
     <div class="card card-primary card-tabs">
         <div class="card-header p-0 pt-1">
             <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active" id="custom-tabs-one-home-tab" data-toggle="pill"
-                       href="#custom-tabs-one-home" role="tab" aria-controls="custom-tabs-one-home"
+                       href="#custom-tabs-one-home" role="tab"
+                       aria-controls="custom-tabs-one-home"
                        aria-selected="true">Edit</a>
                 </li>
             </ul>
         </div>
         <div class="card-body">
+{{--            @if ($errors->any())--}}
+{{--                <div class="alert alert-danger">--}}
+{{--                    <ul>--}}
+{{--                        @foreach ($errors->all() as $error)--}}
+{{--                            <li>{{ $error }}</li>--}}
+{{--                        @endforeach--}}
+{{--                    </ul>--}}
+{{--                </div>--}}
+{{--            @endif--}}
+
             <div class="tab-content" id="custom-tabs-one-tabContent">
                 <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel"
                      aria-labelledby="custom-tabs-one-home-tab">
-                    <form method="post" action="{{route('category.update',['category'=>$category->id])}}"
+                    <form method="post"
+                          action="{{route('category.update',['category'=>$category->id])}}"
                           id="update-category-form"
                           enctype="multipart/form-data">
                         @method('PUT')
@@ -22,18 +40,13 @@
                             @foreach(config('translatable.locales') as $local)
                                 <div class="form-group">
                                     <label>{{$local=='ar'?'arabic name':'english name'}}</label>
-                                    <input type="text" value="{{$category->translate($local)->name}}"
-                                           class="form-control @error($local.'[name]') is-invalid @enderror"
-                                           name="{{$local}}[name]" id="name"
-                                           placeholder="Enter category {{$local=='ar'?'arabic name':'english name'}}">
-                                    @error($local.'[name]')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <span class="errors1"></span>
+                                    <input type="text"
+                                           value="{{$category->translate($local)->name}}"
+                                           class="form-control nameajax "
+                                           name="{{$local}}[name]" id="nameajax"></div>
                             @endforeach
+                                <span class="errors1"></span>
+
                             <div class="form-group">
                                 <label>parent category</label>
                                 <select
@@ -52,40 +65,44 @@
                                 </select>
                                 @error('parent_id')
                                 <span class="invalid-feedback" role="alert">
-                                      <strong>{{ $message }}</strong>
-                                  </span>
+                                                           <strong>{{ $message }}</strong>
+                                                        </span>
                                 @enderror
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputFile">image</label>
                                 <div class="input-group">
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <input type="file" id="imageajax" name="image">
-                                            <span class="text-danger" id="image-error"></span>
-                                            <br/>
-                                            <img id="frameajax" src="{{$category->image_path}}"
-                                                 style=" width:100px;height:100px">
-                                        </div>
+                                    <div class="custom-file">
+                                        <input type="file" data-validation="required"
+                                               class="@error('image') is-invalid @enderror"
+                                               id="imageajax" name="image">
+                                        <span class="text-danger" id="image-input-error"></span>
+                                        <br/>
+                                        <img id="frameajax" src="{{$category->image_path}}"
+                                             style=" width:100px;height:100px; border: 1px solid #ddd;border-radius: 8px;padding: 5px;">
+                                        @error('image')
+                                        <div
+                                            class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group" id="parcatajax">
+                            <div class="form-group" id="pcategoryajax">
                                 <label>category order</label>
-                                <input name="category_order"
-                                       class="form-control @error('category_order') is-invalid @enderror"
+                                <input name="category_order" data-validation="required"
+                                       class="@error('category_order') is-invalid @enderror form-control"
                                        value="{{$category->category_order}}"
-                                       id="category_order_count_ajax">
+                                       id="category_order_count_ajax" disabled>
                                 @error('category_order')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                  </span>
+                                <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
-                        <input type="hidden" class="form-control" value="{{$category->id}}" id="catid">
+                        <input type="hidden" class="form-control" value="{{$category->id}}"
+                               id="catid">
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary btn-submit">Submit
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -96,6 +113,10 @@
 </div>
 
 <script>
+
+    $(function () {
+        $('#update-category-form').parsley();
+    });
     $(document).ready(function () {
         var catajax = $('.parcatajax').change(function (e) {
 

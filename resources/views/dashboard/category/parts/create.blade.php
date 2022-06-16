@@ -1,3 +1,9 @@
+<style>
+    .parsley-errors-list li{
+        color: red;
+        list-style: none;
+    }
+</style>
 <div class="col-12">
     <div class="card card-primary card-tabs">
         <div class="card-header p-0 pt-1">
@@ -10,31 +16,6 @@
             </ul>
         </div>
         <div class="card-body">
-            @if(\Illuminate\Support\Facades\Session::has('success'))
-
-                <div class="alert alert-success">
-
-                    {{ \Illuminate\Support\Facades\Session::get('success') }}
-
-                    @php
-
-                        \Illuminate\Support\Facades\Session::forget('success');
-
-                    @endphp
-
-                </div>
-
-            @endif
-
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
                 <div class="tab-content" id="custom-tabs-one-tabContent">
                 <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel"
                      aria-labelledby="custom-tabs-one-home-tab">
@@ -44,50 +25,38 @@
                             @foreach(config('translatable.locales') as $local)
                                 <div class="form-group">
                                     <label>{{$local=='ar'?'arabic name':'english name'}}</label>
-                                    <input type="text" value="{{old($local.'[.name]')}}" class="form-control nameajax @error($local.'[name]') is-invalid @enderror"
-                                           name="{{$local}}[name]" id="nameajax" data-validation="required"
+                                    <input type="text" value="{{old($local.'[.name]')}}" class="form-control nameajax "
+                                           name="{{$local}}[name]" id="nameajax"
                                            placeholder="Enter category {{$local=='ar'?'arabic name':'english name'}}"></div>
-                                    @error($local.'[name]')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                    @enderror
                             @endforeach
                                 <span class="errors1"></span>
-                        <div class="form-group">
+                                <div class="form-group">
                                 <label>parent category</label>
-                                <select class="form-control select2 parcatajax @error('parent_id') is-invalid @enderror"
+                                <select class="form-control select2 parcatajax"
                                         id="catnameajax"
-                                        name="parent_id" data-validation="required" style="width: 100%;">
+                                        name="parent_id" style="width: 100%;">
                                     <option selected="selected" value={{0}} >select category</option>
                                     @foreach($parentcategories as $category)
                                         <option value="{{$category->id}}">{{$category->name}}</option>
                                     @endforeach
                                 </select>
-                                @error('parent_id')
-                                <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputFile">image</label>
                                 <div class="input-group">
                                     <div class="custom-file">
-                                        <input type="file" data-validation="required" class="@error('image') is-invalid @enderror" id="imageajax" name="image">
+                                        <input type="file" id="imageajax" name="image">
                                         <span class="text-danger" id="image-input-error"></span> <br/>
                                         <img id="frameajax" src="{{asset('/uploads/category/default.png')}}" style=" width:100px;height:100px; border: 1px solid #ddd;border-radius: 8px;padding: 5px;">
-                                        @error('image')
-                                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                                        @enderror
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group" id="pcategoryajax">
                                 <label>category order</label>
                                 <input name="category_order" data-validation="required"
-                                       class="@error('category_order') is-invalid @enderror form-control"
+                                       class="form-control"
                                        value="{{old('category_order')}}"
-                                       id="category_order_count_ajax" disabled>
-                                @error('category_order')
-                                <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                                @enderror
+                                       id="category_order_count_ajax" >
                             </div>
                         </div>
                         <div class="card-footer">

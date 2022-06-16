@@ -56,9 +56,16 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
+        $request->validate([
+            'ar.title' => 'required|unique:category_translations,name',
+            'en.title' => 'required|unique:category_translations,name',
+            'ar.description' => 'required',
+            'en.description' => 'required',
+            'quantity' => 'required',
             'images' => 'required',
-            'images.*' => 'mimes:jpg,png,jpeg,gif,svg'
+            'images.*' => 'mimes:jpg,png,jpeg,gif,svg',
+            'categories' => 'required',
+            'price' => 'required',
         ]);
 
         $product = Product::create([
@@ -137,11 +144,16 @@ class ProductController extends Controller
 
     public function update(Request $request, Product $product)
     {
-        $product->update([
-            'en' => ['title' => $request->en['title'], 'description' => $request->en['description']],
-            'ar' => ['title' => $request->ar['title'], 'description' => $request->ar['description']],
-            'quantity' => $request->get('quantity'),
-            'price' => $request->get('price'),
+        $request->validate([
+            'ar.title' => 'required|unique:category_translations,name',
+            'en.title' => 'required|unique:category_translations,name',
+            'ar.description' => 'required',
+            'en.description' => 'required',
+            'quantity' => 'required',
+            'images' => 'required',
+            'images.*' => 'mimes:jpg,png,jpeg,gif,svg',
+            'categories' => 'required',
+            'price' => 'required',
         ]);
 
         if ($request->offer) {
