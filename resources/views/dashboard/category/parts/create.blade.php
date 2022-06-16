@@ -38,10 +38,8 @@
                 <div class="tab-content" id="custom-tabs-one-tabContent">
                 <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel"
                      aria-labelledby="custom-tabs-one-home-tab">
-                    <form method="post" action="{{route('category.createcat')}}"
-                          enctype="multipart/form-data" id="upload-cat-form">
-                        <input type="hidden" name="_token" id="token2"
-                               value="{{csrf_token()}}">
+                    <form method="post" action="{{route('category.createcat')}}" enctype="multipart/form-data" id="upload-cat-form">
+                        <input type="hidden" name="_token" id="token2" value="{{csrf_token()}}">
                         <div class="card-body">
                             @foreach(config('translatable.locales') as $local)
                                 <div class="form-group">

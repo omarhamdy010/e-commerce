@@ -22,16 +22,24 @@
                             @foreach(config('translatable.locales') as $local)
                                 <div class="form-group">
                                     <label>{{$local=='ar'?'arabic name':'english name'}}</label>
-                                    <input type="text" value="{{$category->translate($local)->name}}" class="form-control @error($local.'[name]') is-invalid @enderror"
+                                    <input type="text" value="{{$category->translate($local)->name}}"
+                                           class="form-control @error($local.'[name]') is-invalid @enderror"
                                            name="{{$local}}[name]" id="name"
                                            placeholder="Enter category {{$local=='ar'?'arabic name':'english name'}}">
+                                    @error($local.'[name]')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                                 <span class="errors1"></span>
                             @endforeach
                             <div class="form-group">
                                 <label>parent category</label>
-                                <select class="form-control select2 parcatajax @error('paren_name') is-invalid @enderror" id="parent_name" name="parent_id"
-                                        style="width: 100%;">
+                                <select
+                                    class="form-control select2 parcatajax @error('paren_name') is-invalid @enderror"
+                                    id="parent_name" name="parent_id"
+                                    style="width: 100%;">
                                     @if( $category->parent_id == 0)
                                         <option value="{{0}}" selected>select category</option>
                                     @else
@@ -42,6 +50,11 @@
                                             value="{{$cat->id}}"{{$category->parent_id == $cat->id?'selected':''}}>{{$cat->name}}</option>
                                     @endforeach
                                 </select>
+                                @error('parent_id')
+                                <span class="invalid-feedback" role="alert">
+                                      <strong>{{ $message }}</strong>
+                                  </span>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputFile">image</label>
@@ -59,9 +72,15 @@
                             </div>
                             <div class="form-group" id="parcatajax">
                                 <label>category order</label>
-                                <input name="category_order" class="form-control @error('category_order') is-invalid @enderror"
+                                <input name="category_order"
+                                       class="form-control @error('category_order') is-invalid @enderror"
                                        value="{{$category->category_order}}"
                                        id="category_order_count_ajax">
+                                @error('category_order')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                  </span>
+                                @enderror
                             </div>
                         </div>
                         <input type="hidden" class="form-control" value="{{$category->id}}" id="catid">

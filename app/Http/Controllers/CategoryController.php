@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rules\Unique;
 use Intervention\Image\Facades\Image;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -56,19 +54,19 @@ class CategoryController extends Controller
 
         $category = Category::latest()->first();
 
-        $create = view('dashboard.category.parts.create')->with(['parentcategories' => $parentcategories, 'categories' => $categories , 'category'=>$category])->render();
+        $create = view('dashboard.category.parts.create')->with(['parentcategories' => $parentcategories, 'categories' => $categories, 'category' => $category])->render();
 
-        return response()->json(array('success' => true, 'html' => $create, 'parentcategories' => $parentcategories, 'categories' => $categories ,'category'=>$category));
+        return response()->json(array('success' => true, 'html' => $create, 'parentcategories' => $parentcategories, 'categories' => $categories, 'category' => $category));
     }
 
     public function ajaxstore(Request $request)
     {
 
-//        dd($request->all());
-        request()->validate([
-        'ar.name' => ['required', Unique::class],
-        'en.name' => ['required', Unique::class]
+        $validated = $request->validate([
+            'ar.name' => 'required|unique:categories|max:255',
+            'en.name' => 'required|unique:categories|max:255',
         ]);
+
         $data = $request->except('image');
         if ($request->image) {
             $data['image'] = $request->image->hashName();
@@ -106,8 +104,12 @@ class CategoryController extends Controller
 
     public function update(Request $request, Category $category)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|unique',]);
+
+        $validated = $request->validate([
+            'ar.name' => 'required:unique',
+            'en.name' => 'required:unique',
+        ]);
+
         $data = $request->except(['image']);
         if ($request->image) {
             if ($category->image != 'default.png') {
