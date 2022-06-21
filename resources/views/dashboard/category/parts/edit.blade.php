@@ -44,8 +44,8 @@
                                            value="{{$category->translate($local)->name}}"
                                            class="form-control nameajax "
                                            name="{{$local}}[name]" id="nameajax"></div>
+                                <span class="{{$local}}_name"></span>
                             @endforeach
-                                <span class="errors1"></span>
 
                             <div class="form-group">
                                 <label>parent category</label>

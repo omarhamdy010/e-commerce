@@ -64,9 +64,9 @@ class CategoryController extends Controller
     {
 //dd($request->all());
           $request->validate([
-              'ar.name' => 'required|unique:category_translations,name',
-              'en.name' => 'required|unique:category_translations,name',
-        ]);
+        'ar.name' => 'required|unique:category_translations,name',
+        'en.name' => 'required|unique:category_translations,name',
+    ]);
         $data = $request->except('image');
         if ($request->image) {
             $data['image'] = $request->image->hashName();

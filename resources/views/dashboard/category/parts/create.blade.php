@@ -1,9 +1,3 @@
-<style>
-    .parsley-errors-list li{
-        color: red;
-        list-style: none;
-    }
-</style>
 <div class="col-12">
     <div class="card card-primary card-tabs">
         <div class="card-header p-0 pt-1">
@@ -28,8 +22,8 @@
                                     <input type="text" value="{{old($local.'[.name]')}}" class="form-control nameajax "
                                            name="{{$local}}[name]" id="nameajax"
                                            placeholder="Enter category {{$local=='ar'?'arabic name':'english name'}}"></div>
+                                <span class="{{$local}}_name"></span>
                             @endforeach
-                                <span class="errors1"></span>
                                 <div class="form-group">
                                 <label>parent category</label>
                                 <select class="form-control select2 parcatajax"

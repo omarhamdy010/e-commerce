@@ -42,8 +42,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
 
-
-
     <!-- summernote -->
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -857,11 +855,7 @@
 {{--<script>--}}
 {{--    $.widget.bridge('uibutton', $.ui.button)--}}
 {{--</script>--}}
-<script>
-    $(function () {
-        $('#update-category-form').parsley();
-    });
-</script>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>

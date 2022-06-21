@@ -57,8 +57,8 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'ar.title' => 'required|unique:category_translations,name',
-            'en.title' => 'required|unique:category_translations,name',
+            'ar.title' => 'required|unique:product_translations,name',
+            'en.title' => 'required|unique:product_translations,name',
             'ar.description' => 'required',
             'en.description' => 'required',
             'quantity' => 'required',
@@ -139,14 +139,13 @@ class ProductController extends Controller
         }
         $edit = view('dashboard.product.parts.edit', compact('product', 'categories', 'offers', 'ids', 'images'))->render();
         return response()->json(array('success' => true, 'html' => $edit, 'product' => $product, 'categories' => $categories, 'images' => $images, 'offers' => $offers, 'ids' => $ids));
-
     }
 
     public function update(Request $request, Product $product)
     {
         $request->validate([
-            'ar.title' => 'required|unique:category_translations,name',
-            'en.title' => 'required|unique:category_translations,name',
+            'ar.title' => 'required|unique:product_translations,name',
+            'en.title' => 'required|unique:product_translations,name',
             'ar.description' => 'required',
             'en.description' => 'required',
             'quantity' => 'required',
@@ -154,6 +153,13 @@ class ProductController extends Controller
             'images.*' => 'mimes:jpg,png,jpeg,gif,svg',
             'categories' => 'required',
             'price' => 'required',
+        ]);
+
+        $product->update([
+            'en' => ['title' => $request->en['title'], 'description' => $request->en['description']],
+            'ar' => ['title' => $request->ar['title'], 'description' => $request->ar['description']],
+            'quantity' => $request->get('quantity'),
+            'price' => $request->get('price'),
         ]);
 
         if ($request->offer) {

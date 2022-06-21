@@ -1,5 +1,4 @@
 <div class="col-12">
-    <span class="error1"></span>
     <div class="card-body">
 
         <div class="tab-content" id="custom-tabs-one-tabContent">
@@ -24,6 +23,7 @@
                                        name="{{$local}}[title]" id="title"
                                        placeholder="Enter product {{$local=='ar'?'arabic name':'english name'}}">
                             </div>
+                            <span class="{{$local}}_title"></span>
 
                             <div class="form-group">
                                     <textarea name="{{$local}}[description]" style="height: 200px;width: 670px"
@@ -31,6 +31,7 @@
                                               placeholder="{{$local=='ar'?'arabic description':'english description'}}">
                                               {{$product->translate($local)->description}}</textarea>
                             </div>
+                            <span class="{{$local}}_description"></span>
                         @endforeach
 
                         <div class="form-group">

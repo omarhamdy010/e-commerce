@@ -19,6 +19,7 @@
                                            name="{{$local}}[title]" id="title"
                                     placeholder="Enter product {{$local=='ar'?'arabic name':'english name'}}">
                                 </div>
+                                <span class="{{$local}}_title"></span>
 
                                 <div class="form-group">
                                 <textarea name="{{$local}}[description]" style="height: 200px;width: 670px"
@@ -26,6 +27,7 @@
                                           value="{{old($local.'[.description]')}}" class="form-control"
                                           placeholder="{{$local=='ar'?'arabic description':'english description'}}"></textarea>
                                 </div>
+                                <span class="{{$local}}_description"></span>
                             @endforeach
 
                             <div class="form-group">

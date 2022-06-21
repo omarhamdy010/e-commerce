@@ -312,7 +312,8 @@
                 error: function (xhr, status, error) {
                     console.log(xhr);
                     $.each(xhr.responseJSON.errors, function (key, item) {
-                        $(".errors1").append("<span class='text-danger'>" + item + "</span><br>")
+                        var strArray = key.replace('.','_');
+                        $('.'+strArray).append("<span class='text-danger'>" + item + "</span><br>")
                     });
                 }
             });
@@ -348,7 +349,8 @@
                 error: function (xhr, status, error) {
                     console.log(xhr);
                     $.each(xhr.responseJSON.errors, function (key, item) {
-                        $(".errors1").append("<span class='text-danger'>" + item + "</span><br>")
+                        var strArray = key.replace('.','_');
+                        $('.'+strArray).append("<span class='text-danger'>" + item + "</span><br>")
                     });
                 }
             });
