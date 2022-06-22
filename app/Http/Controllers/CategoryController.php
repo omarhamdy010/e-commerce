@@ -104,10 +104,20 @@ class CategoryController extends Controller
 
     public function update(Request $request, Category $category)
     {
+//        dd($request->all());
 
         $request->validate([
-            'ar.name' => 'required|unique:category_translations,name',
-            'en.name' => 'required|unique:category_translations,name',
+//            'ar.name' =>"required|unique:category_translations,name,$request->id",
+//            'en.name' =>"required|unique:category_translations,name,$request->id",
+
+            'ar.name' =>[
+                'required',
+                Rule::unique('category_translations', 'name')->ignore($category->id)
+            ],
+            'en.name' => [
+                'required',
+                Rule::unique('category_translations', 'name')->ignore($category->id)
+            ],
         ]);
 
         $data = $request->except(['image']);

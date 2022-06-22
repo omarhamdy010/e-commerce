@@ -57,8 +57,8 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'ar.title' => 'required|unique:product_translations,name',
-            'en.title' => 'required|unique:product_translations,name',
+            'ar.title' => 'required|unique:product_translations,title',
+            'en.title' => 'required|unique:product_translations,title',
             'ar.description' => 'required',
             'en.description' => 'required',
             'quantity' => 'required',
@@ -144,8 +144,8 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $request->validate([
-            'ar.title' => 'required|unique:product_translations,name',
-            'en.title' => 'required|unique:product_translations,name',
+            'ar.title' => "required|unique:product_translations,title,",
+            'en.title' => "required|unique:product_translations,title",
             'ar.description' => 'required',
             'en.description' => 'required',
             'quantity' => 'required',

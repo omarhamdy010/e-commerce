@@ -20,14 +20,14 @@
                                 <div class="form-group">
                                     <label>{{$local=='ar'?'arabic name':'english name'}}</label>
                                     <input type="text" value="{{old($local.'[.name]')}}" class="form-control nameajax "
-                                           name="{{$local}}[name]" id="nameajax"
+                                           name="{{$local}}[name]" id="nameajax" data-validation="required"
                                            placeholder="Enter category {{$local=='ar'?'arabic name':'english name'}}"></div>
                                 <span class="{{$local}}_name"></span>
                             @endforeach
                                 <div class="form-group">
                                 <label>parent category</label>
                                 <select class="form-control select2 parcatajax"
-                                        id="catnameajax"
+                                        id="catnameajax" data-validation="required"
                                         name="parent_id" style="width: 100%;">
                                     <option selected="selected" value={{0}} >select category</option>
                                     @foreach($parentcategories as $category)
@@ -39,7 +39,7 @@
                                 <label for="exampleInputFile">image</label>
                                 <div class="input-group">
                                     <div class="custom-file">
-                                        <input type="file" id="imageajax" name="image">
+                                        <input type="file" id="imageajax" data-validation="required" name="image">
                                         <span class="text-danger" id="image-input-error"></span> <br/>
                                         <img id="frameajax" src="{{asset('/uploads/category/default.png')}}" style=" width:100px;height:100px; border: 1px solid #ddd;border-radius: 8px;padding: 5px;">
                                     </div>
@@ -92,3 +92,17 @@ $(document).ready(function () {
 
 </script>
 
+<script>
+
+    $.validate({
+        modules: 'logic, location',
+        onSuccess: function() {
+            alert('valid');
+            return false;
+        },
+        onModulesLoaded: function() {
+            $('input[name="country"]').suggestCountry();
+        }
+    });
+
+</script>

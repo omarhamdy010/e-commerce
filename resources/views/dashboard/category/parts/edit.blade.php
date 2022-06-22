@@ -42,7 +42,7 @@
                                     <label>{{$local=='ar'?'arabic name':'english name'}}</label>
                                     <input type="text"
                                            value="{{$category->translate($local)->name}}"
-                                           class="form-control nameajax "
+                                           class="form-control nameajax " data-validation="required"
                                            name="{{$local}}[name]" id="nameajax"></div>
                                 <span class="{{$local}}_name"></span>
                             @endforeach
@@ -51,7 +51,7 @@
                                 <label>parent category</label>
                                 <select
                                     class="form-control select2 parcatajax @error('paren_name') is-invalid @enderror"
-                                    id="parent_name" name="parent_id"
+                                    id="parent_name" name="parent_id" data-validation="required"
                                     style="width: 100%;">
                                     @if( $category->parent_id == 0)
                                         <option value="{{0}}" selected>select category</option>
@@ -98,7 +98,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <input type="hidden" class="form-control" value="{{$category->id}}"
+                        <input type="hidden" class="form-control" name="id" value="{{$category->id}}"
                                id="catid">
                         <div class="card-footer">
                             <button type="submit" class="btn btn-primary btn-submit">Submit
@@ -113,10 +113,6 @@
 </div>
 
 <script>
-
-    $(function () {
-        $('#update-category-form').parsley();
-    });
     $(document).ready(function () {
         var catajax = $('.parcatajax').change(function (e) {
 
@@ -139,3 +135,19 @@
     });
 
 </script>
+
+<script>
+
+    $.validate({
+        modules: 'logic, location',
+        onSuccess: function() {
+            alert('valid');
+            return false;
+        },
+        onModulesLoaded: function() {
+            $('input[name="country"]').suggestCountry();
+        }
+    });
+
+</script>
+
