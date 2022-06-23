@@ -16,14 +16,14 @@
                                 <div class="form-group">
                                     <label>{{$local=='ar'?'arabic title':'english title'}}</label>
                                     <input type="text" value="{{old($local.'[.title]')}}" class="form-control title"
-                                           name="{{$local}}[title]" id="title"
+                                           name="{{$local}}[title]" id="title" data-validation="required"
                                     placeholder="Enter product {{$local=='ar'?'arabic name':'english name'}}">
                                 </div>
                                 <span class="{{$local}}_title"></span>
 
                                 <div class="form-group">
                                 <textarea name="{{$local}}[description]" style="height: 200px;width: 670px"
-                                          id="description"
+                                          id="description" data-validation="required"
                                           value="{{old($local.'[.description]')}}" class="form-control"
                                           placeholder="{{$local=='ar'?'arabic description':'english description'}}"></textarea>
                                 </div>
@@ -32,21 +32,21 @@
 
                             <div class="form-group">
                                 <input  type="file" class="form-control" name="images[]" placeholder="address" id="images"
-                                       value="{{old('images[]')}}"
+                                       value="{{old('images[]')}}" data-validation="required"
                                        multiple>
                             </div>
                             <span class="images"></span>
 
                             <div class="form-group">
                                 <label>quantity</label>
-                                <input name="quantity" class="form-control value"
+                                <input name="quantity" class="form-control value" data-validation="required"
                                   type="number" value="{{old('quantity')}}" id="quantity">
                             </div>
                             <span class="quantity"></span>
 
                             <div class="form-group">
                                 <label for="category">category</label>
-                                <select name="categories[]" multiple="multiple" id="category_SELECT2" class="select2-multiple form-control">
+                                <select name="categories[]" multiple="multiple" id="category_SELECT2" data-validation="required" class="select2-multiple form-control">
                                     @foreach($Categories as $category)
                                         <option
                                             value="{{$category->id}}" {{old('category_id') == $category->id? 'selected' : ''}}>{{$category->name}}</option>
@@ -58,7 +58,7 @@
                             <div class="form-group">
                                 <label>price</label>
                                 <input name="price" type="number"
-                                       class="form-control value"
+                                       class="form-control value" data-validation="required"
                                        value="{{old('price')}}"
                                        id="price">
                             </div>
@@ -120,6 +120,17 @@
     // $(document).ready(function (){
     //     $('#category_SELECT2').select2();
     // })
+
+    $.validate({
+        modules: 'logic, location',
+        onSuccess: function() {
+            // alert('valid');
+            return false;
+        },
+        onModulesLoaded: function() {
+            $('input[name="country"]').suggestCountry();
+        }
+    });
 
     $('.offer').on('click', function () {
         var x = document.getElementById("page");

@@ -90,14 +90,11 @@ $(document).ready(function () {
         });
     });
 
-</script>
-
-<script>
 
     $.validate({
         modules: 'logic, location',
         onSuccess: function() {
-            alert('valid');
+            // alert('valid');
             return false;
         },
         onModulesLoaded: function() {

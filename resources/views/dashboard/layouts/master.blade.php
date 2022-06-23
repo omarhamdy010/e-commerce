@@ -887,6 +887,7 @@
 
 <script src="{{asset('plugins/jquery/jquery_plugins.js')}}"></script>
 <script src="{{asset('plugins/jquery/jquery.form-validator.js')}}"></script>
+<script src="{{asset('plugins/jquery/jquery.translate.js')}}"></script>
 <!-- Bootstrap 4 -->
 <script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- DataTables  & Plugins -->

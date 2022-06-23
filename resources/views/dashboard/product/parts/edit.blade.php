@@ -19,7 +19,7 @@
                             <div class="form-group">
                                 <label>{{$local=='ar'?'arabic title':'english title'}}</label>
                                 <input type="text" value="{{$product->translate($local)->title}}"
-                                       class="form-control title"
+                                       class="form-control title" data-validation="required"
                                        name="{{$local}}[title]" id="title"
                                        placeholder="Enter product {{$local=='ar'?'arabic name':'english name'}}">
                             </div>
@@ -27,7 +27,7 @@
 
                             <div class="form-group">
                                     <textarea name="{{$local}}[description]" style="height: 200px;width: 670px"
-                                              id="description" class="form-control"
+                                              id="description" class="form-control" data-validation="required"
                                               placeholder="{{$local=='ar'?'arabic description':'english description'}}">
                                               {{$product->translate($local)->description}}</textarea>
                             </div>
@@ -35,7 +35,7 @@
                         @endforeach
 
                         <div class="form-group">
-                            <input type="file" class="form-control" name="images[]" placeholder="address"
+                            <input type="file" class="form-control" name="images[]" placeholder="address" data-validation="required"
                                    value="{{$images[0]}}" multiple>
                         </div>
                         <span class="images"></span>
@@ -43,7 +43,7 @@
                         <div class="form-group">
                             <label>quantity</label>
                             <input name="quantity"
-                                   class="form-control value"
+                                   class="form-control value" data-validation="required"
                                    value="{{$product->quantity}}"
                                    id="quantity">
                         </div>
@@ -51,7 +51,7 @@
 
                         <div class="form-group">
                             <label>category</label>
-                            <select name="categories[]" multiple="multiple"
+                            <select name="categories[]" multiple="multiple" data-validation="required"
                                     class="form-control js-example-basic-single">
                                 @foreach($categories as $category)
                                     <option
@@ -63,10 +63,8 @@
                         </div>
                         <div class="form-group">
                             <label>price</label>
-                            <input name="price"
-                                   class="form-control value"
-                                   value="{{$product->price}}"
-                                   id="price">
+                            <input name="price" class="form-control value" data-validation="required"
+                                   value="{{$product->price}}" id="price">
                         </div>
                         <span class="price"></span>
 
@@ -130,6 +128,18 @@
 </div>
 
 <script>
+
+    $.validate({
+        modules: 'logic, location',
+        onSuccess: function() {
+            // alert('valid');
+            return false;
+        },
+        onModulesLoaded: function() {
+            $('input[name="country"]').suggestCountry();
+        }
+    });
+
     $(document).ready(function () {
         var catajax = $('.parcatajax').change(function (e) {
 
