@@ -139,15 +139,11 @@
 <script>
 
     $.validate({
-        modules: 'logic, location',
-        onSuccess: function() {
-            alert('valid');
-            return false;
-        },
-        onModulesLoaded: function() {
-            $('input[name="country"]').suggestCountry();
-        }
-    });
+        ignore: 'input[type=hidden]',
+        modules : 'date, security',
+        lang:"ar",
+        validateOnEvent : true
 
+    });
 </script>
 

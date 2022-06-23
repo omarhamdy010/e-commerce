@@ -106,7 +106,6 @@
 @section('js')
 
     <script type="text/javascript">
-
         function runDataTable() {
             var table = $('.yajra-datatable').DataTable({
                 processing: true,

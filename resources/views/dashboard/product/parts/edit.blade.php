@@ -129,16 +129,6 @@
 
 <script>
 
-    $.validate({
-        modules: 'logic, location',
-        onSuccess: function() {
-            // alert('valid');
-            return false;
-        },
-        onModulesLoaded: function() {
-            $('input[name="country"]').suggestCountry();
-        }
-    });
 
     $(document).ready(function () {
         var catajax = $('.parcatajax').change(function (e) {
@@ -245,4 +235,13 @@
         });
 
     });
+
+    $.validate({
+        ignore: 'input[type=hidden]',
+        modules : 'date, security',
+        lang:"ar",
+        validateOnEvent : true
+
+    });
+
 </script>

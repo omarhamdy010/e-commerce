@@ -854,10 +854,6 @@
 @yield('js')
 <script src="{{asset('assets/plugins/jquery/jquery.min.js')}}"></script>
 
-<!-- jQuery UI 1.11.4 -->
-{{--<script>--}}
-{{--    $.widget.bridge('uibutton', $.ui.button)--}}
-{{--</script>--}}
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -870,7 +866,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.2/parsley.min.js"
         integrity="sha512-eyHL1atYNycXNXZMDndxrDhNAegH2BDWt1TmkXJPoGf1WLlNYt08CSjkqF5lnCRmdm3IrkHid8s2jOUY4NIZVQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
 <!-- Bootstrap 4 -->
 <script src="{{asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- Sparkline -->
@@ -882,12 +877,11 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{asset('assets/js/pages/dashboard.js')}}"></script>
 
-
 <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
 
 <script src="{{asset('plugins/jquery/jquery_plugins.js')}}"></script>
 <script src="{{asset('plugins/jquery/jquery.form-validator.js')}}"></script>
-<script src="{{asset('plugins/jquery/jquery.translate.js')}}"></script>
+<script src="{{asset('jQuery-Form-Validator-master/src/lang/ar.js')}}"></script>
 <!-- Bootstrap 4 -->
 <script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- DataTables  & Plugins -->

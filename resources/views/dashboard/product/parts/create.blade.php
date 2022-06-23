@@ -117,19 +117,12 @@
 
 <script>
 
-    // $(document).ready(function (){
-    //     $('#category_SELECT2').select2();
-    // })
-
     $.validate({
-        modules: 'logic, location',
-        onSuccess: function() {
-            // alert('valid');
-            return false;
-        },
-        onModulesLoaded: function() {
-            $('input[name="country"]').suggestCountry();
-        }
+        ignore: 'input[type=hidden]',
+        modules : 'date, security',
+        lang:"ar",
+        validateOnEvent : true
+
     });
 
     $('.offer').on('click', function () {
