@@ -1,6 +1,7 @@
 @extends('dashboard.layouts.master')
 
 @section('content')
+
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -185,7 +186,7 @@
                 success: function (data) {
                     console.log(data);
                     $('.renderproduct').html(data.html);
-                    $('#category_SELECT2').select2();
+                    $('#select2-dropdown').select2();
                 }
             });
         });
@@ -211,6 +212,8 @@
                 success: function (data) {
                     console.log(data);
                     $('.rendereditproduct').html(data.html);
+
+                    $('#select2-dropdown').select2();
                     // $('.js-example-basic-single').select2({
                     //     width: '100%',
                     //     placeholder: "Select an Option",
@@ -277,7 +280,6 @@
                     $('#exampleModal').toggleClass('show');
                     $('#exampleModal').toggleClass('in');
                     $('.modal-backdrop').css('display', 'none');
-
                     $('.datatable').DataTable().ajax.reload(null, false);
                 },
                 error: function (xhr, status, error) {

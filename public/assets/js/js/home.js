@@ -27,11 +27,11 @@ var swiper = new Swiper(".mySwiper", {
       httprequest.onreadystatechange=function(){
           if(httprequest.status==200 && httprequest.readyState==4){
               var Data=JSON.parse(httprequest.response).items
-          
+
               displayProductTemp(Data);
           }
       }
-         
+
   }
 function displayProductTemp(Topproducts){
   for(var i =0 ;i<Topproducts.length ; i++) {
@@ -45,11 +45,11 @@ function displayProductTemp(Topproducts){
           </a> </div>
         <div class="pr-info-area">
           <div data-select="`+Topproducts[i].id+`" class="pr-button">
-          
+
             <div id="`+Topproducts[i].id+`" onclick="likeProduct(this.id)" class="mt-button add_to_wishlist"> <a> <i class="fa fa-heart-o"></i> </a> </div>
             <div  id="`+Topproducts[i].id+`" onclick="follow(this.id)" class="mt-button add_to_compare follow"> <a> <i " class="fa fa-check-circle"></i> </a> </a></div>
                   <div  id="`+Topproducts[i].id+`" onclick="unfollow(this.id)" class="mt-button add_to_compare unfollow"> <a> <i " class="fa fa-times-circle"></i> </a> </a></div>
-            
+
           </div>
         </div>
       </div>
@@ -71,7 +71,7 @@ function displayProductTemp(Topproducts){
     </div>
   </div>
 </div>`
-    swiper.appendSlide(slider);
+    // swiper.appendSlide(slider);
   }
 }
 
@@ -89,12 +89,12 @@ function displayTopProducts(Topproducts){
           </a> </div>
         <div class="pr-info-area">
           <div ata-select="`+Topproducts[i].id+`" class="pr-button">
-          
+
             <div id="`+Topproducts[i].id+`" onclick="likeProduct(this.id)" class="mt-button add_to_wishlist"> <a> <i class="fa fa-heart-o"></i> </a> </div>
             <div  id="`+Topproducts[i].id+`" onclick="follow(this.id)" class="mt-button add_to_compare follow"> <a> <i " class="fa fa-check-circle"></i> </a> </a></div>
             <div  id="`+Topproducts[i].id+`" onclick="unfollow(this.id)" class="mt-button add_to_compare unfollow"> <a> <i " class="fa fa-times-circle"></i> </a> </a></div>
-            
-            
+
+
           </div>
         </div>
       </div>
@@ -120,11 +120,11 @@ function displayTopProducts(Topproducts){
   //   // $(".old-price").css("display","none !important")
 
   // }
-  
-          
+
+
       }
-  
-  
+
+
   document.getElementById("sellingg").innerHTML = MostSelling;
 //  var x=document.getElementById("old-price").value;
 //  console.log(x)
@@ -147,7 +147,7 @@ var x =$('#priceId').text();
 $('#priceId').css("display","none")
     if (x == "null"){
       // alert("null")
-    }  
+    }
 
 }
 
@@ -176,7 +176,7 @@ var lang="en"
               displayData(Data);
           }
       }
-          
+
       }
       defult();
 
@@ -184,21 +184,21 @@ var lang="en"
 function displayData(Data)
 {
    temp = "";
-          
+
           var titles=[];
           for(var i =0 ;i<Data.length ; i++)
               {
 
                   temp+=`<li data-transition="fade" data-slotamount="7" data-masterspeed="10000" data-thumb="" style="width: 100%; height: 100%; overflow: hidden; visibility: visible; left: 0px; top: 0px; z-index: 20; opacity: 1;"><div class="slotholder" style="width:100%;height:100%;" data-duration="undefined" data-zoomstart="undefined" data-zoomend="undefined" data-rotationstart="undefined" data-rotationend="undefined" data-ease="undefined" data-bgpositionend="undefined" data-bgposition="left top" data-kenburns="undefined" data-easeme="undefined" data-bgfit="cover" data-bgfitend="undefined" data-owidth="undefined" data-oheight="undefined"><div class="tp-bgimg defaultimg" data-lazyload="undefined" data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat" data-lazydone="undefined" src="http://aaaserver-001-site31.ftempurl.com`+Data[i].image+`" data-src="http://aaaserver-001-site31.ftempurl.com`+Data[i].image+`" style="background-color: rgba(0, 0, 0, 0); background-repeat: no-repeat; background-image: url(http://aaaserver-001-site31.ftempurl.com`+Data[i].image+`); background-size:102%; background-position: left top; width: 100%; height: 100%; opacity: 1; position: relative;"></div></div>
-                 
+
                 </li>`
                   titles.push(Data[i].image);
-                  
+
               }
-          
-          
+
+
           document.getElementById("slider-list").innerHTML = temp;
-              
+
 }
     /* ---------------------------------------------
        Offers section
@@ -211,12 +211,12 @@ function getOffers(){
     httprequest.onreadystatechange=function(){
         if(httprequest.status==200 && httprequest.readyState==4){
             var Data=JSON.parse(httprequest.response).items
-           displayoffers(Data) 
-    
+           displayoffers(Data)
+
     }
-    
+
     }
-    
+
     }
     getOffers()
     function displayoffers(Data){
@@ -233,10 +233,10 @@ function getOffers(){
   </div>`;
 
     }
-      document.getElementById("offersSection").innerHTML= Offers;
+      // document.getElementById("offersSection").innerHTML= Offers;
     }
 
-    
+
 // categories Ahmed Samir
 function categories(){
 
@@ -255,7 +255,7 @@ function categories(){
                   jQuery('.mega-menu-category').slideDown();
               }
           });
-          
+
   jQuery('.mega-menu-category .nav > li').hover(function() {
       jQuery(this).addClass("active");
       jQuery(this).find('.popup').stop(true, true).fadeIn('slow');
@@ -277,10 +277,10 @@ function categories(){
   });
       }
   }
-      
+
   }
   categories();
-  
+
   var mainC = {}
   var idMain = {}
   function saveMain(allMainCatData) {
@@ -302,7 +302,7 @@ function categories(){
     })
 
   }
-  
+
   var catIds={};
   var catWithSub={};
   function saveCat(allCatData,key) {
@@ -334,14 +334,14 @@ function categories(){
                 displayof();
               }
             }
-            
+
         });
     }
     getData();
   }
- 
+
   function displayof(){
-  
+
 $.each(mainC, function(key, value) {
   var mainCategory = key;
   var html = '<li><a href="#">'+mainCategory+'</a><div class="wrap-popup"><div class="popup"><div class="row">'
@@ -367,7 +367,7 @@ $.each(mainC, function(key, value) {
   }
   html+='</div></div></div></div></li>';
   html2+='</ul>'
-  
+
   document.getElementById("nav-categories").innerHTML = html;
   document.getElementById("categ-mob").innerHTML = html2;
 })
@@ -378,9 +378,9 @@ jQuery('.mega-menu-category .nav > li').hover(function() {
   jQuery(this).removeClass("active");
   jQuery(this).find('.popup').stop(true, true).fadeOut('slow');
 });
-          
+
   }
-//End Ahmed 
+//End Ahmed
 function getBrandcategories(){
   var httprequest= new XMLHttpRequest();
   httprequest.open("GET","http://aaaserver-001-site31.ftempurl.com/"+lang+"/api/Brands/GetBrands?Index=0&Size=10");
@@ -389,10 +389,10 @@ function getBrandcategories(){
       if(httprequest.status==200 && httprequest.readyState==4){
           var Data=JSON.parse(httprequest.response).items
           displayBrandCategries(Data);
-      
+
       }
   }
-     
+
 }
     /* ---------------------------------------------
        Brand section
@@ -400,29 +400,29 @@ function getBrandcategories(){
 getBrandcategories();
 function displayBrandCategries(Brand){
   BrandItem = "";
-  brandMobile=""        
+  brandMobile=""
   var titles=[];
   for(var i =0 ;i<Brand.length ; i++)
       {
 
-        
+
         BrandItem+=`<li class="menu-item depth-1 menucol-1-3 ">
-                    
+
         <ul class="submenu">
           <li class="menu-item">
             <div class="title"> <a href="shop_grid.html?brand_id=`+Brand[i].id+`">`+Brand[i].name+`</a></div>
           </li>
-         
+
         </ul>
       </li>`
       brandMobile+=`<li><a href="shop_grid.html?brand_id=`+Brand[i].id+`">`+Brand[i].name+`</a></li>`
- 
+
       }
-  
-  
+
+
   document.getElementById("brands").innerHTML = BrandItem ;
-  document.getElementById("brandMobile").innerHTML=brandMobile
-  
+  // document.getElementById("brandMobile").innerHTML=brandMobile
+
 }
 
 
@@ -452,14 +452,14 @@ function displayBrandCategries(Brand){
   //             });
   //         }
   //     }
-         
+
   // }
   // getProducts()
   // function displayProducts(products){
 
   //     item = "";
   //      text="";
-         
+
   //     var titles=[];
   //     for(var i =0 ;i<products.length ; i++)
   //         {
@@ -497,11 +497,11 @@ function displayBrandCategries(Brand){
   //       </div>
   //     </div>`
   //             titles.push(products[i].name);
-              
+
   //         }
-    
+
   //     document.getElementById("prod-item").innerHTML = item;
-          
+
   // }
 
      /* ---------------------------------------------
@@ -515,7 +515,7 @@ function displayBrandCategries(Brand){
       httprequest.onreadystatechange=function(){
           if(httprequest.status==200 && httprequest.readyState==4){
               var Data=JSON.parse(httprequest.response).items
-              
+
               if(Data.length == 0){
                 $("#zero-section").css("display","none")
               }else{
@@ -538,7 +538,7 @@ function displayBrandCategries(Brand){
 
           }
       }
-         
+
   }
   getZeroCostProducts()
   function displayZeroProducts(products){
@@ -547,7 +547,7 @@ function displayBrandCategries(Brand){
       var titles=[];
       for(var i =0 ;i<products.length ; i++)
           {
-       
+
         item+=`
         <div class="product-item hell">
         <div class="item-inner">
@@ -582,11 +582,10 @@ function displayBrandCategries(Brand){
         </div>
       </div>`
               titles.push(products[i].name);
-              
+
           }
-    
-      document.getElementById("zero-cost").innerHTML = item;
-          
+
+      // document.getElementById("zero-cost").innerHTML = item;
         }
 
 
@@ -598,15 +597,15 @@ function displayBrandCategries(Brand){
           httprequest.onreadystatechange=function(){
               if(httprequest.status==200 && httprequest.readyState==4){
                   var Data=JSON.parse(httprequest.response)
-                  displayofferImg(Data) 
-               
+                  displayofferImg(Data)
+
                    }
-          
+
           }
           // window.location.replace("http://127.0.0.1:5500/offer.html");
           }
-          
-          
+
+
           getOfferImg();
           function displayofferImg(offerImg){
 
@@ -615,11 +614,11 @@ function displayBrandCategries(Brand){
             // offerImg = "";
             //  console.log(offerImg.image)
             // offerImg+=`<img src="http://aaaserver-001-site31.ftempurl.com`+offerImg.image+`" alt="HTML template"/> `;
-            
-            document.getElementById("backgroundImg").innerHTML= imgOffer;
+
+            // document.getElementById("backgroundImg").innerHTML= imgOffer;
           }
 
-         
+
 
 
 
@@ -629,8 +628,8 @@ function displayBrandCategries(Brand){
 
 
             var id =parseInt(event)
-           
-           
+
+
              var token=JSON.parse(sessionStorage.getItem('token'));
                      fetch("http://aaaserver-001-site31.ftempurl.com/"+lang+"/api/Favorites/LikeProduct",{
                          method:'POST',
@@ -648,11 +647,11 @@ function displayBrandCategries(Brand){
                          //     throw new Error("HTTP status " + response.status);
                          // }
                          return response.json();
-                     
+
                      })
-                 
+
              .then(function(data){
-                 
+
                  console.log(data)
                  // console.log(email)
                  // console.log(data.token)
@@ -661,20 +660,20 @@ function displayBrandCategries(Brand){
                console.error(err.message);
              })
              // .catch(error => console.log("invalid ") );
-           
-           
-           
-           
+
+
+
+
            }
            function follow(event){
- 
+
 
             $('.follow').closest('div#'+event).css("display","none")
             $('.unfollow').closest('div#'+event).css("display","block")
-          
+
               var id =parseInt(event)
-             
-             
+
+
                var token=JSON.parse(sessionStorage.getItem('token'));
                        fetch("http://aaaserver-001-site31.ftempurl.com/"+lang+"/api/Products/FollowProduct/"+id,{
                            method:'POST',
@@ -683,27 +682,27 @@ function displayBrandCategries(Brand){
                              "content-type": "application/json; charset=utf-8"
                                            }
                        }).then(function(response){
-                        
+
                            return response.json();
-                       
+
                        })
-                   
+
                .then(function(data){
-             
+
                }).catch(err =>{
                  console.error(err.message);
                })
-          
+
           }
-          
+
           function unfollow(event){
-           
+
             $('.follow').closest('div#'+event).css("display","block")
             $('.unfollow').closest('div#'+event).css("display","none")
-          
+
             var id =parseInt(event)
-           
-           
+
+
              var token=JSON.parse(sessionStorage.getItem('token'));
                      fetch("http://aaaserver-001-site31.ftempurl.com/"+lang+"/api/Products/UnFollowProduct/"+id,{
                          method:'POST',
@@ -712,20 +711,20 @@ function displayBrandCategries(Brand){
                            "content-type": "application/json; charset=utf-8"
                                          }
                      }).then(function(response){
-                        
+
                          return response.json();
-                     
+
                      })
-                 
+
              .then(function(data){
-           
-                
+
+
              }).catch(err =>{
                console.error(err.message);
              })
-          
-           
-           
-           
-           
+
+
+
+
+
           }

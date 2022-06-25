@@ -32,8 +32,13 @@ class Product extends Model implements TranslatableContract
         return $this->hasMany(product_image::class);
     }
 
+    public function getDefaultImageAttribute()
+    {
+        return $this->images()->where('is_default',1)->first();
+    }
+
     public function getImagePathAttribute()
     {
-        return asset('uploads/products/' . $this->images()->where('is_default',1)->get());
+        return $this->images()->where('is_default',0)->get();
     }
 }

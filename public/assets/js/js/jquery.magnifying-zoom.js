@@ -1,17 +1,19 @@
-(function(d) {
+(function (d) {
     "use strict";
 
     function r(e) {
         if ("string" === typeof e) {
-            var c = e.indexOf("_"); - 1 != c && (e = e.substr(c + 1))
+            var c = e.indexOf("_");
+            -1 != c && (e = e.substr(c + 1))
         }
         return e
     }
+
     var p = [],
         l = 0,
         s = {
-            init: function(e) {
-                this.each(function() {
+            init: function (e) {
+                this.each(function () {
                     var c = d(this),
                         a = c.data("mlens"),
                         a = d(),
@@ -35,7 +37,7 @@
                         }, e);
                     "" == a.imgSrc && (g = c.attr("src"));
                     "" != a.imgSrc2x && 1 < window.devicePixelRatio ? (g = a.imgSrc2x, h = new Image, h.onload =
-                        function() {
+                        function () {
                             b = String(parseInt(this.width / 2)) + "px";
                             f.css({
                                 backgroundSize: b + " auto"
@@ -48,11 +50,13 @@
                         k = "position: absolute; width: 100%; height: 100%; left: 0; top: 0; background-position: center center; background-repeat: no-repeat; z-index: 1;";
                     !0 === a.overlayAdapt && (k += "background-position: center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;");
                     switch (a.lensShape) {
-                        default: n = n + "border-radius:" + String(a.borderRadius) + "px;";k = k + "border-radius:" + String(a.borderRadius) + "px;";
-                        break;
+                        default:
+                            n = n + "border-radius:" + String(a.borderRadius) + "px;";
+                            k = k + "border-radius:" + String(a.borderRadius) + "px;";
+                            break;
                         case "circle":
-                                n = n + "border-radius: " + String(a.lensSize / 2 + a.borderSize) + "px;",
-                            k = k + "border-radius: " + String(a.lensSize / 2 + a.borderSize) + "px;"
+                            n = n + "border-radius: " + String(a.lensSize / 2 + a.borderSize) + "px;",
+                                k = k + "border-radius: " + String(a.lensSize / 2 + a.borderSize) + "px;"
                     }
                     c.wrap("<div id='mlens_wrapper_" + l + "' />");
                     h = c.parent();
@@ -84,45 +88,45 @@
                     });
                     a = c.data("mlens");
                     p[l] = a;
-                    f.mousemove(function(a) {
+                    f.mousemove(function (a) {
                         d.fn.mlens("move", c.attr("data-id"), a)
                     });
-                    c.mousemove(function(a) {
+                    c.mousemove(function (a) {
                         d.fn.mlens("move", c.attr("data-id"), a)
                     });
-                    f.on("touchmove", function(a) {
+                    f.on("touchmove", function (a) {
                         a.preventDefault();
                         a = a.originalEvent.touches[0] || a.originalEvent.changedTouches[0];
                         d.fn.mlens("move", c.attr("data-id"), a)
                     });
-                    c.on("touchmove", function(a) {
+                    c.on("touchmove", function (a) {
                         a.preventDefault();
                         a = a.originalEvent.touches[0] || a.originalEvent.changedTouches[0];
                         d.fn.mlens("move", c.attr("data-id"), a)
                     });
-                    c.hover(function() {
+                    c.hover(function () {
                         f.show()
-                    }, function() {
+                    }, function () {
                         f.hide()
                     });
-                    f.hover(function() {
+                    f.hover(function () {
                         f.show()
-                    }, function() {
+                    }, function () {
                         f.hide()
                     });
-                    c.on("touchstart", function(a) {
+                    c.on("touchstart", function (a) {
                         a.preventDefault();
                         f.show()
                     });
-                    c.on("touchend", function(a) {
+                    c.on("touchend", function (a) {
                         a.preventDefault();
                         f.hide()
                     });
-                    f.on("touchstart", function(a) {
+                    f.on("touchstart", function (a) {
                         a.preventDefault();
                         f.show()
                     });
-                    f.on("touchend", function(a) {
+                    f.on("touchend", function (a) {
                         a.preventDefault();
                         f.hide()
                     });
@@ -130,7 +134,7 @@
                     return p
                 })
             },
-            move: function(e, c) {
+            move: function (e, c) {
                 e = r(e);
                 var a = p[e],
                     f = a.lens,
@@ -151,7 +155,7 @@
                 p[e] = a;
                 return p
             },
-            update: function(e, c) {
+            update: function (e, c) {
                 e = r(e);
                 var a = p[e],
                     f = a.lens,
@@ -165,7 +169,7 @@
                 if ("" != b.imgSrc2x && 1 < window.devicePixelRatio) {
                     var g = b.imgSrc2x,
                         k = new Image;
-                    k.onload = function() {
+                    k.onload = function () {
                         n = String(parseInt(this.width / 2)) + "px";
                         q.css({
                             backgroundSize: n + " auto"
@@ -180,11 +184,13 @@
                     l = "position: absolute; width: 100%; height: 100%; left: 0; top: 0; background-position: center center; background-repeat: no-repeat; z-index: 1;";
                 !0 === b.overlayAdapt && (l += "background-position: center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;");
                 switch (b.lensShape) {
-                    default: k = k + "border-radius:" + String(b.borderRadius) + "px;";l = l + "border-radius:" + String(b.borderRadius) + "px;";
-                    break;
+                    default:
+                        k = k + "border-radius:" + String(b.borderRadius) + "px;";
+                        l = l + "border-radius:" + String(b.borderRadius) + "px;";
+                        break;
                     case "circle":
-                            k = k + "border-radius: " + String(b.lensSize / 2 + b.borderSize) + "px;",
-                        l = l + "border-radius: " + String(b.lensSize / 2 + b.borderSize) + "px;"
+                        k = k + "border-radius: " + String(b.lensSize / 2 + b.borderSize) + "px;",
+                            l = l + "border-radius: " + String(b.lensSize / 2 + b.borderSize) + "px;"
                 }
                 q.attr("style", k);
                 m.attr("src", g);
@@ -210,7 +216,7 @@
                 p[e] = a;
                 return p
             },
-            destroy: function(e) {
+            destroy: function (e) {
                 e = r(e);
                 d.removeData(p[e], this.name);
                 this.removeClass(this.name);
@@ -218,7 +224,7 @@
                 this.element = null
             }
         };
-    d.fn.mlens = function(e) {
+    d.fn.mlens = function (e) {
         if (s[e]) return s[e].apply(this, Array.prototype.slice.call(arguments, 1));
         if ("object" !== typeof e && e) d.error("Method " +
             e + " does not exist on jQuery.mlens");
@@ -229,7 +235,7 @@
 // ************************ //
 // Magnifying Glass
 // ************************ //
-(function() {
+(function () {
     "use strict";
     jQuery("#magni_img").mlens({
         imgSrc: jQuery("#magni_img").attr("data-big"), // path of the hi-res version of the image
@@ -246,7 +252,7 @@
 })(jQuery);
 
 
-jQuery(".cloud-zoom-gallery").click(function() {
+jQuery(".cloud-zoom-gallery").click(function () {
     var galimg = jQuery(this).attr('href');
     jQuery("#magni_img").attr("data-big", galimg);
     jQuery("#mlens_target_0").css('background-image', 'url(' + galimg + ')');

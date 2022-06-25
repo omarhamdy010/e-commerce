@@ -40,10 +40,9 @@
     <link rel="stylesheet" href="{{asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
     <link rel="stylesheet" href="{{asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
     <link rel="stylesheet" href="{{asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
+{{--select2--}}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
 
     <!-- summernote -->
 </head>
@@ -64,7 +63,7 @@
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="index3.html" class="nav-link">Home</a>
+                <a href="{{route('site.index')}}" class="nav-link">Site</a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
                 <a href="#" class="nav-link">Contact</a>
@@ -852,8 +851,11 @@
 <!-- ./wrapper -->
 <!-- jQuery -->
 @yield('js')
+{{--select2--}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+{{--end select2--}}
 <script src="{{asset('assets/plugins/jquery/jquery.min.js')}}"></script>
-
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 

@@ -1,3 +1,4 @@
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <div class="col-12">
     <div class="card card-primary card-tabs">
 
@@ -9,15 +10,15 @@
                     <form method="post" action="{{route('product.store')}}"
                           enctype="multipart/form-data" id="upload-cat-form">
                         <input type="hidden" name="_token" id="token2"
-                        value="{{csrf_token()}}">
+                               value="{{csrf_token()}}">
                         <div class="card-body">
 
-                        @foreach(config('translatable.locales') as$key=>$local)
+                            @foreach(config('translatable.locales') as$key=>$local)
                                 <div class="form-group">
                                     <label>{{$local=='ar'?'arabic title':'english title'}}</label>
                                     <input type="text" value="{{old($local.'[.title]')}}" class="form-control title"
                                            name="{{$local}}[title]" id="title" data-validation="required"
-                                    placeholder="Enter product {{$local=='ar'?'arabic name':'english name'}}">
+                                           placeholder="Enter product {{$local=='ar'?'arabic name':'english name'}}">
                                 </div>
                                 <span class="{{$local}}_title"></span>
 
@@ -31,7 +32,8 @@
                             @endforeach
 
                             <div class="form-group">
-                                <input  type="file" class="form-control" name="images[]" placeholder="address" id="images"
+                                <input type="file" class="form-control" name="images[]" placeholder="address"
+                                       id="images"
                                        value="{{old('images[]')}}" data-validation="required"
                                        multiple>
                             </div>
@@ -40,13 +42,14 @@
                             <div class="form-group">
                                 <label>quantity</label>
                                 <input name="quantity" class="form-control value" data-validation="required"
-                                  type="number" value="{{old('quantity')}}" id="quantity">
+                                       type="number" value="{{old('quantity')}}" id="quantity">
                             </div>
                             <span class="quantity"></span>
 
                             <div class="form-group">
                                 <label for="category">category</label>
-                                <select name="categories[]" multiple="multiple" id="category_SELECT2" data-validation="required" class="select2-multiple form-control">
+                                <select name="categories[]" multiple="multiple" id="select2-dropdown"
+                                        data-validation="required" class="select2-multiple form-control">
                                     @foreach($Categories as $category)
                                         <option
                                             value="{{$category->id}}" {{old('category_id') == $category->id? 'selected' : ''}}>{{$category->name}}</option>
@@ -69,15 +72,16 @@
                                     <input name="offer" class="offer" type="checkbox">
                                 </label>
                             </div>
-                                @php  $types =['amount', 'fixed','percentage'];   @endphp
+                            @php  $types =['amount', 'fixed','percentage'];   @endphp
 
-                                <div class="form-group" id="page" style="display: none">
+                            <div class="form-group" id="page" style="display: none">
                                 <div class="form-control-sm">
                                     <label>offer type</label>
                                 </div>
                                 <div class="btn-group btn-group-toggle form-group" data-toggle="buttons">
                                     @foreach($types as $key=>$type )
-                                        <label class="btn btn-outline-primary {{$type=='percentage'?'active':''}}" id="option{{$key+1}}">
+                                        <label class="btn btn-outline-primary {{$type=='percentage'?'active':''}}"
+                                               id="option{{$key+1}}">
                                             <input type="radio" name="type" value="{{$type}}" id="{{$type}}"> {{$type}}
                                         </label>
                                     @endforeach
@@ -98,8 +102,8 @@
 
 
                                 <div>
-                                    <input type="date" class="form-control" name="start_date" placeholder="start Date" >
-                                    <input type="date" class="form-control" name="end_date" placeholder="end Date" >
+                                    <input type="date" class="form-control" name="start_date" placeholder="start Date">
+                                    <input type="date" class="form-control" name="end_date" placeholder="end Date">
                                 </div>
 
                             </div>
@@ -115,13 +119,21 @@
     </div>
 </div>
 
-<script>
 
+<script>
+    $(document).ready(function () {
+        $('#select2-dropdown').select2();
+        $('#select2-dropdown').on('change', function (e) {
+            var data = $('#select2-dropdown').select2("val");
+            $this.set('ottPlatform', data);
+        });
+    });
     $.validate({
         ignore: 'input[type=hidden]',
-        modules : 'date, security',
-        lang:"ar",
-        validateOnEvent : true
+        modules: 'date, security',
+        lang: "ar",
+        validateOnEvent: true
+
 
     });
 
@@ -222,4 +234,5 @@
 
 </script>
 
+{{--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>--}}
 
