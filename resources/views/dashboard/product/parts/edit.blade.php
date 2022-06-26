@@ -51,7 +51,7 @@
 
                         <div class="form-group">
                             <label>category</label>
-                            <select name="categories[]" multiple="multiple" data-validation="required"
+                            <select name="categories[]" multiple="multiple" data-validation="required" id="select_2"
                                     class="form-control js-example-basic-single">
                                 @foreach($categories as $category)
                                     <option
@@ -129,6 +129,13 @@
 
 <script>
 
+    // $(document).ready(function () {
+    //     $('#js-example-basic-single').select2();
+    //     $('#js-example-basic-single').on('change', function (e) {
+    //         var data = $('#select2-dropdown').select2("val");
+    //         $this.set('ottPlatform', data);
+    //     });
+    // });
 
     $(document).ready(function () {
         var catajax = $('.parcatajax').change(function (e) {

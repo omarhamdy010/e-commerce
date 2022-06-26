@@ -1,5 +1,11 @@
 @extends('dashboard.layouts.master')
-
+@section('css')
+`<style>
+    .select2-container--default .select2-selection--multiple .select2-selection__choice__display {
+        color: black;
+    }
+</style>`
+@endsection
 @section('content')
 
     <div class="content-header">
@@ -100,8 +106,11 @@
 @endsection
 
 @section('js')
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <script type="text/javascript">
+
+
 
         $(document).ready(function () {
             var table = $('.datatable').DataTable({
@@ -187,6 +196,11 @@
                     console.log(data);
                     $('.renderproduct').html(data.html);
                     $('#select2-dropdown').select2();
+                    $('#select2-dropdown').select2({
+                        width: '100%',
+                        placeholder: "Select an Option",
+                        allowClear: true
+                    });
                 }
             });
         });
@@ -213,12 +227,12 @@
                     console.log(data);
                     $('.rendereditproduct').html(data.html);
 
-                    $('#select2-dropdown').select2();
-                    // $('.js-example-basic-single').select2({
-                    //     width: '100%',
-                    //     placeholder: "Select an Option",
-                    //     allowClear: true
-                    // });
+                    $('#select_2').select2();
+                    $('#select_2').select2({
+                        width: '100%',
+                        placeholder: "Select an Option",
+                        allowClear: true
+                    });
                 }
             });
         });
