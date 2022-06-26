@@ -144,9 +144,10 @@ class ProductController extends Controller
 
     public function update(Request $request, Product $product)
     {
+//        dd($product->translate('en')->id);
         $request->validate([
-            'ar.title' => "required|unique:product_translations,title,",
-            'en.title' => "required|unique:product_translations,title",
+            'ar.title' => "required|unique:product_translations,title,".$product->translate('ar')->id,
+            'en.title' => "required|unique:product_translations,title,".$product->translate('en')->id,
             'ar.description' => 'required',
             'en.description' => 'required',
             'quantity' => 'required',
