@@ -117,3 +117,108 @@
         </div>
     </div>
 </div>
+
+<script>
+    $.validate({
+        ignore: 'input[type=hidden]',
+        modules: 'date, security',
+        lang: "ar",
+        validateOnEvent: true
+    });
+
+    $('.offer').on('click', function () {
+        var x = document.getElementById("page");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    });
+    //offer
+    $(document).ready(function () {
+
+        // var x = document.getElementById("amount_value");
+        // var y = document.getElementById("fixed_value");
+        // var z = document.getElementById("percentage_value");
+        var a = document.getElementById("bounce_value");
+        var b = document.getElementById("value_discount_price");
+        var c = document.getElementById("percentage_value_price");
+
+        if ($('#option1').hasClass('active')) {
+            // x.style.display = "block";
+            a.style.display = "block";
+            // y.style.display = "none";
+            b.style.display = "none";
+            // z.style.display = "none";
+            c.style.display = "none";
+        }
+        if ($('#option2').hasClass('active')) {
+            // x.style.display = "none";
+            a.style.display = "none";
+            // y.style.display = "block";
+            b.style.display = "block";
+            // z.style.display = "none";
+            c.style.display = "none";
+        }
+        if ($('#option3').hasClass('active')) {
+            // x.style.display = "none";
+            a.style.display = "none";
+            // y.style.display = "none";
+            b.style.display = "none";
+            // z.style.display = "block";
+            c.style.display = "block";
+        }
+        $('#option1').on('click', function () {
+            // x.style.display = "block";
+            a.style.display = "block";
+            // y.style.display = "none";
+            b.style.display = "none";
+            // z.style.display = "none";
+            c.style.display = "none";
+        });
+        $('#option2').on('click', function () {
+            // x.style.display = "none";
+            a.style.display = "none";
+            // y.style.display = "block";
+            b.style.display = "block";
+            // z.style.display = "none";
+            c.style.display = "none";
+        });
+        $('#option3').on('click', function () {
+            // x.style.display = "none";
+            a.style.display = "none";
+            // y.style.display = "none";
+            b.style.display = "none";
+            // z.style.display = "block";
+            c.style.display = "block";
+        });
+    });
+
+    $(document).ready(function () {
+        $('.value').on('keyup', function () {
+            var quantity = $('#quantity').val();
+            var price = $('#price').val();
+            var value_discount = $('#value').val();
+
+            $('#value_discount_price').val((quantity * price) - value_discount);
+        });
+        $('.value').on('keyup', function () {
+            var quantity = $('#quantity').val();
+            var price = $('#price').val();
+            var percentage_value = $('#value').val();
+
+            $('#percentage_value_price').val((quantity * price) - (quantity * price * percentage_value / 100));
+        });
+    });
+
+    $(document).ready(function (e) {
+        $('#images').change(function () {
+            let reader = new FileReader();
+            reader.onload = (e) => {
+                $('#preview-image-before-upload').attr('src', e.target.result);
+            };
+            reader.readAsDataURL(this.files[0]);
+        });
+    });
+
+</script>
