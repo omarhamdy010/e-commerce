@@ -17,6 +17,7 @@ class ProductController extends Controller
     {
         $Categories = Category::all();
         $product = Product::all();
+
 //        $image = Product::with('images')->where('is_default',1)->get();
         return view('dashboard.product.index', compact('product', 'Categories'));
     }

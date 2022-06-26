@@ -1,4 +1,3 @@
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <div class="col-12">
     <div class="card card-primary card-tabs">
 
@@ -49,7 +48,7 @@
                             <div class="form-group">
                                 <label for="category">category</label>
                                 <select name="categories[]" multiple="multiple" id="select2-dropdown"
-                                        data-validation="required" class="select2-multiple form-control">
+                                        data-validation="required" class="select2-multiple form-control w-100">
                                     @foreach($Categories as $category)
                                         <option
                                             value="{{$category->id}}" {{old('category_id') == $category->id? 'selected' : ''}}>{{$category->name}}</option>
@@ -118,121 +117,3 @@
         </div>
     </div>
 </div>
-
-
-<script>
-    $(document).ready(function () {
-        $('#select2-dropdown').select2();
-        $('#select2-dropdown').on('change', function (e) {
-            var data = $('#select2-dropdown').select2("val");
-            $this.set('ottPlatform', data);
-        });
-    });
-    $.validate({
-        ignore: 'input[type=hidden]',
-        modules: 'date, security',
-        lang: "ar",
-        validateOnEvent: true
-
-
-    });
-
-    $('.offer').on('click', function () {
-        var x = document.getElementById("page");
-        if (x.style.display === "none") {
-            x.style.display = "block";
-        } else {
-            x.style.display = "none";
-        }
-    });
-    //offer
-    $(document).ready(function () {
-
-        // var x = document.getElementById("amount_value");
-        // var y = document.getElementById("fixed_value");
-        // var z = document.getElementById("percentage_value");
-        var a = document.getElementById("bounce_value");
-        var b = document.getElementById("value_discount_price");
-        var c = document.getElementById("percentage_value_price");
-
-        if ($('#option1').hasClass('active')) {
-            // x.style.display = "block";
-            a.style.display = "block";
-            // y.style.display = "none";
-            b.style.display = "none";
-            // z.style.display = "none";
-            c.style.display = "none";
-        }
-        if ($('#option2').hasClass('active')) {
-            // x.style.display = "none";
-            a.style.display = "none";
-            // y.style.display = "block";
-            b.style.display = "block";
-            // z.style.display = "none";
-            c.style.display = "none";
-        }
-        if ($('#option3').hasClass('active')) {
-            // x.style.display = "none";
-            a.style.display = "none";
-            // y.style.display = "none";
-            b.style.display = "none";
-            // z.style.display = "block";
-            c.style.display = "block";
-        }
-        $('#option1').on('click', function () {
-            // x.style.display = "block";
-            a.style.display = "block";
-            // y.style.display = "none";
-            b.style.display = "none";
-            // z.style.display = "none";
-            c.style.display = "none";
-        });
-        $('#option2').on('click', function () {
-            // x.style.display = "none";
-            a.style.display = "none";
-            // y.style.display = "block";
-            b.style.display = "block";
-            // z.style.display = "none";
-            c.style.display = "none";
-        });
-        $('#option3').on('click', function () {
-            // x.style.display = "none";
-            a.style.display = "none";
-            // y.style.display = "none";
-            b.style.display = "none";
-            // z.style.display = "block";
-            c.style.display = "block";
-        });
-    });
-
-    $(document).ready(function () {
-        $('.value').on('keyup', function () {
-            var quantity = $('#quantity').val();
-            var price = $('#price').val();
-            var value_discount = $('#value').val();
-
-            $('#value_discount_price').val((quantity * price) - value_discount);
-        });
-        $('.value').on('keyup', function () {
-            var quantity = $('#quantity').val();
-            var price = $('#price').val();
-            var percentage_value = $('#value').val();
-
-            $('#percentage_value_price').val((quantity * price) - (quantity * price * percentage_value / 100));
-        });
-    });
-
-    $(document).ready(function (e) {
-        $('#images').change(function () {
-            let reader = new FileReader();
-            reader.onload = (e) => {
-                $('#preview-image-before-upload').attr('src', e.target.result);
-            };
-            reader.readAsDataURL(this.files[0]);
-        });
-    });
-
-</script>
-
-{{--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>--}}
-

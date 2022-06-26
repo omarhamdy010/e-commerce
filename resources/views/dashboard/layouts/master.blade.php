@@ -43,7 +43,7 @@
 {{--select2--}}
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
-
+@yield('css')
     <!-- summernote -->
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -850,18 +850,10 @@
 </div>
 <!-- ./wrapper -->
 <!-- jQuery -->
-@yield('js')
 {{--select2--}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-{{--end select2--}}
-<script src="{{asset('assets/plugins/jquery/jquery.min.js')}}"></script>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 {{--    bootstrap 4.6 cdn--}}
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.all.min.js"></script>
@@ -879,7 +871,6 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{asset('assets/js/pages/dashboard.js')}}"></script>
 
-<script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
 
 <script src="{{asset('plugins/jquery/jquery_plugins.js')}}"></script>
 <script src="{{asset('plugins/jquery/jquery.form-validator.js')}}"></script>
@@ -899,6 +890,7 @@
 <script src="{{asset('plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
 <script src="{{asset('plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
 <script src="{{asset('plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
+@yield('js')
 
 </body>
 </html>
