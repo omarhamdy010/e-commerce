@@ -2,7 +2,7 @@
 <div class="container">
     <div class="row">
         <div class="mm-toggle-wrap">
-            <div class="mm-toggle"><i class="fa fa-align-justify"></i> </div>
+            <div class="mm-toggle"><i class="fab fa-align-justify"></i> </div>
             <span class="mm-label">All Categories</span> </div>
         <div class="col-md-3 col-sm-3 mega-container hidden-xs">
             <div class="navleft-container">

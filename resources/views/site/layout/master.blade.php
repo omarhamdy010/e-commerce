@@ -24,7 +24,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Favicons Icon -->
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/x-icon" href="{{asset('images/shopping-cart.png')}}">
     <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
     <!-- CSS Style -->
     <link rel="stylesheet" href="{{asset('assets/style.css')}}">
@@ -91,6 +91,7 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="{{asset('assets/js/js/jquery-ui.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/js/js/bootstrap.min.js')}}"></script>
+<link rel="stylesheet" href="{{asset('assets/plugins/fontawesome-free/css/all.min.css')}}">
 
 <!-- owl.carousel.min js -->
 <script type="text/javascript" src="http://aaaserver-001-site44.dtempurl.com/js/owl.carousel.min.js"></script>
