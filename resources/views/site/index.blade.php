@@ -6,14 +6,11 @@
     <div class="container">
         <div class="home-tab">
             @foreach($categories as $category)
-
-                {{--                @dump($category)--}}
                 <div class="tab-title text-left">
                     <h2>{{$category->name}}</h2>
                     <ul class="nav home-nav-tabs home-product-tabs" id="top-selling">
                     </ul>
                 </div>
-
                 <div id="productTabContent" class="tab-content">
                     <div class="tab-pane active in" id="computer">
                         <div class="featured-pro">
@@ -25,18 +22,13 @@
                             </div>
                         </div>
                     </div>
-
-
                     <div id="smartphone-slider" class="product-flexslider">
                         <div class="slider-items slider-width-col4 ">
 
                             @foreach($category->products()->get() as $product)
-                                {{--                                                            @dd($product)--}}
                                 <div class="product-item">
                                     <div class="item-inner">
                                         <div class="product-thumbnail">
-                                            {{--                                        <div class="icon-sale-label sale-left">Sale</div>--}}
-                                            {{--                                        <div class="icon-new-label new-right">New</div>--}}
                                             <div class="pr-img-area"><a title="{{$product->title}}"
                                                                         href="single_product.html">
                                                     <figure>
@@ -54,7 +46,6 @@
                                                                  src="{{asset($product->default_image->path)}}"
                                                                  alt="HTML template">
                                                         @endif
-
                                                     </figure>
                                                 </a></div>
                                             <div class="pr-info-area">
@@ -89,6 +80,7 @@
                                                                     class="price">${{$product->price}}</span> </span>
                                                         </div>
                                                     </div>
+                                                    <input type="hidden" value="{{\Illuminate\Support\Facades\Session::get('cart')[$product->id]['quantity']}}" id="session_data">
                                                     <div class="pro-action">
                                                         <button type="button" data-id="{{$product->id}}"
                                                                 class="add-to-cart"><span> Add to Cart</span>
@@ -113,6 +105,8 @@
     <script>
         $('.add-to-cart').on('click', function () {
             var id = $(this).data('id');
+            {{--            var value = '{{ \Illuminate\Support\Facades\Session::get('cart',[])}}';--}}
+            // alert(value);
             $.ajax({
                 url: '{{ route('add-to-cart') }}',
                 method: "GET",
@@ -122,7 +116,12 @@
                     // quantity: ele.parents("tr").find(".quantity").val()
                 },
                 success: function (response) {
-                    window.location.reload();
+                    console.log(response);
+                    // window.location.reload();
+                    var z = JSON.parse(value);
+                    if (document.getElementById("cartNo")) {
+                        document.getElementById("cartNo").innerHTML = `<i class="fa fa-shopping-basket"></i> <span class=cart-total>` + z.length + `</span>`
+                    }
                 }
             });
         });

@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-6 col-md-3 col-xs-12">
-                <div class="footer-logo"><a href="index.html"><img src="images/logofinal.png" alt="fotter logo" style="width:100px"></a> </div>
+                <div class="footer-logo"><a href="index.html"><img src="{{asset('images/logofinal.png')}}" alt="fotter logo" style="width:100px"></a> </div>
                 <p>Lorem Ipsum is simply dummy text of the print and typesetting industry. Ut pharetra augue nec augue. Nam elit agna, endrerit sit amet.</p>
                 <div class="social">
                     <ul class="inline-mode">
@@ -34,7 +34,7 @@
                     <h3 class="links-title">Insider<a class="expander visible-xs" href="#TabBlock-3">+</a></h3>
                     <div class="tabBlock" id="TabBlock-3">
                         <ul class="list-links list-unstyled">
-                            <li><a href="sitemap.html"> Sites Map </a></li>
+                            <li><a href="sitemap.html"> Sites Map</a></li>
                             <li><a href="#">News</a></li>
                             <li><a href="#">Trends</a></li>
                             <li><a href="about_us.html">About Us</a></li>
@@ -69,10 +69,10 @@
                             <b>Sunday:</b> Closed </div>
                         <div class="payment">
                             <ul>
-                                <li><a href="#"><img title="Visa" alt="Visa" src="images/visa.png"></a></li>
-                                <li><a href="#"><img title="Paypal" alt="Paypal" src="images/paypal.png"></a></li>
-                                <li><a href="#"><img title="Discover" alt="Discover" src="images/discover.png"></a></li>
-                                <li><a href="#"><img title="Master Card" alt="Master Card" src="images/master-card.png"></a></li>
+                                <li><a href="#"><img title="Visa" alt="Visa" src="{{asset('images/visa.png')}}"></a></li>
+                                <li><a href="#"><img title="Paypal" alt="Paypal" src="{{asset('images/paypal.png')}}"></a></li>
+                                <li><a href="#"><img title="Discover" alt="Discover" src="{{asset('images/discover.png')}}"></a></li>
+                                <li><a href="#"><img title="Master Card" alt="Master Card" src="{{asset('images/master-card.png')}}"></a></li>
                             </ul>
                         </div>
                     </div>
@@ -83,7 +83,7 @@
     <div class="footer-coppyright">
         <div class="container">
             <div class="row">
-                <div class="col-sm-6 col-xs-12 coppyright"> Copyright © 2020 <a href="http://zaid.info/"> Ahmed Zaid </a>. All Rights Reserved. </div>
+                <div class="col-sm-6 col-xs-12 coppyright"> Copyright © 2022. All Rights Reserved. </div>
                 <div class="col-sm-6 col-xs-12">
                     <ul class="footer-company-links">
                         <li> <a href="about_us.html">About Low-cost</a> </li>

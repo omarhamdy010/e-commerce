@@ -111,18 +111,20 @@ function addtoCart(event) {
 
 
 function displayDataCart20() {
-    var x = localStorage.getItem("orders");
-    console.log(x);
+    var x = document.getElementById("session_data");
+    alert(x);
+
     if (x) {
         var z = JSON.parse(x);
         // for( i =0 ;i<z.length ; i++)
         // {
         // }
         if (document.getElementById("cartNo")) {
-            document.getElementById("cartNo").innerHTML = `<i class="icon-basket-loaded icons"></i> <span class=cart-total>` + z.length + `</span>`
+            document.getElementById("cartNo").innerHTML = `<i class="fas fa-shopping-cart px-2"></i> <span class=cart-total>` + z.length + `</span>`
         }
-    }
+        // }
 
+    }
 }
 
 displayDataCart20();
