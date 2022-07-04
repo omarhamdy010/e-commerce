@@ -14,20 +14,20 @@ function wishlist(){
         if(httprequest.status==200 && httprequest.readyState==4){
             var Data=JSON.parse(httprequest.response).items
             console.log(Data)
-           displayprod(Data) 
-      
-    
+           displayprod(Data)
+
+
     }
-    
+
     }
-    
+
     }
     wishlist();
     function displayprod(Data){
       productDe = "";
         for(var i =0 ;i<Data.length ; i++)
         {
-          
+
             productDe+=`<tr><td id=`+Data[i].id+` onclick=removefromWishlist(this.id) class="th-delate"><a href="#">X</a></td>
             <td class="th-product"><a href="#"><img src="http://aaaserver-001-site31.ftempurl.com`+Data[i].image+`" alt="cart"></a></td>
             <td class="th-details"><h2><a href="#">`+Data[i].name+`</a></h2></td>
@@ -39,9 +39,9 @@ function wishlist(){
         // alert("fav")
         Data[i].isFav=false
        }
-            
+
         }
-     
+
       console.log(Data)
       document.getElementById("wishlist-prod").innerHTML= productDe;
     }
@@ -66,11 +66,11 @@ function wishlist(){
                 //     throw new Error("HTTP status " + response.status);
                 // }
                 return response.json();
-            
+
             })
-        
+
     .then(function(data){
-        
+
         console.log(data)
         // console.log(email)
         // console.log(data.token)
@@ -80,9 +80,9 @@ function wishlist(){
       console.error(err.message);
     })
     // .catch(error => console.log("invalid ") );
-  
-  
-  
+
+
+
     }
 
     // categories Ahmed Samir
@@ -104,7 +104,7 @@ function categories(){
                   jQuery('.mega-menu-category').slideDown();
               }
           });
-          
+
   jQuery('.mega-menu-category .nav > li').hover(function() {
       jQuery(this).addClass("active");
       jQuery(this).find('.popup').stop(true, true).fadeIn('slow');
@@ -126,7 +126,7 @@ function categories(){
   });
       }
   }
-      
+
   }
   categories();
   var mainC = {}
@@ -182,19 +182,19 @@ function categories(){
                 displayof();
               }
             }
-            
+
         });
     }
     getData();
   }
   function displayof(){
-    
+
 $.each(mainC, function(key, value) {
   var mainCategory = key;
   var html = '<li><a href="#">'+mainCategory+'</a><div class="wrap-popup"><div class="popup"><div class="row">'
   var html2='<a href="#">'+mainCategory+'</a><ul>'
   var cats = mainC[key];
-  
+
   for(var i=0; i<cats.length; ++i){
     var subCats = catWithSub[cats[i]];
     if(i%2==0){
@@ -225,9 +225,9 @@ jQuery('.mega-menu-category .nav > li').hover(function() {
   jQuery(this).removeClass("active");
   jQuery(this).find('.popup').stop(true, true).fadeOut('slow');
 });
-          
+
   }
-//End Ahmed 
+//End Ahmed
 function getBrandcategories(){
   var httprequest= new XMLHttpRequest();
   httprequest.open("GET","http://aaaserver-001-site31.ftempurl.com/"+lang+"/api/Brands/GetBrands?Index=0&Size=10");
@@ -236,10 +236,10 @@ function getBrandcategories(){
       if(httprequest.status==200 && httprequest.readyState==4){
           var Data=JSON.parse(httprequest.response).items
           displayBrandCategries(Data);
-      
+
       }
   }
-     
+
 }
     /* ---------------------------------------------
        Brand section
@@ -247,27 +247,27 @@ function getBrandcategories(){
 getBrandcategories();
 function displayBrandCategries(Brand){
   BrandItem = "";
-  brandMobile=""        
+  brandMobile=""
   var titles=[];
   for(var i =0 ;i<Brand.length ; i++)
       {
 
-        
+
         BrandItem+=`<li class="menu-item depth-1 menucol-1-3 ">
-                    
+
         <ul class="submenu">
           <li class="menu-item">
             <div class="title"> <a href="shop_grid.html?brand_id=`+Brand[i].id+`">`+Brand[i].name+`</a></div>
           </li>
-         
+
         </ul>
       </li>`
       brandMobile+=`<li><a href="shop_grid.html?brand_id=`+Brand[i].id+`">`+Brand[i].name+`</a></li>`
- 
+
       }
-  
-  
+
+
   document.getElementById("brands").innerHTML = BrandItem ;
   document.getElementById("brandMobile").innerHTML=brandMobile
-  
+
 }

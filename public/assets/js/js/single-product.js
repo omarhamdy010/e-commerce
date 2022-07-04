@@ -28,7 +28,7 @@ function productdetailes(){
     var queryString = window.location.search;
 
     var urlParams = new URLSearchParams(queryString);
-    
+
     var product_id = urlParams.get('product_id')
     var httprequest= new XMLHttpRequest();
     httprequest.open("GET","http://aaaserver-001-site31.ftempurl.com/"+lang+"/api/Products/GetProduct/"+product_id);
@@ -38,18 +38,18 @@ function productdetailes(){
             var Data=JSON.parse(httprequest.response)
             var price=JSON.parse(httprequest.response).prices
           //  var prices=JSON.parse(httprequest.response)
-         
-           displayhtml(Data) 
+
+           displayhtml(Data)
            console.log(Data.image)
            console.log("prodDe"+Data.isFav)
            displayPrices(price,Data.id, Data.image, Data.name)
- 
 
-    
+
+
     }
-    
+
     }
-    
+
     }
     // var image="";
     function displayhtml(Data , prices){
@@ -61,16 +61,16 @@ function productdetailes(){
           <ul class="previews-list slides">
             <li><a  class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: 'images/products/product-1.jpg' "><img src="http://aaaserver-001-site31.ftempurl.com`+Data.subCategory.image+`" alt = "Thumbnail 2"/></a></li>
             <li><a href='images/products/product-1.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: 'http://aaaserver-001-site31.ftempurl.com`+Data.subCategory.image+`' "><img src="http://aaaserver-001-site31.ftempurl.com`+Data.brand.image+`" alt = "Thumbnail 1"/></a></li>
-          
-            
+
+
           </ul>
         </div>
 
-        
+
       </div>
       <div class="col-xs-12 col-sm-7 col-lg-7 col-md-7 product-details-area" >
         <div class="product-name" >
-           <h1>`+Data.name+`</h1> 
+           <h1>`+Data.name+`</h1>
         </div>
         <div class="price-box">
           <p class="special-price"> <span class="price-label">Special Price</span> <span class="price">`+Data.lowPriceData.price+`EGP</span> </p>
@@ -81,9 +81,9 @@ function productdetailes(){
           <span>`+Data.lowPriceData.marketName+`</span>
         </div>
         <div class="product-color-size-area">
-      
+
           <div class="size-area">
-           
+
           </div>
         </div>
         <div class="product-variation">
@@ -111,7 +111,7 @@ function productdetailes(){
           <a href="#">`+Data.brand.name+`</a></div>
           <div style="display:inline-block" class="pro-tags-title">subCtagory:</div>
           <a href="#">`+Data.subCategory.name+`</a></div>
-    
+
       </div>
     </div>`;
       // console.log(Data.image)
@@ -126,7 +126,7 @@ function productdetailes(){
 // getImage()
     function displayPrices(prices,id,image,name){
   shopitemprod = "";
-        
+
   for(var i =0 ;i<prices.length ; i++)
       {
     shopitemprod+=`<div class="col-md-3" style="text-align:center">
@@ -136,9 +136,9 @@ function productdetailes(){
     <p> `+prices[i].price+`</p>
     <button id="`+id+`" onclick="addtoCart(this.id)" class="button pro-add-to-cart" class="btn">Add to cart</button>
     </div>`
-  
-    
-          
+
+
+
       }
       document.getElementById("prices").innerHTML= shopitemprod;
     }
@@ -146,9 +146,9 @@ function productdetailes(){
     function RecommendedProducts(){
 
       var queryString = window.location.search;
-  
+
       var urlParams = new URLSearchParams(queryString);
-      
+
       var product_id = urlParams.get('product_id')
       var httprequest= new XMLHttpRequest();
       httprequest.open("GET","http://aaaserver-001-site31.ftempurl.com/"+lang+"/api/Products/GetRecommendedProducts/"+product_id+"?Index=0&Size=10");
@@ -157,9 +157,9 @@ function productdetailes(){
           if(httprequest.status==200 && httprequest.readyState==4){
               var Data=JSON.parse(httprequest.response).items
               console.log("this new " +Data)
-              displayTempRecommended(Data) 
+              displayTempRecommended(Data)
       }
-      
+
       }
     }
     RecommendedProducts();
@@ -175,11 +175,11 @@ function productdetailes(){
                 </a> </div>
               <div class="pr-info-area">
                 <div data-select="`+Topproducts[i].id+`" class="pr-button">
-                
+
                   <div id="`+Topproducts[i].id+`" onclick="likeProduct(this.id)" class="mt-button add_to_wishlist"> <a> <i class="fa fa-heart-o"></i> </a> </div>
                   <div  id="`+Topproducts[i].id+`" onclick="follow(this.id)" class="mt-button add_to_compare follow"> <a> <i " class="fa fa-check-circle"></i> </a> </a></div>
                   <div  id="`+Topproducts[i].id+`" onclick="unfollow(this.id)" class="mt-button add_to_compare unfollow"> <a> <i " class="fa fa-times-circle"></i> </a> </a></div>
-                  
+
                 </div>
               </div>
             </div>
@@ -206,7 +206,7 @@ function productdetailes(){
     }
     function displayRecommended(products){
       shopitemprod = "";
-        
+
 for(var i =0 ;i<products.length ; i++)
     {
   shopitemprod+=`
@@ -219,8 +219,8 @@ for(var i =0 ;i<products.length ; i++)
       <div class="pr-info-area">
         <div class="pr-button">
           <div data-select="`+products[i].id+`"  id="`+products[i].id+`" class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart-o"></i> </a> </div>
-          
-         
+
+
         </div>
       </div>
     </div>
@@ -241,8 +241,8 @@ for(var i =0 ;i<products.length ; i++)
   </div>
 </div>`
 
-  
-        
+
+
     }
 
 
@@ -268,7 +268,7 @@ document.getElementById("recommended").innerHTML = shopitemprod;
                       jQuery('.mega-menu-category').slideDown();
                   }
               });
-              
+
       jQuery('.mega-menu-category .nav > li').hover(function() {
           jQuery(this).addClass("active");
           jQuery(this).find('.popup').stop(true, true).fadeIn('slow');
@@ -276,8 +276,8 @@ document.getElementById("recommended").innerHTML = shopitemprod;
           jQuery(this).removeClass("active");
           jQuery(this).find('.popup').stop(true, true).fadeOut('slow');
       });
-    
-    
+
+
       jQuery('.mega-menu-category .nav > li.view-more').on('click', function(e) {
           if (jQuery('.mega-menu-category .nav > li.more-menu').is(':visible')) {
               jQuery('.mega-menu-category .nav > li.more-menu').stop().slideUp();
@@ -290,7 +290,7 @@ document.getElementById("recommended").innerHTML = shopitemprod;
       });
           }
       }
-          
+
       }
       categories();
       var mainC = {}
@@ -312,7 +312,7 @@ document.getElementById("recommended").innerHTML = shopitemprod;
               }
             }
         })
-    
+
       }
       var catIds={};
       var catWithSub={};
@@ -346,19 +346,19 @@ document.getElementById("recommended").innerHTML = shopitemprod;
                     displayof();
                   }
                 }
-                
+
             });
         }
         getData();
       }
       function displayof(){
-        
+
     $.each(mainC, function(key, value) {
       var mainCategory = key;
       var html = '<li><a href="#">'+mainCategory+'</a><div class="wrap-popup"><div class="popup"><div class="row">'
       var html2='<a href="#">'+mainCategory+'</a><ul>'
       var cats = mainC[key];
-      
+
       for(var i=0; i<cats.length; ++i){
         var subCats = catWithSub[cats[i]];
         if(i%2==0){
@@ -389,9 +389,9 @@ document.getElementById("recommended").innerHTML = shopitemprod;
       jQuery(this).removeClass("active");
       jQuery(this).find('.popup').stop(true, true).fadeOut('slow');
     });
-              
+
       }
-    //End Ahmed 
+    //End Ahmed
     function getBrandcategories(){
       var httprequest= new XMLHttpRequest();
       httprequest.open("GET","http://aaaserver-001-site31.ftempurl.com/"+lang+"/api/Brands/GetBrands?Index=0&Size=10");
@@ -400,10 +400,10 @@ document.getElementById("recommended").innerHTML = shopitemprod;
           if(httprequest.status==200 && httprequest.readyState==4){
               var Data=JSON.parse(httprequest.response).items
               displayBrandCategries(Data);
-          
+
           }
       }
-         
+
     }
         /* ---------------------------------------------
            Brand section
@@ -411,39 +411,39 @@ document.getElementById("recommended").innerHTML = shopitemprod;
     getBrandcategories();
     function displayBrandCategries(Brand){
       BrandItem = "";
-      brandMobile=""        
+      brandMobile=""
       var titles=[];
       for(var i =0 ;i<Brand.length ; i++)
           {
-    
-            
+
+
             BrandItem+=`<li class="menu-item depth-1 menucol-1-3 ">
-                        
+
             <ul class="submenu">
               <li class="menu-item">
                 <div class="title"> <a href="shop_grid.html?brand_id=`+Brand[i].id+`">`+Brand[i].name+`</a></div>
               </li>
-             
+
             </ul>
           </li>`
           brandMobile+=`<li><a href="shop_grid.html?brand_id=`+Brand[i].id+`">`+Brand[i].name+`</a></li>`
-     
+
           }
-      
-      
+
+
       document.getElementById("brands").innerHTML = BrandItem ;
       document.getElementById("brandMobile").innerHTML=brandMobile
-      
+
     }
     function follow(event){
- 
+
 
       $('.follow').closest('div#'+event).css("display","none")
       $('.unfollow').closest('div#'+event).css("display","block")
-    
+
         var id =parseInt(event)
-       
-       
+
+
          var token=JSON.parse(sessionStorage.getItem('token'));
                  fetch("http://aaaserver-001-site31.ftempurl.com/"+lang+"/api/Products/FollowProduct/"+id,{
                      method:'POST',
@@ -452,27 +452,27 @@ document.getElementById("recommended").innerHTML = shopitemprod;
                        "content-type": "application/json; charset=utf-8"
                                      }
                  }).then(function(response){
-                  
+
                      return response.json();
-                 
+
                  })
-             
+
          .then(function(data){
-       
+
          }).catch(err =>{
            console.error(err.message);
          })
-    
+
     }
-    
+
     function unfollow(event){
-     
+
       $('.follow').closest('div#'+event).css("display","block")
       $('.unfollow').closest('div#'+event).css("display","none")
-    
+
       var id =parseInt(event)
-     
-     
+
+
        var token=JSON.parse(sessionStorage.getItem('token'));
                fetch("http://aaaserver-001-site31.ftempurl.com/"+lang+"/api/Products/UnFollowProduct/"+id,{
                    method:'POST',
@@ -481,20 +481,20 @@ document.getElementById("recommended").innerHTML = shopitemprod;
                      "content-type": "application/json; charset=utf-8"
                                    }
                }).then(function(response){
-                  
+
                    return response.json();
-               
+
                })
-           
+
        .then(function(data){
-     
-          
+
+
        }).catch(err =>{
          console.error(err.message);
        })
-    
-     
-     
-     
-     
+
+
+
+
+
     }

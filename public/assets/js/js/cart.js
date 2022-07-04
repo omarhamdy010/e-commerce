@@ -110,24 +110,23 @@ function addtoCart(event) {
 }
 
 
-function displayDataCart20() {
-    var x = $('#session_data').val();
-    alert(x);
-
-    if (x) {
-        var z = JSON.parse(x);
-        // for( i =0 ;i<z.length ; i++)
-        // {
-        // }
-        if (document.getElementById("cartNo")) {
-            document.getElementById("cartNo").innerHTML = `<i class="fas fa-shopping-cart px-2"></i> <span class=cart-total>${x}</span>`
-        }
-        // }
-
-    }
-}
-
-displayDataCart20();
+// function displayDataCart20() {
+    // var x = $('#session_data').val();
+    //
+    // if (x) {
+    //     var z = JSON.parse(x);
+    //     // for( i =0 ;i<z.length ; i++)
+    //     // {
+    //     // }
+    //     if (document.getElementById("cartNo")) {
+    //         document.getElementById("cartNo").innerHTML = `<i class="fas fa-shopping-cart px-2"></i> <span class=cart-total>${x}</span>`
+    //     }
+    //     // }
+    //
+    // }
+// }
+//
+// displayDataCart20();
 
 function displayDataCart() {
 

@@ -511,11 +511,11 @@ function(t, e) {
             }, 1500)
         }), r = l.Ticker.prototype = new l.events.EventDispatcher, r.constructor = l.Ticker;
         var x = d("core.Animation", function(t, e) {
-            if (this.vars = e = e || {}, this._duration = this._totalDuration = t || 0, this._delay = Number(e.delay) || 0, this._timeScale = 1, this._active = e.immediateRender === !0, this.data = e.data, this._reversed = e.reversed === !0, Q) {
-                a || n.wake();
-                var i = this.vars.useFrames ? G : Q;
-                i.add(this, i._time), this.vars.paused && this.paused(!0)
-            }
+            // if (this.vars = e = e || {}, this._duration = this._totalDuration = t || 0, this._delay = Number(e.delay) || 0, this._timeScale = 1, this._active = e.immediateRender === !0, this.data = e.data, this._reversed = e.reversed === !0, Q) {
+            //     a || n.wake();
+            //     var i = this.vars.useFrames ? G : Q;
+            //     i.add(this, i._time), this.vars.paused && this.paused(!0)
+            // }
         });
         n = x.ticker = new l.Ticker, r = x.prototype, r._dirty = r._gc = r._initted = r._paused = !1, r._totalTime = r._time = 0, r._rawPrevTime = -1, r._next = r._last = r._onUpdate = r._timeline = r.timeline = null, r._paused = !1;
         var C = function() {
@@ -527,8 +527,9 @@ function(t, e) {
             return arguments.length && this.seek(t, e), this.paused(!0)
         }, r.resume = function(t, e) {
             return arguments.length && this.seek(t, e), this.paused(!1)
-        }, r.seek = function(t, e) {
-            return this.totalTime(Number(t), e !== !1)
+        },
+            r.seek = function(t, e) {
+            // return this.totalTime(Number(t), e !== !1)
         }, r.restart = function(t, e) {
             return this.reversed(!1).paused(!1).totalTime(t ? -this._delay : 0, e !== !1, !0)
         }, r.reverse = function(t, e) {
@@ -623,12 +624,12 @@ function(t, e) {
         var D = d("TweenLite", function(e, i, s) {
                 if (x.call(this, i, s), this.render = D.prototype.render, null == e) throw "Cannot tween a null target.";
                 this.target = e = "string" != typeof e ? e : D.selector(e) || e;
-                var r, n, a, o = e.jquery || e.length && e !== t && e[0] && (e[0] === t || e[0].nodeType && e[0].style && !e.nodeType),
-                    l = this.vars.overwrite;
+                var r, n, a, o = e.jquery || e.length && e !== t && e[0] && (e[0] === t || e[0].nodeType && e[0].style && !e.nodeType);
+                    // l = this.vars.overwrite;
                 if (this._overwrite = l = null == l ? j[D.defaultOverwrite] : "number" == typeof l ? l >> 0 : j[l], (o || e instanceof Array || e.push && m(e)) && "number" != typeof e[0])
                     for (this._targets = a = _.call(e, 0), this._propLookup = [], this._siblings = [], r = 0; a.length > r; r++) n = a[r], n ? "string" != typeof n ? n.length && n !== t && n[0] && (n[0] === t || n[0].nodeType && n[0].style && !n.nodeType) ? (a.splice(r--, 1), this._targets = a = a.concat(_.call(n, 0))) : (this._siblings[r] = B(n, this, !1), 1 === l && this._siblings[r].length > 1 && q(n, this, null, 1, this._siblings[r])) : (n = a[r--] = D.selector(n), "string" == typeof n && a.splice(r + 1, 1)) : a.splice(r--, 1);
                 else this._propLookup = {}, this._siblings = B(e, this, !1), 1 === l && this._siblings.length > 1 && q(e, this, null, 1, this._siblings);
-                (this.vars.immediateRender || 0 === i && 0 === this._delay && this.vars.immediateRender !== !1) && this.render(-this._delay, !1, !0)
+                // (this.vars.immediateRender || 0 === i && 0 === this._delay && this.vars.immediateRender !== !1) && this.render(-this._delay, !1, !0)
             }, !0),
             E = function(e) {
                 return e.length && e !== t && e[0] && (e[0] === t || e[0].nodeType && e[0].style && !e.nodeType)
@@ -5442,7 +5443,7 @@ function revslider_showDoubleJqueryError(e) {
         if (r.slideamount > 1 && !(r.stopAfterLoops == 0 && r.stopAtSlide == 1)) {
             var i = n.find(".tp-bannertimer");
             n.on("stoptimer", function() {
-                i.data("tween").pause();
+                // i.data("tween").pause();
                 if (r.hideTimerBar == "on") i.css({
                     visibility: "hidden"
                 })
@@ -5478,7 +5479,7 @@ function revslider_showDoubleJqueryError(e) {
                 })
             });
             n.on("nulltimer", function() {
-                i.data("tween").pause(0);
+                // i.data("tween").pause(0);
                 if (r.hideTimerBar == "on") i.css({
                     visibility: "hidden"
                 })

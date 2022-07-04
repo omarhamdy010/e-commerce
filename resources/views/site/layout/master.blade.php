@@ -106,7 +106,6 @@
                             <div id="search">
                                 <form>
                                     <div class="input-group">
-
                                         <input type="text" id="searchinp" class="form-control"
                                                placeholder="Enter your search..." name="search">
                                         <button onclick="searchbtn()" class="btn-search" type="button"><i
@@ -126,7 +125,7 @@
                         <a>
                             <div class="top-cart-contain ">
                                 <div class="mini-cart">
-                                    <div class="basket "><a href="shopping_cart.html">
+                                    <div class="basket "><a href="{{route('cart')}}">
                                             <div id="cartNo" class="cart-icon"></div>
                                             <div class="shoppingcart-inner hidden-xs"><span
                                                     class="cart-title">My Cart</span>

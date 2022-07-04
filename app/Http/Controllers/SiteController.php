@@ -25,7 +25,6 @@ class SiteController extends Controller
         $product = Product::where('id', $request->get('id'))->first();
 
         $cart = Session::get('cart', []);
-
         if (isset($cart[$request->get('id')])) {
             $cart[$request->get('id')]['quantity']++;
         }
@@ -36,10 +35,14 @@ class SiteController extends Controller
                 'price' => $product->price,
                 'title' => $product->title,
                 'description' => $product->description,
+                'image'=>$product->default_image->name
             ];
         }
         Session::put('cart', $cart);
         return redirect()->back()->with('success', 'Product added to cart successfully!');
 
+    }
+    public function cart(){
+        return view('site.cart');
     }
 }

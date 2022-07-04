@@ -16,13 +16,13 @@ var lang="en"
       httprequest.onreadystatechange=function(){
           if(httprequest.status==200 && httprequest.readyState==4){
               var Data=JSON.parse(httprequest.response).items
-             displayprod(Data) 
-        
-      
+             displayprod(Data)
+
+
       }
-      
+
       }
-      
+
       }
       wishlist();
       function displayprod(Data){
@@ -30,11 +30,11 @@ var lang="en"
           for(var i =0 ;i<Data.length ; i++)
           {
             wishlistProducts.push(Data[i].id)
-           
+
           }
             ;
 
-       
+
           }
 function getshopProducts(){
 
@@ -42,7 +42,7 @@ function getshopProducts(){
 
   var urlParams = new URLSearchParams(queryString);
   if(urlParams.get('brand_id')){
-    
+
   var brand = urlParams.get('brand_id')
   var httprequest= new XMLHttpRequest();
   httprequest.open("GET","http://aaaserver-001-site31.ftempurl.com/"+lang+"/api/Products/GetProductsUsingBrandId/"+brand+"?Index=0&Size=10");
@@ -51,15 +51,15 @@ function getshopProducts(){
       if(httprequest.status==200 && httprequest.readyState==4){
         var Count=JSON.parse(httprequest.response).allCount
           var Data=JSON.parse(httprequest.response).items
-         
+
           if(Data.length == 0){
            emptyData();
           }
           var pagesCount=JSON.parse(httprequest.response).pagesCount
-          displayshopProducts(Data) 
+          displayshopProducts(Data)
           dispaypagesNumberBrand(pagesCount,pageNum)
   }
-  
+
   }
 }else if(urlParams.get('sub')){
 
@@ -76,10 +76,10 @@ function getshopProducts(){
            emptyData();
           }
           var pagesCount=JSON.parse(httprequest.response).pagesCount
-          displayshopProducts(Data) 
+          displayshopProducts(Data)
           dispaypagesNumberBrand(pagesCount,pageNum)
   }
-  
+
   }
 }
 else{
@@ -97,22 +97,22 @@ else{
   httprequest.onreadystatechange=function(){
       if(httprequest.status==200 && httprequest.readyState==4){
           var Data=JSON.parse(httprequest.response).items
-         
+
           var pagesCount=JSON.parse(httprequest.response).pagesCount
-          displayshopProducts(Data) 
+          displayshopProducts(Data)
           dispaypagesNumber(pagesCount,pageNum)
-  
+
   }
-  
+
   }
 }
   }
-  
+
 getshopProducts()
 function displayshopProducts(products){
- 
+
   shopitem = "";
-          
+
   var titles=[];
   if(products.length==0){
     document.getElementById("shop-products").innerHTML = "No products";
@@ -129,7 +129,7 @@ function displayshopProducts(products){
     <div class="product-item">
       <div class="item-inner">
         <div class="product-thumbnail">
-    
+
           <div  class="pr-img-area"> <a href="single_product.html?product_id=`+products[i].id+`" title="Ipsums Dolors Untra" >
             <figure> <img class="first-img imageSize " src="http://aaaserver-001-site31.ftempurl.com`+products[i].image+`" alt="HTML template"> <img class="hover-img" src="http://aaaserver-001-site31.ftempurl.com`+products[i].image+`" alt="HTML template"></figure>
             </a> </div>
@@ -159,23 +159,23 @@ function displayshopProducts(products){
           </div>
         </div>
       </div>
-    
+
     </div>
   </li>`
- 
+
 
       }
       for(var i =0 ;i<products ; i++)
       {
 
     shopitem+=``
- 
+
           titles.push(products[i].name);
-          
+
       }
     }
   document.getElementById("shop-products").innerHTML = shopitem;
-  
+
 }
 function dispaypagesNumber(Numbers , currenPage){
 Number=""
@@ -217,7 +217,7 @@ function FilterInputCateg(event){
    var categId=$("#"+event + " input").attr('value');
    var id =parseInt(categId)
     Catg.push(id)
-  
+
   }else{
     var val = $("#"+event + " input").attr('value');
     var id =parseInt(val)
@@ -237,7 +237,7 @@ function FilterInputMain(event){
    var id =parseInt(mainId)
     main.push(id)
 
-  
+
   }else{
     var val = $("#"+event + " input").attr('value');
     var id =parseInt(val)
@@ -258,7 +258,7 @@ function FilterInputMarket(event){
    var id =parseInt(marketId)
     market.push(id)
 
-  
+
   }else{
     var val = $("#"+event + " input").attr('value');
     var id =parseInt(val)
@@ -320,19 +320,19 @@ var sortNo=parseInt(selected);
                  "content-type": "application/json; charset=utf-8"
                                }
            }).then(function(response){
-            
+
                return response.json();
-           
+
            })
-       
+
    .then(function(data){
 
        displayshopProducts(data.items)
- 
+
    }).catch(err =>{
      console.error(err.message);
    })
-  
+
  }
 
 
@@ -342,8 +342,8 @@ function postProduct(event){
            method:'POST',
            body:JSON.stringify({
                product_Id:event,
-               
-          
+
+
            }),
            headers:{
                "Content-Type":"application/json;"
@@ -354,7 +354,7 @@ function postProduct(event){
 .then(function(data){
 
 })
- 
+
 }
 
 //get Main Categories
@@ -366,15 +366,15 @@ function getMaincategories(){
       if(httprequest.status==200 && httprequest.readyState==4){
           var Data=JSON.parse(httprequest.response).items
           displayMainCategries(Data);
-      
+
       }
   }
-     
+
 }
 getMaincategories();
 function displayMainCategries(MainCateg){
   mainItem = "";
-          
+
 
   for(var i =0 ;i<MainCateg.length ; i++)
       {
@@ -382,14 +382,14 @@ function displayMainCategries(MainCateg){
         mainItem+=`<li id="`+MainCateg[i].id+`FM" onclick="FilterInputMain(this.id)"> <input type="checkbox" id="`+MainCateg[i].id+`Main" value="`+MainCateg[i].id+`" name="`+MainCateg[i].name+`">
         <label for="`+MainCateg[i].id+`Main"> <span class="button"></span>`+MainCateg[i].name+`<span class="count"></span> </label>
       </li> `
- 
-    
-          
+
+
+
       }
-  
-  
+
+
   document.getElementById("main").innerHTML =mainItem ;
-  
+
 }
 //getBrand
 
@@ -403,7 +403,7 @@ function getBrandcategoriesf(){
           displayBrandCategriesf(Data);
       }
   }
-     
+
 }
 
 function displayBrandCategriesf(Brand){
@@ -413,13 +413,13 @@ function displayBrandCategriesf(Brand){
         BrandItem+=`<li id="`+Brand[i].id+`FB" onclick="FilterInputBrand(this.id)"> <input type="checkbox" id="`+Brand[i].id+`B" value="`+Brand[i].id+`" name="`+Brand[i].name+`">
         <label for="`+Brand[i].id+`B"> <span class="button"></span>`+Brand[i].name+`<span class="count"></span> </label>
       </li> `
- 
-          
+
+
       }
-  
-  
+
+
   document.getElementById("brand").innerHTML =BrandItem ;
-  
+
 }
 getBrandcategoriesf();
 // get Market
@@ -432,10 +432,10 @@ function getMarketcategories(){
       if(httprequest.status==200 && httprequest.readyState==4){
           var Data=JSON.parse(httprequest.response).items
           displayMarketCategries(Data);
-      
+
       }
   }
-     
+
 }
 getMarketcategories();
 function displayMarketCategries(Market){
@@ -447,12 +447,12 @@ function displayMarketCategries(Market){
         <input type="checkbox" id="`+Market[i].id+`M" value="`+Market[i].id+`" name="`+Market[i].name+`">
         <label for="`+Market[i].id+`M"> <span class="button"></span>`+Market[i].name+`<span class="count"></span> </label>
       </li>`
-          
+
       }
-  
-  
+
+
   document.getElementById("market").innerHTML =marketItem ;
-  
+
 }
 
 
@@ -467,10 +467,10 @@ function displayMarketCategries(Market){
           if(httprequest.status==200 && httprequest.readyState==4){
               var Data=JSON.parse(httprequest.response).items
               displayshopCategries(Data);
-          
+
           }
       }
-         
+
     }
   getshopcategories();
 
@@ -484,8 +484,8 @@ for(var i =0 ;i<products.length ; i++)
   <label for="`+products[i].id+`C"> <span class="button"></span>`+products[i].name+`<span class="count"></span> </label>
 </li>`
 
-  
-        
+
+
     }
 
 
@@ -513,7 +513,7 @@ function displayDataCartShop(){
 
     }
     document.getElementById("yourNumb").innerHTML=`<a href="shopping_cart.html">`+z.length+`</a>`
-    
+
   }
   displayDataCartShop()
 
@@ -525,17 +525,17 @@ function displayDataCart(){
     var total=0;
     for( i =0 ;i<z.length ; i++)
     {
-    
+
       total+=z[i].quantity*z[i].price
         productDe+=`
         <li class="item"> <a href="shopping_cart.html" title="Sample Product" class="product-image"><img src="`+z[i].image+`" alt="Sample Product "></a>
         <div class="product-details">
-        
+
           <p class="product-name"> <a href="shopping_cart.html">`+z[i].name+`</a> </p>
           <div><span class="price">`+z[i].price+` EGP</span> </div>
       </li>
       `;
-  
+
     }
     document.getElementById("Total").innerHTML="<p class=subtotal> <span class=label>Cart Subtotal:</span> <span class=price>"+total+"</span> </p>";
     document.getElementById("cart").innerHTML= productDe;
@@ -548,19 +548,19 @@ function displayDataCart(){
           if(event==z[i].id){
             z.splice(i,1);
             localStorage.setItem("orders",JSON.stringify(z))
-         
+
            displayDataCart()
-    
+
       } }
 
 }
- 
-  
+
+
   displayDataCart()
 
 
-  
-        // categories 
+
+        // categories
 function categories(){
 
   var httprequest= new XMLHttpRequest();
@@ -577,7 +577,7 @@ function categories(){
                   jQuery('.mega-menu-category').slideDown();
               }
           });
-          
+
   jQuery('.mega-menu-category .nav > li').hover(function() {
       jQuery(this).addClass("active");
       jQuery(this).find('.popup').stop(true, true).fadeIn('slow');
@@ -599,7 +599,7 @@ function categories(){
   });
       }
   }
-      
+
   }
   categories();
   var mainC = {}
@@ -637,7 +637,7 @@ function categories(){
     {
         /* This IF block has nothing to do with the OP. It just resets everything so the demo can be ran more than once. */
         if (counter===catss.length) {
-        
+
         }
         var id = catIds[catss[counter]];
         var category = catss[counter];
@@ -654,19 +654,19 @@ function categories(){
                 displayof();
               }
             }
-            
+
         });
     }
     getData();
   }
   function displayof(){
-    
+
 $.each(mainC, function(key, value) {
   var mainCategory = key;
   var html = '<li><a href="#">'+mainCategory+'</a><div class="wrap-popup"><div class="popup"><div class="row">'
   var html2='<a href="#">'+mainCategory+'</a><ul>'
   var cats = mainC[key];
-  
+
   for(var i=0; i<cats.length; ++i){
     var subCats = catWithSub[cats[i]];
     if(i%2==0){
@@ -687,7 +687,7 @@ $.each(mainC, function(key, value) {
   }
   html+='</div></div></div></div></li>';
   html2+='</ul>'
-  
+
   document.getElementById("nav-categories").innerHTML = html;
   document.getElementById("categ-mob").innerHTML = html2;
 
@@ -700,9 +700,9 @@ jQuery('.mega-menu-category .nav > li').hover(function() {
   jQuery(this).removeClass("active");
   jQuery(this).find('.popup').stop(true, true).fadeOut('slow');
 });
-          
+
   }
-//End Ahmed 
+//End Ahmed
 function getBrandcategoriess(){
   var httprequest= new XMLHttpRequest();
   httprequest.open("GET","http://aaaserver-001-site31.ftempurl.com/"+lang+"/api/Brands/GetBrands?Index=0&Size=10");
@@ -711,10 +711,10 @@ function getBrandcategoriess(){
       if(httprequest.status==200 && httprequest.readyState==4){
           var Data=JSON.parse(httprequest.response).items
           displayBrandCategriess(Data);
-      
+
       }
   }
-     
+
 }
     /* ---------------------------------------------
        Brand section
@@ -722,39 +722,39 @@ function getBrandcategoriess(){
 getBrandcategoriess();
 function displayBrandCategriess(Brand){
   BrandItem = "";
-  brandMobile=""        
+  brandMobile=""
   var titles=[];
   for(var i =0 ;i<Brand.length ; i++)
       {
 
-        
+
         BrandItem+=`<li class="menu-item depth-1 menucol-1-3 ">
-                    
+
         <ul class="submenu">
           <li class="menu-item">
             <div class="title"> <a href="shop_grid.html?brand_id=`+Brand[i].id+`">`+Brand[i].name+`</a></div>
           </li>
-         
+
         </ul>
       </li>`
       brandMobile+=`<li><a href="shop_grid.html?brand_id=`+Brand[i].id+`">`+Brand[i].name+`</a></li>`
- 
+
       }
-  
-  
+
+
   document.getElementById("brands").innerHTML = BrandItem ;
   document.getElementById("brandMobile").innerHTML=brandMobile
-  
+
 }
 function follow(event){
- 
+
 
   $('.follow').closest('div#'+event).css("display","none")
   $('.unfollow').closest('div#'+event).css("display","block")
 
     var id =parseInt(event)
-   
-   
+
+
      var token=JSON.parse(sessionStorage.getItem('token'));
              fetch("http://aaaserver-001-site31.ftempurl.com/"+lang+"/api/Products/FollowProduct/"+id,{
                  method:'POST',
@@ -763,13 +763,13 @@ function follow(event){
                    "content-type": "application/json; charset=utf-8"
                                  }
              }).then(function(response){
-              
+
                  return response.json();
-             
+
              })
-         
+
      .then(function(data){
-   
+
      }).catch(err =>{
        console.error(err.message);
      })
@@ -777,13 +777,13 @@ function follow(event){
 }
 
 function unfollow(event){
- 
+
   $('.follow').closest('div#'+event).css("display","block")
   $('.unfollow').closest('div#'+event).css("display","none")
 
   var id =parseInt(event)
- 
- 
+
+
    var token=JSON.parse(sessionStorage.getItem('token'));
            fetch("http://aaaserver-001-site31.ftempurl.com/"+lang+"/api/Products/UnFollowProduct/"+id,{
                method:'POST',
@@ -792,20 +792,20 @@ function unfollow(event){
                  "content-type": "application/json; charset=utf-8"
                                }
            }).then(function(response){
-              
+
                return response.json();
-           
+
            })
-       
+
    .then(function(data){
- 
-      
+
+
    }).catch(err =>{
      console.error(err.message);
    })
 
- 
- 
- 
- 
+
+
+
+
 }
