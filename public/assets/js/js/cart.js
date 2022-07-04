@@ -111,7 +111,7 @@ function addtoCart(event) {
 
 
 function displayDataCart20() {
-    var x = document.getElementById("session_data");
+    var x = $('#session_data').val();
     alert(x);
 
     if (x) {
@@ -120,7 +120,7 @@ function displayDataCart20() {
         // {
         // }
         if (document.getElementById("cartNo")) {
-            document.getElementById("cartNo").innerHTML = `<i class="fas fa-shopping-cart px-2"></i> <span class=cart-total>` + z.length + `</span>`
+            document.getElementById("cartNo").innerHTML = `<i class="fas fa-shopping-cart px-2"></i> <span class=cart-total>${x}</span>`
         }
         // }
 
