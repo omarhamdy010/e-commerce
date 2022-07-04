@@ -4,7 +4,7 @@
     <script type="text/javascript" src="{{asset('assets/js/js/jquery.min.js')}}"></script>
 
     <script>
-        $(function(){
+        $(function () {
             $("#top-search-div-2").load("header.html");
         });
     </script>
@@ -16,9 +16,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <![endif]-->
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Low-cost </title>
-    <meta name="description" content="best template, template free, responsive Template, fashion store, responsive Template, responsive html Template, Premium website templates, web templates, Multi-Purpose Responsive HTML5 Template">
-    <meta name="keywords" content="bootstrap, ecommerce, fashion, layout, responsive, responsive template, responsive template download, responsive Template, retail, shop, shopping, store, Premium website templates, web templates, Multi-Purpose Responsive HTML5 Template"/>
+    @yield('title')
+    <meta name="description"
+          content="best template, template free, responsive Template, fashion store, responsive Template, responsive html Template, Premium website templates, web templates, Multi-Purpose Responsive HTML5 Template">
+    <meta name="keywords"
+          content="bootstrap, ecommerce, fashion, layout, responsive, responsive template, responsive template download, responsive Template, retail, shop, shopping, store, Premium website templates, web templates, Multi-Purpose Responsive HTML5 Template"/>
 
     <!-- Mobile specific metas  -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -31,7 +33,7 @@
 
 </head>
 
-<body class="cms-index-index cms-home-page" >
+<body class="cms-index-index cms-home-page">
 
 <div id="page">
 
@@ -40,7 +42,141 @@
 
     </header>
     <!-- end header -->
-        @include('site.layout._nav')
+    <div class="header-container">
+        <div class="header-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4 col-md-4 col-xs-12">
+                        <!-- Default Welcome Message -->
+                        <div id="userName" class="welcome-msg hidden-xs hidden-sm"></div>
+                        <!-- Language &amp; Currency wrapper -->
+                        <div class="language-currency-wrapper">
+                            <div class="sorter">
+                                <div id="langua" class="short-by">
+                                </div>
+                                <!-- <div class="short-by page">
+                                  <label>Show:</label>
+                                  <select>
+                                    <option selected="selected">18</option>
+                                    <option>20</option>
+                                    <option>25</option>
+                                    <option>30</option>
+                                  </select>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- top links -->
+                    <div class="headerlinkmenu col-md-8 col-sm-8 col-xs-12"><span class="phone  hidden-xs hidden-sm">Call Egy: +02012 0105 5210</span>
+                        <ul class="links">
+                            <li class="hidden-xs"><a title="Help Center" href="#"><span>Help Center</span></a></li>
+                            <li><a title="Store Locator" href="#"><span>Store Locator</span></a></li>
+                            <li id="checkOutWord"></li>
+                            <li>
+                                <div class="dropdown" id="myAccount">
+
+                                </div>
+
+                            <li id="accountLog">
+
+                            </li>
+                            <!-- <li onclick="logOut()"><a title="logout" id="logout" ><span>Logout</span></a></li> -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- header inner -->
+        <div class="header-inner">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-2 col-xs-12 jtv-logo-block">
+
+                        <!-- Header Logo -->
+                        <div class="logo"><a title="e-commerce" href="index.html"><img alt="ShopMart" title="ShopMart"
+                                                                                       src="{{asset('assets/img/logofinal.png')}}"
+                                                                                       style="width:300px;"></a></div>
+                    </div>
+                    <div class="col-xs-12 col-sm-5 col-md-6 jtv-top-search">
+
+                        <!-- Search -->
+
+                        <div class="top-search">
+                            <div id="search">
+                                <form>
+                                    <div class="input-group">
+
+                                        <input type="text" id="searchinp" class="form-control"
+                                               placeholder="Enter your search..." name="search">
+                                        <button onclick="searchbtn()" class="btn-search" type="button"><i
+                                                class="fa fa-search"></i></button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- End Search -->
+
+                    </div>
+                    <div class="col-xs-12 col-sm-4 col-md-4 top-cart">
+                        <div class="link-wishlist"><a href="wishlist.html"> <i
+                                    class="fa fa-heart-o"></i><span> Wishlist</span></a></div>
+                        <!-- top cart -->
+                        <a>
+                            <div class="top-cart-contain ">
+                                <div class="mini-cart">
+                                    <div class="basket "><a href="shopping_cart.html">
+                                            <div id="cartNo" class="cart-icon"></div>
+                                            <div class="shoppingcart-inner hidden-xs"><span
+                                                    class="cart-title">My Cart</span>
+                                            </div>
+                                        </a></div>
+                                    <div>
+                                        <!-- <div class="top-cart-content">
+                                          <div class="block-subtitle hidden">Recently added items</div>
+                                          <ul id="cart-sidebar-content" class="mini-products-list">
+
+
+
+                                          </ul>
+                                          <div class="top-subtotal">Subtotal: <span class="price">$520.00</span></div>
+                                          <div class="actions">
+                                            <button class="btn-checkout" type="button" onClick="location.href='checkout.html'"><i class="fa fa-check"></i><span>Checkout</span></button>
+                                            <button class="view-cart" type="button" onClick="location.href='shopping_cart.html'"><i class="fa fa-shopping-cart"></i><span>View Cart</span></button>
+                                          </div>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="top-cart-contain">
+                                <div class="mini-cart">
+                                    <div data-toggle="dropdown" data-hover="dropdown" class="basket dropdown-toggle"><a href="#">
+                                            <div class="cart-icon" id="iconNum" style="margin-right: 50px;"></div>
+                                        </a></div>
+                                    <div>
+                                        <div class="top-cart-content">
+                                            <div class="block-subtitle hidden">Recently added items</div>
+                                            <ul id="cart-sidebar Notifcation" class="mini-products-list">
+
+                                            </ul>
+                                            <!-- <div class="top-subtotal">Subtotal: <span class="price">$520.00</span></div>
+                                            <div class="actions">
+                                              <button class="btn-checkout" type="button" onClick="location.href='checkout.html'"><i class="fa fa-check"></i><span>Checkout</span></button>
+                                              <button class="view-cart" type="button" onClick="location.href='shopping_cart.html'"><i class="fa fa-shopping-cart"></i><span>View Cart</span></button>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+@include('site.layout._nav')
 
     <!-- Slideshow  -->
     <div class="main-slider" id="home">
@@ -48,7 +184,7 @@
             <div class="row">
                 <div class="col-sm-9 col-md-9 col-lg-9 col-xs-12 jtv-slideshow">
                     <div id="jtv-slideshow">
-                        <div id='rev_slider_4_wrapper' class='rev_slider_wrapper fullwidthbanner-container' >
+                        <div id='rev_slider_4_wrapper' class='rev_slider_wrapper fullwidthbanner-container'>
                             <div id='rev_slider_4' class='rev_slider fullwidthabanner'>
                                 <ul id="slider-list" style="display: block; overflow: hidden; width: 100%; height: 100%; max-height: none;">
                                     <li data-transition="fade" data-slotamount="7" data-masterspeed="1000" data-thumb="">
@@ -66,7 +202,7 @@
 
     <!-- All products-->
 
-@yield('content')
+    @yield('content')
 </div>
 
 
@@ -91,7 +227,14 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="{{asset('assets/js/js/jquery-ui.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/js/js/bootstrap.min.js')}}"></script>
-<link rel="stylesheet" href="{{asset('assets/plugins/fontawesome-free/css/all.min.css')}}">
+<script type="text/javascript" src="{{asset('assets/js/js/jquery.bxslider.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/js/js/owl.carousel.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/js/js/cart.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/js/js/shop-grid.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/js/js/global-methods.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/js/js/apiHeader.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/js/js/header.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/js/js/wishlist.js')}}"></script>
 
 <!-- owl.carousel.min js -->
 <script type="text/javascript" src="http://aaaserver-001-site44.dtempurl.com/js/owl.carousel.min.js"></script>
@@ -114,6 +257,7 @@
 <!-- Slider Js -->
 <script type="text/javascript" src="{{asset('assets/js/js/revolution-slider.js')}}"></script>
 <!-- <script type="text/javascript" src="js/cart.js"></script>  -->
+@yield('js')
 <script type='text/javascript'>
     jQuery(document).ready(function(){
 

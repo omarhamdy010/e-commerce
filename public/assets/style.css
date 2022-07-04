@@ -1,4 +1,5 @@
 @import url('css/css/bootstrap.min.css');
+@import url('css/css/all.css');
 @import url('css/css/animate.css');
 @import url('css/css/font-awesome.min.css');
 @import url('css/css/simple-line-icons.css');
@@ -18,3 +19,10 @@
 @import url('css/css/shortcodes/post.css');
 @import url('css/css/style.css');
 @import url('css/css/responsive.css');
+@import url('plugins/fontawesome-free/css/all.css');
+@import url('plugins/fontawesome-free/css/brands.css');
+@import url('plugins/fontawesome-free/css/fontawesome.css');
+@import url('plugins/fontawesome-free/css/regular.css');
+@import url('plugins/fontawesome-free/css/solid.css');
+@import url('plugins/fontawesome-free/css/svg-with-js.css');
+@import url('plugins/fontawesome-free/css/v4-shims.css');

@@ -103,7 +103,7 @@
                         </a></div>
                     </li> -->
                     <li class="mt-root">
-                        <div class="mt-root-item"><a href="shop_grid.html">
+                        <div class="mt-root-item"><a href="{{route('shop')}}">
                                 <div class="title title_font"><span class="title-text">Shop</span> </div>
                             </a></div>
                     </li>

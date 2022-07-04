@@ -36,5 +36,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     });
-    Route::resource('site',\App\Http\Controllers\SiteController::class);
+    Route::resource('site',\App\Http\Controllers\SiteController::class)->except('show');
+    Route::get('site/shop',[\App\Http\Controllers\SiteController::class,'shop'])->name('shop');
+    Route::get('add_to_cart',[\App\Http\Controllers\SiteController::class,'add_to_cart'])->name('add-to-cart');
 });

@@ -1,11 +1,13 @@
 @extends('site.layout.master')
-
+@section('title')
+    <title>Main Page</title>
+@endsection
 @section('content')
     <div class="container">
         <div class="home-tab">
             @foreach($categories as $category)
 
-{{--                @dump($category)--}}
+                {{--                @dump($category)--}}
                 <div class="tab-title text-left">
                     <h2>{{$category->name}}</h2>
                     <ul class="nav home-nav-tabs home-product-tabs" id="top-selling">
@@ -29,7 +31,7 @@
                         <div class="slider-items slider-width-col4 ">
 
                             @foreach($category->products()->get() as $product)
-{{--                                                            @dd($product)--}}
+                                {{--                                                            @dd($product)--}}
                                 <div class="product-item">
                                     <div class="item-inner">
                                         <div class="product-thumbnail">
@@ -71,7 +73,9 @@
                                         </div>
                                         <div class="item-info">
                                             <div class="info-inner">
-                                                <div class="item-title"><a title="{{$product->title}}" href="single_product.html">{{$product->title}}</a></div>
+                                                <div class="item-title"><a title="{{$product->title}}"
+                                                                           href="single_product.html">{{$product->title}}</a>
+                                                </div>
                                                 <div class="item-content">
                                                     <div class="rating">
                                                         <i class="fa fa-star"></i>
@@ -86,7 +90,8 @@
                                                         </div>
                                                     </div>
                                                     <div class="pro-action">
-                                                        <button type="button" class="add-to-cart"><span> Add to Cart</span>
+                                                        <button type="button" data-id="{{$product->id}}"
+                                                                class="add-to-cart"><span> Add to Cart</span>
                                                         </button>
                                                     </div>
                                                 </div>
@@ -98,8 +103,28 @@
                         </div>
                     </div>
                 </div>
-                @endforeach
+            @endforeach
         </div>
-
     </div>
+@endsection
+
+
+@section('js')
+    <script>
+        $('.add-to-cart').on('click', function () {
+            var id = $(this).data('id');
+            $.ajax({
+                url: '{{ route('add-to-cart') }}',
+                method: "GET",
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    id: id,
+                    // quantity: ele.parents("tr").find(".quantity").val()
+                },
+                success: function (response) {
+                    window.location.reload();
+                }
+            });
+        });
+    </script>
 @endsection
