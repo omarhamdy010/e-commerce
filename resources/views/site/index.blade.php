@@ -117,7 +117,7 @@
             }
             var y = JSON.parse(z);
             if (document.getElementById("cartNo")) {
-                document.getElementById("cartNo").innerHTML = `<i class="fas fa-shopping-cart px-2"></i> <span class=cart-total>${y+1}</span>`
+                document.getElementById("cartNo").innerHTML = `<i class="fas fa-shopping-cart px-2"></i> <span class=cart-total>${y}</span>`
             }
             $('.add-to-cart').on('click', function () {
                 var id = $(this).data('id');

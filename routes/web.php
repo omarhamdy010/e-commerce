@@ -40,4 +40,5 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
     Route::get('site/shop',[\App\Http\Controllers\SiteController::class,'shop'])->name('shop');
     Route::get('add_to_cart',[\App\Http\Controllers\SiteController::class,'add_to_cart'])->name('add-to-cart');
     Route::get('cart',[\App\Http\Controllers\SiteController::class,'cart'])->name('cart');
+    Route::get('deleteCart/{id}',[\App\Http\Controllers\SiteController::class,'deleteCart'])->name('deletecart');
 });

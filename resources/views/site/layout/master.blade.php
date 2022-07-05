@@ -94,7 +94,7 @@
                     <div class="col-sm-2 col-xs-12 jtv-logo-block">
 
                         <!-- Header Logo -->
-                        <div class="logo"><a title="e-commerce" href="index.html"><img alt="ShopMart" title="ShopMart"
+                        <div class="logo"><a title="e-commerce" href="{{route('site.index')}}"><img alt="ShopMart" title="ShopMart"
                                                                                        src="{{asset('assets/img/logofinal.png')}}"
                                                                                        style="width:300px;"></a></div>
                     </div>
@@ -178,6 +178,7 @@
 @include('site.layout._nav')
 
     <!-- Slideshow  -->
+    @if(\Illuminate\Support\Facades\Request::segment(1)==''|| \Illuminate\Support\Facades\Request::segment(2)=='site')
     <div class="main-slider" id="home">
         <div class="container">
             <div class="row">
@@ -198,7 +199,7 @@
             </div>
         </div>
     </div>
-
+    @endif
     <!-- All products-->
 
     @yield('content')

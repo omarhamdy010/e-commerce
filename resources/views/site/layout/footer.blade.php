@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-6 col-md-3 col-xs-12">
-                <div class="footer-logo"><a href="index.html"><img src="{{asset('images/logofinal.png')}}" alt="fotter logo" style="width:100px"></a> </div>
+                <div class="footer-logo"><a href="{{route('site.index')}}"><img src="{{asset('images/logofinal.png')}}" alt="fotter logo" style="width:100px"></a> </div>
                 <p>Lorem Ipsum is simply dummy text of the print and typesetting industry. Ut pharetra augue nec augue. Nam elit agna, endrerit sit amet.</p>
                 <div class="social">
                     <ul class="inline-mode">

@@ -27,22 +27,33 @@ class SiteController extends Controller
         $cart = Session::get('cart', []);
         if (isset($cart[$request->get('id')])) {
             $cart[$request->get('id')]['quantity']++;
-        }
-        else{
+        } else {
             $cart[$request->get('id')] = [
                 'id' => $request->get('id'),
                 'quantity' => 1,
                 'price' => $product->price,
                 'title' => $product->title,
                 'description' => $product->description,
-                'image'=>$product->default_image->name
+                'image' => $product->default_image->name
             ];
         }
         Session::put('cart', $cart);
         return redirect()->back()->with('success', 'Product added to cart successfully!');
 
     }
-    public function cart(){
+
+    public function cart()
+    {
         return view('site.cart');
+    }
+
+    public function deleteCart($id)
+    {
+        $cart = Session::get('cart');
+
+        unset($cart[$id]);
+        session()->put('cart', $cart);
+
+        return redirect()->back();
     }
 }
