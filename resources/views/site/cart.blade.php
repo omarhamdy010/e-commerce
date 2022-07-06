@@ -46,7 +46,7 @@
                                                     <td class="qty"><input class="form-control input-sm" type="text"
                                                                            value="{{$cart['quantity']}}"></td>
                                                     <td class="action" id="rremove">
-                                                        <a id="remove_item">
+                                                        <a class="remove_item">
                                                             <i class="fas fa-window-close"></i>
                                                             <input type="hidden" value="{{$cart['id']}}" id="delete">
 
@@ -141,8 +141,8 @@
                     if (document.getElementById("cartNo")) {
                         document.getElementById("cartNo").innerHTML = `<i class="fas fa-shopping-cart px-2"></i> <span class=cart-total>${x}</span>`
                     }
-
-                    $('#remove_item').on('click', function () {
+                });
+                    $('.remove_item').on('click', function () {
 
                         var id = $('#delete').val();
                         var url = 'deleteCart/' + id;
@@ -153,19 +153,20 @@
                                 _token: '{{ csrf_token() }}',
                                 id: id,
                             },
-                            success: function (response) {
-                                var x = $('#session_data').val();
+                            success: function (count) {
+                                var x = JSON.parse(count.count);
                                 if (x) {
                                     var z = x;
+                                }else{
+                                    z=0;
                                 }
-                                var y = JSON.parse(z);
                                 if (document.getElementById("cartNo")) {
-                                    document.getElementById("cartNo").innerHTML = `<i class="fas fa-shopping-cart px-2"></i> <span class=cart-total>${y - 1}</span>`
+                                    document.getElementById("cartNo").innerHTML = `<i class="fas fa-shopping-cart px-2"></i> <span class=cart-total>${z}</span>`
                                 }
                                 $('#rremove').parent().remove();
+                                // window.location.reload();
                             }
                         });
-                    });
                 });
             </script>
 @endsection

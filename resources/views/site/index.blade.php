@@ -3,7 +3,6 @@
     <title>Main Page</title>
 @endsection
 @section('content')
-
     <div class="container">
         <div class="home-tab">
             @foreach($categories as $category)
@@ -30,7 +29,8 @@
                                 <div class="product-item">
                                     <div class="item-inner">
                                         <div class="product-thumbnail">
-                                            <div class="pr-img-area"><a title="{{$product->title}}" href="single_product.html">
+                                            <div class="pr-img-area"><a title="{{$product->title}}"
+                                                                        href="single_product.html">
                                                     <figure>
                                                         <img class="hover-img"
                                                              src="{{asset($product->default_image->path)}}"
@@ -108,48 +108,39 @@
 @section('js')
     <script>
         $(document).ready(function () {
-
             var x = $('#session_data').val();
-            if(x){
+            if (x) {
                 var z = x;
-            }else {
-                var z =0;
+            } else {
+                var z = 0;
             }
             var y = JSON.parse(z);
             if (document.getElementById("cartNo")) {
                 document.getElementById("cartNo").innerHTML = `<i class="fas fa-shopping-cart px-2"></i> <span class=cart-total>${y}</span>`
             }
-            $('.add-to-cart').on('click', function () {
-                var id = $(this).data('id');
-                {{--            var value = '{{ \Illuminate\Support\Facades\Session::get('cart',[])}}';--}}
-                $.ajax({
-                    url: '{{ route('add-to-cart') }}',
-                    method: "GET",
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        id: id,
-                        // quantity: ele.parents("tr").find(".quantity").val()
-                    },
-                    success: function (response) {
-                        var x = $('#session_data').val();
-                        if(x){
-                            var z = x;
-                        }else {
-                            var z =0;
-                        }
+        });
 
-                             var y = JSON.parse(z);
-                            if (document.getElementById("cartNo")) {
-                                document.getElementById("cartNo").innerHTML = `<i class="fas fa-shopping-cart px-2"></i> <span class=cart-total>${y+1}</span>`
-                            }
-                            // window.location.reload();
-
-                        // console.log(response);
-
-                        // alert(x);
-                        // alert(x);
+        $('.add-to-cart').on('click', function () {
+            var id = $(this).data('id');
+            $.ajax({
+                url: '{{ route('add-to-cart') }}',
+                method: "GET",
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    id: id,
+                },
+                success: function (count) {
+                    var x = JSON.parse(count.count);
+                    if (x) {
+                        var z = x;
+                    } else {
+                        var z = 0;
                     }
-                });
+                    if (document.getElementById("cartNo")) {
+                        document.getElementById("cartNo").innerHTML = `<i class="fas fa-shopping-cart px-2"></i> <span class=cart-total>${z}</span>`
+                    }
+                    // window.location.reload();
+                }
             });
         });
     </script>

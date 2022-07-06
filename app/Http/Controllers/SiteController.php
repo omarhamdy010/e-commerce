@@ -17,13 +17,15 @@ class SiteController extends Controller
 
     public function shop()
     {
-        return view('site.shop');
+        $products=Product::all();
+        return view('site.shop',compact('products'));
     }
 
     public function add_to_cart(Request $request)
     {
         $product = Product::where('id', $request->get('id'))->first();
 
+        $count = count(Session::get('cart'));
         $cart = Session::get('cart', []);
         if (isset($cart[$request->get('id')])) {
             $cart[$request->get('id')]['quantity']++;
@@ -36,9 +38,11 @@ class SiteController extends Controller
                 'description' => $product->description,
                 'image' => $product->default_image->name
             ];
+            $count++;
         }
         Session::put('cart', $cart);
-        return redirect()->back()->with('success', 'Product added to cart successfully!');
+//        return redirect()->back()->with('success', 'Product added to cart successfully!');
+        return response()->json(['success' => 'Product added to cart successfully!', 'count' => $count]);
 
     }
 
@@ -49,11 +53,13 @@ class SiteController extends Controller
 
     public function deleteCart($id)
     {
+        $count = count(Session::get('cart'));
         $cart = Session::get('cart');
 
         unset($cart[$id]);
         session()->put('cart', $cart);
+        $count--;
 
-        return redirect()->back();
+        return response()->json(['success' => 'Product deleted from cart successfully!', 'count' => $count]);
     }
 }
