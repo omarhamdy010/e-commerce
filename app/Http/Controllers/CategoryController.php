@@ -112,11 +112,11 @@ class CategoryController extends Controller
 
             'ar.name' =>[
                 'required',
-                Rule::unique('category_translations', 'name')->ignore($category->id)
+                Rule::unique('category_translations', 'name')->ignore($category->translate('ar')->id)
             ],
             'en.name' => [
                 'required',
-                Rule::unique('category_translations', 'name')->ignore($category->id)
+                Rule::unique('category_translations', 'name')->ignore($category->translate('en')->id)
             ],
         ]);
 

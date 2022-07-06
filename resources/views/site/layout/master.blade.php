@@ -94,9 +94,7 @@
                     <div class="col-sm-2 col-xs-12 jtv-logo-block">
 
                         <!-- Header Logo -->
-                        <div class="logo"><a title="e-commerce" href="{{route('site.index')}}"><img alt="ShopMart" title="ShopMart"
-                                                                                       src="{{asset('assets/img/logofinal.png')}}"
-                                                                                       style="width:300px;"></a></div>
+                        <div class="logo"><a title="e-commerce" href="{{route('site.index')}}"><img alt="ShopMart" title="ShopMart" src="{{asset('assets/img/logofinal.png')}}" style="width:300px;"></a></div>
                     </div>
                     <div class="col-xs-12 col-sm-5 col-md-6 jtv-top-search">
 

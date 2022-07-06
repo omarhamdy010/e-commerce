@@ -84,7 +84,7 @@
             <div class="mtmegamenu">
                 <ul class="hidden-xs">
                     <li class="mt-root demo_custom_link_cms">
-                        <div class="mt-root-item"><a href="{{route('home')}}">
+                        <div class="mt-root-item"><a href="{{route('site.index')}}">
                                 <div class="title title_font"><span class="title-text">Home</span></div>
                             </a></div>
 
