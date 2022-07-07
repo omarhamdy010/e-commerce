@@ -15,18 +15,18 @@ class SiteController extends Controller
         return view('site.index', compact('categories'));
     }
 
-    public function shop()
+    public function shop(Request $request)
     {
         $categories = Category::all();
         $products = Product::all();
-        return view('site.shop', compact('products','categories'));
+        return view('site.shop', compact('products', 'categories'));
     }
 
     public function add_to_cart(Request $request)
     {
         $product = Product::where('id', $request->get('id'))->first();
 
-        $count = count(Session::get('cart',[]));
+        $count = count(Session::get('cart', []));
         $cart = Session::get('cart', []);
         if (isset($cart[$request->get('id')])) {
             $cart[$request->get('id')]['quantity']++;
