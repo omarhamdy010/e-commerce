@@ -38,6 +38,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
     });
     Route::resource('site',\App\Http\Controllers\SiteController::class)->except('show');
     Route::get('shop',[\App\Http\Controllers\SiteController::class,'shop'])->name('shop');
+    Route::get('filter',[\App\Http\Controllers\SiteController::class,'filter'])->name('filter');
     Route::get('add_to_cart',[\App\Http\Controllers\SiteController::class,'add_to_cart'])->name('add-to-cart');
     Route::get('cart',[\App\Http\Controllers\SiteController::class,'cart'])->name('cart');
     Route::get('deleteCart/{id}',[\App\Http\Controllers\SiteController::class,'deleteCart'])->name('deletecart');

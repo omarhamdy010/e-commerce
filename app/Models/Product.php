@@ -12,7 +12,7 @@ class Product extends Model implements TranslatableContract
     use Translatable;
     use HasFactory;
     protected $guarded = [];
-    protected $appends = ['image_path'];
+    protected $appends = ['image_path','default_path'];
     public $translatedAttributes = ['title', 'description'];
 
 //    protected $type = ['percentage', 'amount', 'fixed'];

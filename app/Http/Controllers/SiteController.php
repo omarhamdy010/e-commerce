@@ -15,7 +15,28 @@ class SiteController extends Controller
         return view('site.index', compact('categories'));
     }
 
-    public function shop(Request $request)
+    public function filter(Request $request)
+    {
+        if ($request->sort) {
+//            $cat = Category::with('products')->where('id', $request->id)->first();
+//            dd($cat->products->first());
+//            $products = $cat->products()->with(array('products' => function ($query) {
+//                $query->order_by('price', 'asc');
+//            }));
+           $cat = Category::with(array('products' => function($query) {
+                $query->orderBy('price', 'asc');
+            }))->get();
+            $viewRender = view('site.filter', compact('cat'))->render();
+            return response()->json(array('success' => true, 'html' => $viewRender));
+        } else {
+
+            $cat = Category::with('products')->where('id', $request->id)->first();
+            $viewRender = view('site.filter', compact('cat'))->render();
+            return response()->json(array('success' => true, 'html' => $viewRender));
+        }
+    }
+
+    public function shop()
     {
         $categories = Category::all();
         $products = Product::all();
