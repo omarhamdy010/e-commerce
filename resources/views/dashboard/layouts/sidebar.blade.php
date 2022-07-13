@@ -2,10 +2,19 @@
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
+            @if(auth()->user())
             <img src="{{auth()->user()->image}}" class="img-circle elevation-2" alt="User Image">
+                @elseif(auth()->guard('admin')->check())
+                <img src="{{auth()->guard('admin')->user()->image}}" class="img-circle elevation-2" alt="User Image">
+            @endif
         </div>
+{{--        @dd(\Illuminate\Support\Facades\Auth::guard('admin'))--}}
         <div class="info">
-            <a href="#" class="d-block">Alexander Pierce</a>
+            @if(auth()->user())
+                <a href="#" class="d-block">{{auth()->user()->name}}</a>
+            @elseif(auth()->guard('admin')->check())
+                <a href="#" class="d-block">{{\Illuminate\Support\Facades\Auth::guard('admin')->user()->name}}</a>
+            @endif
         </div>
     </div>
 
@@ -47,6 +56,14 @@
                             <p>Product</p>
                         </a>
                     </li>
+                    @if(auth()->guard('admin')->check())
+                        <li class="nav-item">
+                            <a href="{{route('admin.index')}}" class="nav-link active">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Admin</p>
+                            </a>
+                        </li>
+                    @endif
                 </ul>
             </li>
         </ul>

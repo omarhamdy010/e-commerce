@@ -11,7 +11,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                        <li class="breadcrumb-item active">Category</li>
+                        <li class="breadcrumb-item active">Admins</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -25,7 +25,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Category</h3>
+                        <h3 class="card-title">Admins</h3>
 
                         <div class="card-tools">
 
@@ -33,7 +33,7 @@
 
                                 <a class="btn btn-primary btn-sm" data-toggle="modal" id="mediumButton"
                                    data-target="#mediumModal"
-                                   data-attr="{{route('category.create')}}">Create</a>
+                                   data-attr="{{route('admin.create')}}">Create</a>
 
                                 <input type="text" name="search" class="form-control float-right" placeholder="Search">
 
@@ -50,10 +50,9 @@
                         <tr>
                             <th>#</th>
                             <th>name</th>
-                            <th>parent category</th>
+                            <th>email</th>
                             <th>image</th>
                             <th>action</th>
-                            <th>category order</th>
                         </tr>
                         </thead>
                         <tbody id="table_row">
@@ -111,19 +110,18 @@
             var table = $('.yajra-datatable').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('category.getcategory') }}",
+                ajax: "{{ route('admin.getAdmins') }}",
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'name', name: 'name'},
-                    {data: 'parent_id', name: 'parent_id'},
+                    {data: 'email', name: 'email'},
                     {data: 'image', name: 'image'},
                     {
                         data: 'action',
                         name: 'action',
                         orderable: true,
-                        searchable: true
+                        searchable: true,
                     },
-                    {data: 'category_order', name: 'category_order'},
                 ]
             });
         }
@@ -142,7 +140,7 @@
 
                 if (e.value === true) {
 
-                    let _url = '/category/' + id;
+                    let _url = '/admin/' + id;
 
                     $.ajax({
                         type: 'DELETE',
@@ -175,9 +173,10 @@
 
             $_token = "{{ csrf_token() }}";
             var id = $(this).data('id');
+            var url = 'admin/' + id
             $.ajax({
                 headers: {'X-CSRF-Token': $('meta[name=_token]').attr('content')},
-                url: "{{ route('edit.category') }}",
+                url: url,
                 type: 'POST',
                 cache: false,
 
@@ -195,30 +194,30 @@
 
         $(document).on('click', '#mediumButton', function (event) {
             event.preventDefault();
-            $.ajax({
-                'url': '/categoryorder?category_id=0',
-                'type': 'get',
-                'data': {},
-                success: function (response) { // What to do if we succeed
-                    $('#category_order_count').val(response['order_category']);
-                    $('#category_order_count_ajax').val(response['order_category']);
-                },
-                error: function (response) {
-                    alert('Error' + ' ' + response);
-                }
-            });
+            // $.ajax({
+            //     'url': '/categoryorder?category_id=0',
+            //     'type': 'get',
+            //     'data': {},
+            //     success: function (response) { // What to do if we succeed
+            //         $('#category_order_count').val(response['order_category']);
+            //         $('#category_order_count_ajax').val(response['order_category']);
+            //     },
+            //     error: function (response) {
+            //         alert('Error' + ' ' + response);
+            //     }
+            // });
 
-            $.ajax({
-                'url': '/categoryorder?category_id=0',
-                'type': 'get',
-                'data': {},
-                success: function (response) { // What to do if we succeed
-                    $('#category_order_count_ajax').val(response['order_category']);
-                },
-                error: function (response) {
-                    alert('Error' + ' ' + response);
-                }
-            });
+            // $.ajax({
+            //     'url': '/categoryorder?category_id=0',
+            //     'type': 'get',
+            //     'data': {},
+            //     success: function (response) { // What to do if we succeed
+            //         $('#category_order_count_ajax').val(response['order_category']);
+            //     },
+            //     error: function (response) {
+            //         alert('Error' + ' ' + response);
+            //     }
+            // });
 
             $_token = "{{ csrf_token() }}";
 
@@ -227,8 +226,8 @@
 
             $.ajax({
                 headers: {'X-CSRF-Token': $('meta[name=_token]').attr('content')},
-                url: "{{ route('create.category') }}",
-                type: 'POST',
+                url: "{{ route('admin.create') }}",
+                type: 'get',
                 cache: false,
 
                 data: {'_token': $_token},
@@ -261,7 +260,7 @@
                 if (e.value === true) {
                     $.ajax(
                         {
-                            url: "category/" + id,
+                            url: "admin/" + id,
                             type: 'DELETE',
                             data: {
                                 "id": id,
@@ -280,26 +279,21 @@
             })
         });
 
-        $(document).on('submit', '#upload-cat-form', function (e) {
+        $(document).on('submit', '#uploadcatform', function (e) {
             e.preventDefault();
             let formData = new FormData(this);
-            var name = $('.nameajax').val();
-            var id = $(this).data('id');
-            var parentId = $('.parcatajax').val();
             $.ajax({
                 type: 'POST',
-                url: `/categoryajax`,
+                url: `/admin`,
                 data: formData,
                 contentType: false,
                 processData: false,
                 success: (response) => {
                     if (response) {
-                        this.reset();
+                        $(this).reset();
                         console.log('Image has been uploaded successfully');
                     }
-                    if (parentId == 0) {
-                        $('#catnameajax').append(`<option  value="${id}" >${name}</option>`);
-                    }
+
                     $('#mediumModal').toggleClass('show');
                     $('#mediumModal').toggleClass('in');
                     $('.modal-backdrop').css('display', 'none');
@@ -312,8 +306,8 @@
                 error: function (xhr, status, error) {
                     console.log(xhr);
                     $.each(xhr.responseJSON.errors, function (key, item) {
-                        var strArray = key.replace('.','_');
-                        $('.'+strArray).append("<span class='text-danger'>" + item + "</span><br>")
+                        var strArray = key.replace('.', '_');
+                        $('.' + strArray).append("<span class='text-danger'>" + item + "</span><br>")
                     });
                 }
             });
@@ -331,7 +325,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: `/category/` + id,
+                url: `/admin/` + id,
                 data: formData,
                 contentType: false,
                 processData: false,
@@ -349,8 +343,8 @@
                 error: function (xhr, status, error) {
                     console.log(xhr);
                     $.each(xhr.responseJSON.errors, function (key, item) {
-                        var strArray = key.replace('.','_');
-                        $('.'+strArray).append("<span class='text-danger'>" + item + "</span><br>")
+                        var strArray = key.replace('.', '_');
+                        $('.' + strArray).append("<span class='text-danger'>" + item + "</span><br>")
                     });
                 }
             });
@@ -398,7 +392,6 @@
                 }
             });
         });
-
 
     </script>
 @endsection

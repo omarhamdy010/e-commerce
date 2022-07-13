@@ -94,7 +94,11 @@
                     <div class="col-sm-2 col-xs-12 jtv-logo-block">
 
                         <!-- Header Logo -->
-                        <div class="logo"><a title="e-commerce" href="{{route('site.index')}}"><img alt="ShopMart" title="ShopMart" src="{{asset('assets/img/logofinal.png')}}" style="width:300px;"></a></div>
+                        <div class="logo"><a title="e-commerce" href="{{route('site.index')}}"><img alt="ShopMart"
+                                                                                                    title="ShopMart"
+                                                                                                    src="{{asset('assets/img/logofinal.png')}}"
+                                                                                                    style="width:300px;"></a>
+                        </div>
                     </div>
                     <div class="col-xs-12 col-sm-5 col-md-6 jtv-top-search">
 
@@ -102,11 +106,14 @@
 
                         <div class="top-search">
                             <div id="search">
-                                <form>
+                                <form type="get" action="{{route('search')}}">
+                                    @csrf
+                                    @method('get')
                                     <div class="input-group">
                                         <input type="text" id="searchinp" class="form-control"
+                                               value="{{request()->search}}"
                                                placeholder="Enter your search..." name="search">
-                                        <button onclick="searchbtn()" class="btn-search" type="button"><i
+                                        <button class="btn-search" type="submit"><i
                                                 class="fa fa-search"></i></button>
                                     </div>
                                 </form>
@@ -117,7 +124,7 @@
 
                     </div>
                     <div class="col-xs-12 col-sm-4 col-md-4 top-cart">
-                        <div class="link-wishlist"><a href="wishlist.html"> <i
+                        <div class="link-wishlist"><a href="{{route('wishlist')}}"> <i
                                     class="fa fa-heart-o"></i><span> Wishlist</span></a></div>
                         <!-- top cart -->
                         <a>
@@ -130,43 +137,40 @@
                                             </div>
                                         </a></div>
                                     <div>
-                                        <!-- <div class="top-cart-content">
-                                          <div class="block-subtitle hidden">Recently added items</div>
-                                          <ul id="cart-sidebar-content" class="mini-products-list">
-
-
-
-                                          </ul>
-                                          <div class="top-subtotal">Subtotal: <span class="price">$520.00</span></div>
-                                          <div class="actions">
-                                            <button class="btn-checkout" type="button" onClick="location.href='checkout.html'"><i class="fa fa-check"></i><span>Checkout</span></button>
-                                            <button class="view-cart" type="button" onClick="location.href='shopping_cart.html'"><i class="fa fa-shopping-cart"></i><span>View Cart</span></button>
-                                          </div>
-                                        </div> -->
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="top-cart-contain">
-                                <div class="mini-cart">
-                                    <div data-toggle="dropdown" data-hover="dropdown" class="basket dropdown-toggle"><a href="#">
-                                            <div class="cart-icon" id="iconNum" style="margin-right: 50px;"></div>
-                                        </a></div>
-                                    <div>
                                         <div class="top-cart-content">
                                             <div class="block-subtitle hidden">Recently added items</div>
-                                            <ul id="cart-sidebar Notifcation" class="mini-products-list">
+                                            <ul id="cart-sidebar-content" class="mini-products-list">
+
+                                                @foreach(\Illuminate\Support\Facades\Session::get('cart') as $cart)
+                                                    <li class="item odd"><a href="shopping_cart.html" title="Product title here" class="product-image"><img
+                                                                src="{{asset('uploads/products/'.$cart['image'])}}" alt="html Template" width="65"></a>
+                                                        <div class="product-details" id="recart">
+                                                            <a href="#" title="Remove This Item" class="remove-cart">
+                                                                <i class="fas fa-window-close"></i>
+                                                                <input type="hidden" value="{{$cart['id']}}" id="delete">
+
+                                                            </a>
+                                                            <p class="product-name"><a href="shopping_cart.html">{{$cart['title']}}</a></p>
+                                                            <strong>1</strong> x <span class="price">{{$cart['price']}}</span></div>
+                                                    </li>
+                                                @endforeach
 
                                             </ul>
-                                            <!-- <div class="top-subtotal">Subtotal: <span class="price">$520.00</span></div>
+                                            <div class="top-subtotal">Subtotal: <span class="price"></span></div>
                                             <div class="actions">
-                                              <button class="btn-checkout" type="button" onClick="location.href='checkout.html'"><i class="fa fa-check"></i><span>Checkout</span></button>
-                                              <button class="view-cart" type="button" onClick="location.href='shopping_cart.html'"><i class="fa fa-shopping-cart"></i><span>View Cart</span></button>
-                                            </div> -->
+                                                <button class="btn-checkout" type="button"
+                                                        onClick="location.href='checkout.html'"><i
+                                                        class="fa fa-check"></i><span>Checkout</span></button>
+                                                <button class="view-cart" type="button"
+                                                        onClick="location.href='{{route('cart')}}'"><i
+                                                        class="fa fa-shopping-cart"></i><span>View Cart</span></button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
+
                     </div>
                 </div>
             </div>
@@ -175,30 +179,33 @@
 
 @include('site.layout._nav')
 
-    <!-- Slideshow  -->
+<!-- Slideshow  -->
     @if(\Illuminate\Support\Facades\Request::segment(1)==''|| \Illuminate\Support\Facades\Request::segment(2)=='site')
-    <div class="main-slider" id="home">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-9 col-md-9 col-lg-9 col-xs-12 jtv-slideshow">
-                    <div id="jtv-slideshow">
-                        <div id='rev_slider_4_wrapper' class='rev_slider_wrapper fullwidthbanner-container'>
-                            <div id='rev_slider_4' class='rev_slider fullwidthabanner'>
-                                <ul id="slider-list" style="display: block; overflow: hidden; width: 100%; height: 100%; max-height: none;">
-                                    <li data-transition="fade" data-slotamount="7" data-masterspeed="1000" data-thumb="">
-{{--                                        <img src="http://aaaserver-001-site31.ftempurl.com/Uploads/Sliders/1006.jpg?q=-8585714250225824836" data-bgposition="left top" data-bgfit="cover" data-bgrepeat="no-repeat" alt="banner"></li>--}}
-                                    <li data-transition="fade" data-slotamount="7" data-masterspeed="1000" data-thumb="">
-{{--                                        <img src="http://aaaserver-001-site31.ftempurl.com/Uploads/Sliders/1004.jpg?q=-8585714250225823169" data-bgposition="left top" data-bgfit="cover" data-bgrepeat="no-repeat" alt="banner"></li> </ul>--}}
-                                <div class="tp-bannertimer"></div>
+        <div class="main-slider" id="home">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-9 col-md-9 col-lg-9 col-xs-12 jtv-slideshow">
+                        <div id="jtv-slideshow">
+                            <div id='rev_slider_4_wrapper' class='rev_slider_wrapper fullwidthbanner-container'>
+                                <div id='rev_slider_4' class='rev_slider fullwidthabanner'>
+                                    <ul id="slider-list"
+                                        style="display: block; overflow: hidden; width: 100%; height: 100%; max-height: none;">
+                                        <li data-transition="fade" data-slotamount="7" data-masterspeed="1000"
+                                            data-thumb="">
+                                        {{--                                        <img src="http://aaaserver-001-site31.ftempurl.com/Uploads/Sliders/1006.jpg?q=-8585714250225824836" data-bgposition="left top" data-bgfit="cover" data-bgrepeat="no-repeat" alt="banner"></li>--}}
+                                        <li data-transition="fade" data-slotamount="7" data-masterspeed="1000"
+                                            data-thumb="">
+                                            {{--                                        <img src="http://aaaserver-001-site31.ftempurl.com/Uploads/Sliders/1004.jpg?q=-8585714250225823169" data-bgposition="left top" data-bgfit="cover" data-bgrepeat="no-repeat" alt="banner"></li> </ul>--}}
+                                            <div class="tp-bannertimer"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     @endif
-    <!-- All products-->
+<!-- All products-->
 
     @yield('content')
 </div>
@@ -256,8 +263,37 @@
 <script type="text/javascript" src="{{asset('assets/js/js/revolution-slider.js')}}"></script>
 <!-- <script type="text/javascript" src="js/cart.js"></script>  -->
 @yield('js')
+<script>
+    $('.remove-cart').on('click', function () {
+        var id =$('#delete').val();
+        var url = 'deleteCart/' + id;
+        $.ajax({
+            url: url,
+            method: "get",
+            data: {
+                _token: '{{ csrf_token() }}',
+                id: id,
+            },
+            success: function (count) {
+                var x = JSON.parse(count.count);
+                if (x) {
+                    var z = x;
+                } else {
+                    z = 0;
+                }
+                if (document.getElementById("cartNo")) {
+                    document.getElementById("cartNo").innerHTML = `<i class="fas fa-shopping-cart px-2"></i> <span class=cart-total>${z}</span>`
+                }
+
+                $('#recart').parent().remove();
+                $('#rremove').parent().remove();
+                // window.location.reload();
+            }
+        });
+    });
+</script>
 <script type='text/javascript'>
-    jQuery(document).ready(function(){
+    jQuery(document).ready(function () {
 
         jQuery('#rev_slider_4').show().revolution({
             dottedOverlay: 'none',

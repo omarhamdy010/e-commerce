@@ -22,8 +22,7 @@ Route::get('/', function () {
 
 Auth::routes();
 Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']], function () {
-    Route::group(['middleware' => 'auth'], function () {
-
+    Route::group(['middleware' => ['authadmin']], function () {
         Route::resource('category', \App\Http\Controllers\CategoryController::class)->except(['show', 'edit']);
         Route::resource('product', \App\Http\Controllers\ProductController::class)->except(['show']);
         Route::post('category/edit', [\App\Http\Controllers\CategoryController::class, 'edit'])->name('edit.category');
@@ -33,13 +32,29 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::post('view-render', [\App\Http\Controllers\CategoryController::class, 'viewRender'])->name('view.render');
         Route::get('category/datatable', [\App\Http\Controllers\CategoryController::class, 'getCategory'])->name('category.getcategory');
         Route::get('product/datatable', [\App\Http\Controllers\ProductController::class, 'getProducts'])->name('product.getProducts');
+        Route::get('admin/datatable', [\App\Http\Controllers\AdminController::class, 'getAdmins'])->name('admin.getAdmins');
         Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
+    });
+    Route::group(['middleware' => ['auth:admin']], function () {
+        Route::resource('admin', \App\Http\Controllers\AdminController::class)->except(['show']);
     });
     Route::resource('site',\App\Http\Controllers\SiteController::class)->except('show');
     Route::get('shop',[\App\Http\Controllers\SiteController::class,'shop'])->name('shop');
     Route::get('filter',[\App\Http\Controllers\SiteController::class,'filter'])->name('filter');
+    Route::get('search',[\App\Http\Controllers\SiteController::class,'search'])->name('search');
     Route::get('add_to_cart',[\App\Http\Controllers\SiteController::class,'add_to_cart'])->name('add-to-cart');
+    Route::get('add_to_wishlist',[\App\Http\Controllers\SiteController::class,'add_to_wishlist'])->name('add_to_wishlist');
+    Route::get('quickview',[\App\Http\Controllers\SiteController::class,'quickview'])->name('quickview');
     Route::get('cart',[\App\Http\Controllers\SiteController::class,'cart'])->name('cart');
+    Route::get('wishlist',[\App\Http\Controllers\SiteController::class,'wishlist'])->name('wishlist');
+    Route::get('quick_view',[\App\Http\Controllers\SiteController::class,'quick_view'])->name('quick_view');
     Route::get('deleteCart/{id}',[\App\Http\Controllers\SiteController::class,'deleteCart'])->name('deletecart');
+
+
+
+    Route::get('adminlogin',[\App\Http\Controllers\Auth\AdminAuthController::class,'LoginForm'])->name('adminlogin');
+    Route::get('adminregister',[\App\Http\Controllers\Auth\AdminAuthController::class,'RegisterForm'])->name('adminregister');
+    Route::post('adminlogin',[\App\Http\Controllers\Auth\AdminAuthController::class,'adminlogin'])->name('adminlogin');
+    Route::post('adminstore',[\App\Http\Controllers\Auth\AdminAuthController::class,'adminstore'])->name('adminstore');
+    Route::post('adminLogout',[\App\Http\Controllers\Auth\AdminAuthController::class,'adminLogout'])->name('admin_logout');
 });

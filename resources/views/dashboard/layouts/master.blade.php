@@ -70,11 +70,20 @@
                 <a href="#" class="nav-link">Contact</a>
             </li>
             <li class="nav-item">
+                @if(\Illuminate\Support\Facades\Auth::guard('web')->check())
                 <a class="nav-link" href="{{ route('logout') }}"
                    onclick="event.preventDefault();
                 document.getElementById('logout-form').submit();">
                     {{ __('Logout') }}
                 </a>
+                @endif
+                @if(\Illuminate\Support\Facades\Auth::guard('admin')->check())
+                    <a class="nav-link" href="{{ route('admin_logout') }}"
+                   onclick="event.preventDefault();
+                document.getElementById('logout-form').submit();">
+                    {{ __('Logout') }}
+                </a>
+                    @endif
 
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                     @csrf

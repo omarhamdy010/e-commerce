@@ -96,14 +96,16 @@
                                                             </a></div>
                                                         <div class="pr-info-area">
                                                             <div class="pr-button">
-                                                                <div class="mt-button add_to_wishlist"><a
-                                                                        href="wishlist.html"> <i
+                                                                <div data-id="{{$product->id}}"
+                                                                     class="mt-button add_to_wishlist"><a href="#"> <i
                                                                             class="fa fa-heart"></i> </a></div>
-                                                                <div class="mt-button add_to_compare"><a
+                                                                <div data-id="{{$product->id}}"
+                                                                     class="mt-button add_to_compare"><a
                                                                         href="compare.html"> <i
                                                                             class="fa fa-signal"></i> </a></div>
-                                                                <div class="mt-button quick-view"><a
-                                                                        href="quick_view.html"> <i
+                                                                <div data-id="{{$product->id}}"
+                                                                     class="mt-button quick-view"><a class="quick"
+                                                                        href="#"> <i
                                                                             class="fa fa-search"></i> </a></div>
                                                             </div>
                                                         </div>
@@ -182,7 +184,10 @@
                 </div>
             </div>
         </div>
-        <a href="#" id="back-to-top" title="Back to top"><i class="fa fa-angle-up"></i></a></div>
+        <a href="#" id="back-to-top" title="Back to top"><i class="fa fa-angle-up"></i></a>
+    </div>
+<div id="view_view"></div>
+
 @endsection
 
 @section('js')
@@ -219,6 +224,7 @@
                         document.getElementById("cartNo").innerHTML = `<i class="fas fa-shopping-cart px-2"></i> <span class=cart-total>${z}</span>`
                     }
                     $('#cart').append();
+                    $('.mini-products-list').html(count.html);
                     // window.location.reload();
                 }
             });
@@ -281,6 +287,7 @@
                                     document.getElementById("cartNo").innerHTML = `<i class="fas fa-shopping-cart px-2"></i> <span class=cart-total>${z}</span>`
                                 }
                                 $('#cart').append();
+
                                 // window.location.reload();
                             }
                         });
@@ -299,11 +306,47 @@
                     sort: val,
                 },
                 success: function (response) {
-                    // window.location.reload();
-                    alert('success');
+                    $('.product-grid-area').html(response.html);
                 }
             });
 
         });
+        $('.add_to_wishlist').on('click', function () {
+            var id = $(this).data('id');
+            // alert(id);
+            $.ajax({
+                url: '{{ route('add_to_wishlist') }}',
+                method: "GET",
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    id: id,
+                },
+                success: function (count) {
+                    // $('#cart').append();
+                    // $('.mini-products-list').html(count.html);
+                    // window.location.reload();
+                }
+            });
+        });
+        $('.quick').on('click', function () {
+            var id = $('.quick-view').data('id');
+            $.ajax({
+                url: '{{ route('quickview') }}',
+                method: "GET",
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    id: id,
+                },
+                success: function (count) {
+
+                    $('#view_view').append(count.html);
+
+                    // $('#cart').append();
+                    // $('.mini-products-list').html(count.html);
+                    // window.location.reload();
+                }
+            });
+        });
+
     </script>
 @endsection

@@ -164,6 +164,8 @@
                                     document.getElementById("cartNo").innerHTML = `<i class="fas fa-shopping-cart px-2"></i> <span class=cart-total>${z}</span>`
                                 }
                                 $('#rremove').parent().remove();
+                                $('#recart').parent().remove();
+
                                 // window.location.reload();
                             }
                         });

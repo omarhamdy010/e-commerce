@@ -1,13 +1,13 @@
 @extends('dashboard.layouts.master')
 @section('css')
-`<style>
-    .select2-container--default .select2-selection--multiple .select2-selection__choice__display {
-        color: black;
-    }
-</style>`
+    `
+    <style>
+        .select2-container--default .select2-selection--multiple .select2-selection__choice__display {
+            color: black;
+        }
+    </style>`
 @endsection
 @section('content')
-
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -68,7 +68,7 @@
             </div>
         </div>
 
-        <div class="modal fade" id="exampleModal"  aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content" id="model_create">
                     <div class="modal-header">
@@ -106,18 +106,13 @@
 @endsection
 
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <script type="text/javascript">
-
-
-
-        $(document).ready(function () {
+        function runDataTable() {
             var table = $('.datatable').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('product.getProducts') }}",
-                "method": "GET",
+                ajax: "{{ url('product/datatable') }}",
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'title', name: 'title'},
@@ -133,8 +128,7 @@
                     },
                 ]
             });
-
-        });
+        }
 
         function deleteConfirmation(id) {
             swal.fire({
@@ -147,11 +141,8 @@
                 cancelButtonText: "No, cancel!",
                 reverseButtons: !0
             }).then(function (e) {
-
                 if (e.value === true) {
-
                     let _url = '/category/' + id;
-
                     $.ajax({
                         type: 'DELETE',
                         url: _url,
@@ -166,13 +157,10 @@
                             location.reload();
                             console.log("Error!", 'Sumething went wrong.', "error");
                         }
-
                     });
-
                 } else {
                     e.dismiss;
                 }
-
             }, function (dismiss) {
                 return false;
             })
@@ -180,14 +168,12 @@
 
         $(document).on('click', '#createproduct', function (event) {
             event.preventDefault();
-
             $_token = $('#token2').val();
             $.ajax({
                 headers: {'X-CSRF-Token': $('meta[name=_token]').attr('content')},
                 url: "{{ route('product.create') }}",
                 type: 'get',
                 cache: false,
-
                 data: {'_token': $_token},
                 beforeSend: function () {
                     //something before send
@@ -204,21 +190,17 @@
                 }
             });
         });
-
-
         $(document).on('click', '.editProduct', function (event) {
             event.preventDefault();
             var id = $(this).data('id');
             var offer = $(this).data('offer');
             $_token = "{{ csrf_token() }}";
             var url = 'product/' + id + '/edit';
-
             $.ajax({
                 headers: {'X-CSRF-Token': $('meta[name=_token]').attr('content')},
                 url: url,
                 type: 'get',
                 cache: false,
-
                 data: {'_token': $_token, 'id': id, 'offer': offer,},
                 beforeSend: function () {
                     //something before send
@@ -226,7 +208,6 @@
                 success: function (data) {
                     console.log(data);
                     $('.rendereditproduct').html(data.html);
-
                     $('#select_2').select2();
                     $('#select_2').select2({
                         width: '100%',
@@ -236,8 +217,6 @@
                 }
             });
         });
-
-
         $(document).on('click', '.delete', function (event) {
             event.preventDefault();
             var id = $(this).data('id');
@@ -300,8 +279,8 @@
                     console.log(xhr);
                     $.each(xhr.responseJSON.errors, function (key, item) {
                         // $("." + key).append("<span class='text-danger'>" + item + "</span><br>");
-                        var strArray = key.replace('.','_');
-                        $('.'+strArray).append("<span class='text-danger'>" + item + "</span><br>")
+                        var strArray = key.replace('.', '_');
+                        $('.' + strArray).append("<span class='text-danger'>" + item + "</span><br>")
                     });
 
                 }
@@ -344,8 +323,8 @@
                     console.log(xhr);
                     $.each(xhr.responseJSON.errors, function (key, item) {
                         // $("." + key).append("<span class='text-danger'>" + item + "</span><br>");
-                        var strArray = key.replace('.','_');
-                        $('.'+strArray).append("<span class='text-danger'>" + item + "</span><br>")
+                        var strArray = key.replace('.', '_');
+                        $('.' + strArray).append("<span class='text-danger'>" + item + "</span><br>")
                     });
 
 
@@ -355,4 +334,6 @@
         });
 
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 @endsection

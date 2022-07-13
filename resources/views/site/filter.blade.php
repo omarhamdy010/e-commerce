@@ -1,7 +1,5 @@
 <ul class="products-grid">
-    {{--    @dd($cat->products)--}}
-    @foreach($cat as $product)
-{{--        @dd($product)--}}
+    @foreach($cat->products()->get() as $product)
         <li class="item col-lg-4 col-md-4 col-sm-6 col-xs-6 ">
             <div class="product-item">
                 <div class="item-inner">
@@ -11,18 +9,18 @@
                                                     href="single_product.html">
                                 <figure>
                                     <img class="hover-img"
-                                         src="{{asset($product->default_image)}}"
+                                         src="{{asset($product->default_image->path)}}"
                                          alt="HTML template">
-{{--                                    @foreach($product->image_path as $key=>$image)--}}
-{{--                                        @if($key==0)--}}
-{{--                                            <img class="first-img"--}}
-{{--                                                 src="{{asset($image->path)}}"--}}
-{{--                                                 alt="HTML template">--}}
-{{--                                        @endif--}}
-{{--                                    @endforeach--}}
-                                    @if($product->image_path)
+                                    @foreach($product->image_path as $key=>$image)
+                                        @if($key==0)
+                                            <img class="first-img"
+                                                 src="{{asset($image->path)}}"
+                                                 alt="HTML template">
+                                        @endif
+                                    @endforeach
+                                    @if($product->image_path->isEmpty())
                                         <img class="first-img"
-                                             src="{{asset($product->default_image)}}"
+                                             src="{{asset($product->default_image->path)}}"
                                              alt="HTML template">
                                     @endif
                                 </figure>

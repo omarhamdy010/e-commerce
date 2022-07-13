@@ -15,8 +15,6 @@ class Product extends Model implements TranslatableContract
     protected $appends = ['image_path','default_path'];
     public $translatedAttributes = ['title', 'description'];
 
-//    protected $type = ['percentage', 'amount', 'fixed'];
-
     public function categories()
     {
         return $this->belongsToMany(Category::class, 'category_product');
