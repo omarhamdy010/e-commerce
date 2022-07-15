@@ -14,7 +14,7 @@ class authadmin extends Middleware
         $guards = empty($guards) ? [null] : $guards;
         foreach ($guards as $guard) {
             if (! (Auth::guard('admin')->check() || Auth::guard('web')->check())) {
-                return redirect('adminlogin');
+                return redirect('login');
             }
 
         }

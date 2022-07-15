@@ -50,7 +50,7 @@
                                         <label>Sort By:</label>
                                         <select name="selector" id="selector">
                                             <!-- <option selected="selected">Position</option> -->
-                                            <option value="0">Name</option>
+                                            <option value="0">Select</option>
                                             <option value="1">Low to hight</option>
                                             <option value="2">Hight to low</option>
                                         </select>
@@ -74,57 +74,53 @@
                                                 <div class="item-inner">
                                                     <div class="product-thumbnail">
                                                         {{--<div class="icon-new-label new-left">New</div>--}}
-                                                        <div class="pr-img-area"><a title="{{$product->title}}"
-                                                                                    href="single_product.html">
+                                                        <div class="pr-img-area"><a title="{{$product->title}}">
                                                                 <figure>
-                                                                    <img class="hover-img"
-                                                                         src="{{asset($product->default_image->path)}}"
-                                                                         alt="HTML template">
+                                                                    <img class="hover-img" src="{{asset($product->default_image->path)}}" alt="HTML template">
                                                                     @foreach($product->image_path as $key=>$image)
                                                                         @if($key==0)
-                                                                            <img class="first-img"
-                                                                                 src="{{asset($image->path)}}"
-                                                                                 alt="HTML template">
+                                                                            <img class="first-img" src="{{asset($image->path)}}" alt="HTML template">
                                                                         @endif
                                                                     @endforeach
                                                                     @if($product->image_path->isEmpty())
-                                                                        <img class="first-img"
-                                                                             src="{{asset($product->default_image->path)}}"
-                                                                             alt="HTML template">
+                                                                        <img class="first-img" src="{{asset($product->default_image->path)}}" alt="HTML template">
                                                                     @endif
                                                                 </figure>
                                                             </a></div>
                                                         <div class="pr-info-area">
                                                             <div class="pr-button">
-                                                                <div data-id="{{$product->id}}"
-                                                                     class="mt-button add_to_wishlist"><a href="#"> <i
-                                                                            class="fa fa-heart"></i> </a></div>
-                                                                <div data-id="{{$product->id}}"
-                                                                     class="mt-button add_to_compare"><a
-                                                                        href="compare.html"> <i
-                                                                            class="fa fa-signal"></i> </a></div>
-                                                                <div data-id="{{$product->id}}"
-                                                                     class="mt-button quick-view"><a class="quick"
-                                                                        href="#"> <i
-                                                                            class="fa fa-search"></i> </a></div>
+                                                                <div data-id="{{$product->id}}" class="mt-button add_to_wishlist"><a> <i class="fa fa-heart"></i> </a></div>
+{{--                                                                <div data-id="{{$product->id}}" class="mt-button add_to_compare"><a href="compare.html"> <i class="fa fa-signal"></i> </a></div>--}}
+                                                                <div data-id="{{$product->id}}" class="mt-button quick-view"><a class="quick"> <i class="fa fa-search"></i> </a></div>
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    @php
+                                                        $total = 0;
+                                                        $count = 0;
+                                                        $rates=\App\Models\Rating::where('product_id', $product->id)->get();
+                                                        if ($rates->isNotEmpty())
+                                                            {foreach ($rates as $rate) {
+                                                               $total += $rate->stars_rated;
+                                                               $count++;}
+                                                            }
+                                                       $total_rate = $total / $count;
+
+                                                    @endphp
+
                                                     <div class="item-info">
                                                         <div class="info-inner">
-                                                            <div class="item-title"><a title="Ipsums Dolors Untra"
-                                                                                       href="single_product.html">{{$product->title}} </a>
-                                                            </div>
+                                                            <div class="item-title"><a title="Ipsums Dolors Untra">{{$product->title}} </a></div>
                                                             <div class="item-content">
-                                                                <div class="rating"><i class="fa fa-star"></i> <i
-                                                                        class="fa fa-star"></i> <i
-                                                                        class="fa fa-star-o"></i>
-                                                                    <i class="fa fa-star-o"></i> <i
-                                                                        class="fa fa-star-o"></i></div>
+                                                                <div class="rating">
+                                                                    <i class="{{$total_rate >=1?'fa fa-star':'fa fa-star-o'}}"></i>
+                                                                    <i class="{{$total_rate >=2?'fa fa-star':'fa fa-star-o'}}"></i>
+                                                                    <i class="{{$total_rate >=3?'fa fa-star':'fa fa-star-o'}}"></i>
+                                                                    <i class="{{$total_rate >=4?'fa fa-star':'fa fa-star-o'}}"></i>
+                                                                    <i class="{{$total_rate >=5?'fa fa-star':'fa fa-star-o'}}"></i>
+                                                                </div>
                                                                 <div class="item-price">
-                                                                    <div class="price-box"><span class="regular-price"> <span
-                                                                                class="price">${{$product->price}}</span> </span>
-                                                                    </div>
+                                                                    <div class="price-box"><span class="regular-price"> <span class="price">${{$product->price}}</span> </span></div>
                                                                 </div>
                                                                 <div class="pro-action">
                                                                     <button type="button" data-id="{{$product->id}}"
@@ -174,8 +170,7 @@
                             </div>
                             <div class="block-content">
                                 <div class="slider-range">
-                                    <div data-label-reasult="Range:" data-min="0" data-max="500" data-unit="EGP"
-                                         class="slider-range-price" data-value-min="50" data-value-max="350"></div>
+                                    <div data-label-reasult="Range:" data-min="0" data-max="500" data-unit="EGP" class="slider-range-price" data-value-min="50" data-value-max="350"></div>
                                     <div id="range" class=" ">Range: 10 - 550</div>
                                 </div>
                             </div>
@@ -184,9 +179,10 @@
                 </div>
             </div>
         </div>
-        <a href="#" id="back-to-top" title="Back to top"><i class="fa fa-angle-up"></i></a>
+        <a id="back-to-top" title="Back to top"><i class="fa fa-angle-up"></i></a>
     </div>
-<div id="view_view"></div>
+    <input type="hidden" value="{{count(\Illuminate\Support\Facades\Session::get('cart',[]))}}" id="session_data">
+    <div id="view_view"></div>
 
 @endsection
 
@@ -328,8 +324,8 @@
                 }
             });
         });
-        $('.quick').on('click', function () {
-            var id = $('.quick-view').data('id');
+        $('.quick-view').on('click', function () {
+            var id = $(this).data('id');
             $.ajax({
                 url: '{{ route('quickview') }}',
                 method: "GET",
@@ -347,6 +343,5 @@
                 }
             });
         });
-
     </script>
 @endsection

@@ -29,16 +29,16 @@
                                     @foreach(\Illuminate\Support\Facades\Session::get('wishlist') as  $wishlist)
                                         <tr>
                                             <td id="delate_tr">
-                                                <a class="delete_ittem" href="#">X</a>
+                                                <a class="delete_ittem">X</a>
                                                 <input type="hidden" value="{{$wishlist['id']}}" id="delete">
                                             </td>
-                                            <td class="th-product"><a href="#"><img
+                                            <td class="th-product"><a><img
                                                         src="{{asset('uploads/products/'.$wishlist['image'])}}"
                                                         alt="cart"></a></td>
-                                            <td class="th-details"><h2><a href="#">{{$wishlist['title']}}</a></h2></td>
+                                            <td class="th-details"><h2><a>{{$wishlist['title']}}</a></h2></td>
                                             <td class="th-price">{{$wishlist['price']}}EGP</td>
                                             <th class="td-adcartd-to-">
-                                                <a href="#" data-id="{{$wishlist['id']}}" class="add-to-cart"> Add to Cart</a></th>
+                                                <a data-id="{{$wishlist['id']}}" class="add-to-cart"> Add to Cart</a></th>
                                         </tr>
                                     @endforeach
                                 @endif
@@ -132,7 +132,7 @@
         $('.delete_ittem').on('click', function () {
 
             var id = $('#delete').val();
-            var url = 'deleteCart/' + id;
+            var url = 'deleteWishlist/' + id;
             $.ajax({
                 url: url,
                 method: "get",
@@ -141,15 +141,6 @@
                     id: id,
                 },
                 success: function (count) {
-                    var x = JSON.parse(count.count);
-                    if (x) {
-                        var z = x;
-                    } else {
-                        z = 0;
-                    }
-                    if (document.getElementById("cartNo")) {
-                        document.getElementById("cartNo").innerHTML = `<i class="fas fa-shopping-cart px-2"></i> <span class=cart-total>${z}</span>`
-                    }
                     $('#delate_tr').parent().remove();
                     // window.location.reload();
                 }

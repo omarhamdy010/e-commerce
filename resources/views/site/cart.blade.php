@@ -33,46 +33,45 @@
                                         </tr>
                                         </thead>
                                         <tbody id="cartData">
+                                        <?php
+                                        $subtotal = 0;
+                                        ?>
                                         @if(\Illuminate\Support\Facades\Session::has('cart'))
+                                            <?php
+                                            foreach (\Illuminate\Support\Facades\Session::get('cart') as $cart) {
+                                                $price = $cart['price'];
+                                                $quantity = $cart['quantity'];
+                                                $total = $price * $quantity;
+                                                $subtotal += $total;
+                                            }
+                                            ?>
                                             @foreach(\Illuminate\Support\Facades\Session::get('cart') as $cart)
                                                 <tr>
-                                                    <td class="cart_product"><a href="#"><img
-                                                                src="{{asset('uploads/products/'.$cart['image'])}}"
-                                                                alt="Product"></a></td>
-                                                    <td class="cart_description"><p class="product-name"><a
-                                                                href="#">{{$cart['description']}} </a></p>
+                                                    <td class="cart_product"><a><img src="{{asset('uploads/products/'.$cart['image'])}}" alt="Product"></a></td>
+                                                    <td class="cart_description"><p class="product-name"><a>{{$cart['description']}} </a></p>
                                                     <td class="title"><span>{{$cart['title']}}</span></td>
                                                     <td class="price"><span>{{$cart['price']}}</span></td>
-                                                    <td class="qty"><input class="form-control input-sm" type="text"
-                                                                           value="{{$cart['quantity']}}"></td>
-                                                    <td class="action" id="rremove">
-                                                        <a class="remove_item">
-                                                            <i class="fas fa-window-close"></i>
-                                                            <input type="hidden" value="{{$cart['id']}}" id="delete">
-
-                                                        </a>
-                                                    </td>
+                                                    <td class="qty"><input class="form-control input-sm" type="text" value="{{$cart['quantity']}}"></td>
+                                                    <td class="action" id="rremove"><a class="remove_item"><i class="fas fa-window-close"></i><input type="hidden" value="{{$cart['id']}}" id="delete"></a></td>
                                                 </tr>
                                             @endforeach
                                         @endif
                                         </tbody>
                                         <tfoot id="Total">
-                                        {{--                                        <tr>--}}
-                                        {{--                                          <td colspan="2" rowspan="2"></td>--}}
-                                        {{--                                          <td colspan="3">Total products (tax incl.)</td>--}}
-                                        {{--                                          <td colspan="2">$237.88 </td>--}}
-                                        {{--                                        </tr>--}}
+                                                                                <tr>
+{{--                                                                                    <td colspan="2" rowspan="2"></td>--}}
+{{--                                                                                    <td colspan="3">Total products (tax incl.)</td>--}}
+{{--                                                                                    <td colspan="2">$237.88 </td>--}}
+                                                                                </tr>
                                         <tr>
                                             <td colspan="3"><strong>Total</strong></td>
-                                            <td colspan="2"><strong id="total_pricr_pro"></strong></td>
+                                            <td colspan="2"><strong id="total_price_pro">{{$subtotal}}</strong></td>
                                         </tr>
                                         </tfoot>
                                     </table>
                                 </div>
-                                <div class="cart_navigation"><a class="continue-btn" href="shop_grid.html"><i
-                                            class="fa fa-arrow-left"> </i>&nbsp; Continue shopping</a> <a
-                                        class="checkout-btn" href="checkout.html"><i class="fa fa-check"></i> Proceed to
-                                        checkout</a></div>
+                                <div class="cart_navigation"><a class="continue-btn" href="shop_grid.html"><i class="fa fa-arrow-left">
+                                        </i>&nbsp; Continue shopping</a> <a class="checkout-btn" href="checkout.html"><i class="fa fa-check"></i> Proceed to checkout</a></div>
                             </div>
                         </div>
                     </div>
@@ -142,33 +141,50 @@
                         document.getElementById("cartNo").innerHTML = `<i class="fas fa-shopping-cart px-2"></i> <span class=cart-total>${x}</span>`
                     }
                 });
-                    $('.remove_item').on('click', function () {
+                $('.remove_item').on('click', function () {
 
-                        var id = $('#delete').val();
-                        var url = 'deleteCart/' + id;
-                        $.ajax({
-                            url: url,
-                            method: "get",
-                            data: {
-                                _token: '{{ csrf_token() }}',
-                                id: id,
-                            },
-                            success: function (count) {
-                                var x = JSON.parse(count.count);
-                                if (x) {
-                                    var z = x;
-                                }else{
-                                    z=0;
-                                }
-                                if (document.getElementById("cartNo")) {
-                                    document.getElementById("cartNo").innerHTML = `<i class="fas fa-shopping-cart px-2"></i> <span class=cart-total>${z}</span>`
-                                }
-                                $('#rremove').parent().remove();
-                                $('#recart').parent().remove();
-
-                                // window.location.reload();
+                    var id = $('#delete').val();
+                    var url = 'deleteCart/' + id;
+                    $.ajax({
+                        url: url,
+                        method: "get",
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            id: id,
+                        },
+                        success: function (count) {
+                            var x = JSON.parse(count.count);
+                            if (x) {
+                                var z = x;
+                            } else {
+                                z = 0;
                             }
-                        });
+                            if (document.getElementById("cartNo")) {
+                                document.getElementById("cartNo").innerHTML = `<i class="fas fa-shopping-cart px-2"></i> <span class=cart-total>${z}</span>`
+                            }
+                            $('#rremove').parent().remove();
+                            $('#recart').parent().remove();
+                        }
+                    });
+                });
+                $('.input-sm').on('change',function (e) {
+                    e.preventDefault();
+                    var id = $('#delete').val();
+                    var quantity = $(this).val();
+                    var url = 'update_cart';
+                    $.ajax({
+                        url: url,
+                        method: "PATCH",
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            id: id,
+                            quantity:quantity,
+                        },
+                        success: function (count) {
+                            $('#total_price_pro').html(count.total);
+                            // window.location.reload();
+                        }
+                    });
                 });
             </script>
 @endsection
