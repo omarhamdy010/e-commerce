@@ -51,8 +51,9 @@
                                                     <td class="cart_description"><p class="product-name"><a>{{$cart['description']}} </a></p>
                                                     <td class="title"><span>{{$cart['title']}}</span></td>
                                                     <td class="price"><span>{{$cart['price']}}</span></td>
-                                                    <td class="qty"><input class="form-control input-sm" type="text" value="{{$cart['quantity']}}"></td>
-                                                    <td class="action" id="rremove"><a class="remove_item"><i class="fas fa-window-close"></i><input type="hidden" value="{{$cart['id']}}" id="delete"></a></td>
+                                                    <td class="qty"><input type="text" class="input-sm" data-id="{{$cart['id']}}" value="{{$cart['quantity']}}"></td>
+                                                    <td class="action" id="rremove"><a class="remove_item"><i class="fas fa-window-close"></i></a>
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                         @endif
@@ -65,13 +66,18 @@
                                                                                 </tr>
                                         <tr>
                                             <td colspan="3"><strong>Total</strong></td>
-                                            <td colspan="2"><strong id="total_price_pro">{{$subtotal}}</strong></td>
+                                            <td colspan="2"><div class="append"></div><strong id="total_price_pro">{{$subtotal}}</strong></td>
                                         </tr>
                                         </tfoot>
                                     </table>
                                 </div>
-                                <div class="cart_navigation"><a class="continue-btn" href="shop_grid.html"><i class="fa fa-arrow-left">
-                                        </i>&nbsp; Continue shopping</a> <a class="checkout-btn" href="checkout.html"><i class="fa fa-check"></i> Proceed to checkout</a></div>
+                                <div class="cart_navigation">
+                                    <a class="continue-btn" href="shop_grid.html">
+                                        <i class="fa fa-arrow-left">
+                                        </i>&nbsp; Continue shopping</a> <a class="checkout-btn" href="checkout.html">
+                                        <i class="fa fa-check"></i> Proceed to checkout
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -143,8 +149,8 @@
                 });
                 $('.remove_item').on('click', function () {
 
-                    var id = $('#delete').val();
-                    var url = 'deleteCart/' + id;
+                    var id  =   $('#delete').val();
+                    var url =   'deleteCart/' + id;
                     $.ajax({
                         url: url,
                         method: "get",
@@ -164,12 +170,16 @@
                             }
                             $('#rremove').parent().remove();
                             $('#recart').parent().remove();
+                            $('.price_list_cart').html(count.total);
+                            $('#total_price_pro').remove();
+                            $('.append').append(`<strong id="total_price_pro">${count.total}</strong>`);
+
                         }
                     });
                 });
                 $('.input-sm').on('change',function (e) {
                     e.preventDefault();
-                    var id = $('#delete').val();
+                    var id = $(this).data('id');
                     var quantity = $(this).val();
                     var url = 'update_cart';
                     $.ajax({
@@ -181,7 +191,15 @@
                             quantity:quantity,
                         },
                         success: function (count) {
-                            $('#total_price_pro').html(count.total);
+
+                            $('.price_list_cart').html(count.total);
+                            $('#total_price_pro').remove();
+
+                            $('.append').append(`<strong id="total_price_pro">${count.total}</strong>`);
+                            $('.quantity_list').remove();
+
+                            $('.append_qty').append(`<strong class="quantity_list">${quantity}</strong>`);
+
                             // window.location.reload();
                         }
                     });

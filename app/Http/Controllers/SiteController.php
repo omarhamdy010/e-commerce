@@ -43,6 +43,7 @@ class SiteController extends Controller
     public function add_to_cart(Request $request)
     {
 //        dd($request->all());
+//        Session::forget('cart');
         $product = Product::where('id', $request->get('id'))->first();
         $count = count(Session::get('cart', []));
         $cart = Session::get('cart', []);
@@ -60,17 +61,18 @@ class SiteController extends Controller
             $count++;
         }
         Session::put('cart', $cart);
+//dd($cart,$cart[$request->id]['quantity']);
+
         $viewRender = view('site.list_cart')->render();
-        return response()->json(['success' => 'Product added to cart successfully!', 'count' => $count, 'html' => $viewRender]);
+        return response()->json(['success' => 'Product added to cart successfully!','quantity'=>$cart[$request->id]['quantity'], 'count' => $count, 'html' => $viewRender]);
     }
 
     public function update_cart(Request $request)
     {
         $total = 0;
-
-        if ($request->id && $request->quantity) {
+        if($request->id && $request->quantity){
             $cart = session()->get('cart');
-            $cart[$request->get('id')]['quantity'] = $request->quantity;
+            $cart[$request->id]["quantity"] = $request->quantity;
             session()->put('cart', $cart);
             session()->flash('success', 'Cart updated successfully');
         }
@@ -79,7 +81,7 @@ class SiteController extends Controller
             $quantity = $cart['quantity'];
             $total += $price * $quantity;
         }
-        return response()->json(['total' => $total]);
+        return response()->json(['total' => $total ]);
     }
 
     public function add_to_wishlist(Request $request)
@@ -128,12 +130,18 @@ class SiteController extends Controller
 
     public function deleteCart($id)
     {
-        $count = count(Session::get('cart'));
-        $cart = Session::get('cart');
+        $count  = count(Session::get('cart'));
+        $cart   = Session::get('cart');
         unset($cart[$id]);
         session()->put('cart', $cart);
-        $count--;
-        return response()->json(['success' => 'Product deleted from cart successfully!', 'count' => $count]);
+        $count--    ;
+        $total=0    ;
+        foreach (\Illuminate\Support\Facades\Session::get('cart') as $cart) {
+            $price      = $cart['price'];
+            $quantity   = $cart['quantity'];
+            $total      += $price * $quantity;
+        }
+        return response()->json(['success' => 'Product deleted from cart successfully!' , 'total' => $total , 'count' => $count]);
     }
 
     public function deleteWishlist($id)

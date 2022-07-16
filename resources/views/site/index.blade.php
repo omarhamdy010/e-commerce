@@ -131,6 +131,25 @@
                     if (document.getElementById("cartNo")) {
                         document.getElementById("cartNo").innerHTML = `<i class="fas fa-shopping-cart px-2"></i> <span class=cart-total>${z}</span>`
                     }
+                    $('#cart').append();
+                    $('.mini-products-list').html(count.html);
+
+                    quantity = count.quantity;
+                    $.ajax({
+                        url: '{{ route('update_cart') }}',
+                        method: "patch",
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            id: id,
+                            quantity:quantity,
+                        },
+                        success: function (response) {
+                            // alert(count.total);
+                            $('.price_list_cart').html(response.total);
+
+                            // window.location.reload();
+                        }
+                    });
                     // window.location.reload();
                 }
             });

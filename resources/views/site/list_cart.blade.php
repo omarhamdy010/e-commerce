@@ -1,13 +1,13 @@
 @foreach(\Illuminate\Support\Facades\Session::get('cart') as $cart)
-    <li class="item odd"><a href="shopping_cart.html" title="Product title here" class="product-image"><img
-                src="{{asset('uploads/products/'.$cart['image'])}}" alt="html Template" width="65"></a>
+    <li class="item odd"><a href="shopping_cart.html" title="Product title here" class="product-image">
+            <img src="{{asset('uploads/products/'.$cart['image'])}}" alt="html Template" width="65"></a>
         <div class="product-details" id="recart">
             <a title="Remove This Item" class="remove-cart">
                 <i class="fas fa-window-close"></i>
                 <input type="hidden" value="{{$cart['id']}}" id="delete">
             </a>
             <p class="product-name"><a href="shopping_cart.html">{{$cart['title']}}</a></p>
-            <strong>{{$cart['quantity']}}</strong> x <span class="price">{{$cart['price']}}</span></div>
+           <strong class="quantity_list">{{$cart['quantity']}}</strong> x <span class="price">{{$cart['price']}}</span></div>
     </li>
 @endforeach
 
@@ -23,6 +23,7 @@
                 id: id,
             },
             success: function (count) {
+                var total = count.total;
                 var x = JSON.parse(count.count);
                 if (x) {
                     var z = x;
@@ -34,6 +35,8 @@
                 }
 
                 $('#recart').parent().remove();
+                $('.price_list_cart').html(total);
+
                 // window.location.reload();
             }
         });

@@ -93,7 +93,10 @@
                 <div class="row">
                     <div class="col-sm-2 col-xs-12 jtv-logo-block">
                         <!-- Header Logo -->
-                        <div class="logo"><a title="e-commerce" href="{{route('site.index')}}"><img alt="ShopMart" title="ShopMart" src="{{asset('assets/img/logofinal.png')}}" style="width:300px;"></a></div>
+                        <div class="logo">
+                            <a title="e-commerce" href="{{route('site.index')}}">
+                            <img alt="ShopMart" title="ShopMart" src="{{asset('assets/img/logofinal.png')}}" style="width:300px;"></a>
+                        </div>
                     </div>
                     <div class="col-xs-12 col-sm-5 col-md-6 jtv-top-search">
 
@@ -105,11 +108,8 @@
                                     @csrf
                                     @method('get')
                                     <div class="input-group">
-                                        <input type="text" id="searchinp" class="form-control"
-                                               value="{{request()->search}}"
-                                               placeholder="Enter your search..." name="search">
-                                        <button class="btn-search" type="submit"><i
-                                                class="fa fa-search"></i></button>
+                                        <input type="text" id="searchinp" class="form-control" value="{{request()->search}}" placeholder="Enter your search..." name="search">
+                                        <button class="btn-search" type="submit"><i class="fa fa-search"></i></button>
                                     </div>
                                 </form>
                             </div>
@@ -121,18 +121,21 @@
 
 
                     <div class="col-xs-12 col-sm-4 col-md-4 top-cart">
-                        <div class="link-wishlist"><a href="{{route('wishlist')}}"> <i
-                                    class="fa fa-heart-o"></i><span> Wishlist</span></a></div>
+                        <div class="link-wishlist"><a href="{{route('wishlist')}}"> <i class="fa fa-heart-o"></i><span> Wishlist</span></a></div>
                         <!-- top cart -->
                         <a>
                             <div class="top-cart-contain ">
+
                                 <div class="mini-cart">
+
                                     <div class="basket "><a href="{{route('cart')}}">
                                             <div id="cartNo" class="cart-icon"></div>
                                             <div class="shoppingcart-inner hidden-xs"><span
                                                     class="cart-title">My Cart</span>
                                             </div>
-                                        </a></div>
+                                        </a>
+                                    </div>
+
                                     <div>
                                         <div class="top-cart-content">
                                             <div class="block-subtitle hidden">Recently added items</div>
@@ -150,45 +153,31 @@
                                                     }
                                                     ?>
                                                     @foreach(\Illuminate\Support\Facades\Session::get('cart') as $cart)
-                                                        <li class="item odd"><a href="shopping_cart.html"
-                                                                                title="Product title here"
-                                                                                class="product-image">
-                                                                <img src="{{asset('uploads/products/'.$cart['image'])}}"
-                                                                     alt="html Template" width="65"></a>
+                                                        <li class="item odd"><a href="shopping_cart.html" title="Product title here" class="product-image">
+                                                                <img src="{{asset('uploads/products/'.$cart['image'])}}" alt="html Template" width="65"></a>
                                                             <div class="product-details" id="recart">
-                                                                <a href="#" title="Remove This Item"
-                                                                   class="remove-cart">
+                                                                <a href="#" title="Remove This Item" class="remove-cart">
                                                                     <i class="fas fa-window-close"></i>
-                                                                    <input type="hidden" value="{{$cart['id']}}"
-                                                                           id="delete">
-                                                                    <input type="hidden" value="{{$cart['quantity']}}"
-                                                                           id="quantity">
+                                                                    <input type="hidden" value="{{$cart['id']}}" id="delete">
+                                                                    <input type="hidden" value="{{$cart['quantity']}}" id="quantity">
                                                                 </a>
-                                                                <p class="product-name"><a
-                                                                        href="shopping_cart.html">{{$cart['title']}}</a>
-                                                                </p>
-                                                                <strong>{{$cart['quantity']}}</strong> x <span
-                                                                    class="price">{{$cart['price']}}</span></div>
+                                                                <p class="product-name"><a href="shopping_cart.html">{{$cart['title']}}</a></p>
+                                                                <strong>{{$cart['quantity']}}</strong> x <span class="price">{{$cart['price']}}</span></div>
                                                         </li>
                                                     @endforeach
                                                 @endif
                                             </ul>
-                                            <div class="top-subtotal">Subtotal: <span
-                                                    class="price">${{$subtotal}}</span></div>
+                                            <div class="top-subtotal">Subtotal: <span class="price_list_cart">${{$subtotal}}</span></div>
                                             <div class="actions">
-                                                <button class="btn-checkout" type="button"
-                                                        onClick="location.href='checkout.html'"><i
-                                                        class="fa fa-check"></i><span>Checkout</span></button>
-                                                <button class="view-cart" type="button"
-                                                        onClick="location.href='{{route('cart')}}'"><i
-                                                        class="fa fa-shopping-cart"></i><span>View Cart</span></button>
+                                                <button class="btn-checkout" type="button" onClick="location.href='checkout.html'">
+                                                    <i class="fa fa-check"></i><span>Checkout</span></button>
+                                                <button class="view-cart" type="button" onClick="location.href='{{route('cart')}}'">
+                                                    <i class="fa fa-shopping-cart"></i><span>View Cart</span></button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-
                     </div>
                 </div>
             </div>
