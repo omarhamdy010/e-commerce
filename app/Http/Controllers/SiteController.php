@@ -44,6 +44,7 @@ class SiteController extends Controller
     {
 //        dd($request->all());
 //        Session::forget('cart');
+
         $product = Product::where('id', $request->get('id'))->first();
         $count = count(Session::get('cart', []));
         $cart = Session::get('cart', []);

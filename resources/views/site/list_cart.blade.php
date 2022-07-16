@@ -13,7 +13,7 @@
 
 <script>
     $('.remove-cart').on('click', function () {
-        var id =$('#delete').val();
+        var id =$(this).lastChild.val();
         var url = 'deleteCart/' + id;
         $.ajax({
             url: url,

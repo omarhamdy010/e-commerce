@@ -52,7 +52,7 @@
                                                     <td class="title"><span>{{$cart['title']}}</span></td>
                                                     <td class="price"><span>{{$cart['price']}}</span></td>
                                                     <td class="qty"><input type="text" class="input-sm" data-id="{{$cart['id']}}" value="{{$cart['quantity']}}"></td>
-                                                    <td class="action" id="rremove"><a class="remove_item"><i class="fas fa-window-close"></i></a>
+                                                    <td class="action" id="rremove"><a class="remove_product_item"><i class="fas fa-window-close"></i></a>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -147,8 +147,7 @@
                         document.getElementById("cartNo").innerHTML = `<i class="fas fa-shopping-cart px-2"></i> <span class=cart-total>${x}</span>`
                     }
                 });
-                $('.remove_item').on('click', function () {
-
+                $('.remove_product_item').on('click', function () {
                     var id  =   $('#delete').val();
                     var url =   'deleteCart/' + id;
                     $.ajax({
