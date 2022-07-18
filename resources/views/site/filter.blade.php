@@ -27,11 +27,13 @@
                         </div>
                     </div>
                     @php
-                        $total = 0;
-                        $count = 0;
+                        $total = 1;
+                        $count = 1;
                         $rates=\App\Models\Rating::where('product_id', $product->id)->get();
                         if ($rates->isNotEmpty())
                             {
+                        $total = 0;
+                        $count = 0;
                                 foreach ($rates as $rate) {
                                $total += $rate->stars_rated;
                                $count++;

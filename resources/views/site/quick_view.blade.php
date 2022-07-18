@@ -56,11 +56,19 @@
                             </div>
                             <div class="ratings">
                                 <div class="rating">
+                                    @if($rate)
                                     <i class=" {{$rate->stars_rated >=1?'fa fa-star':'fa fa-star-o'}} one"    id="one" data-id="{{$product->id}}"></i>
                                     <i class=" {{$rate->stars_rated >=2?'fa fa-star':'fa fa-star-o'}} two"    id="two" data-id="{{$product->id}}"></i>
                                     <i class=" {{$rate->stars_rated >=3?'fa fa-star':'fa fa-star-o'}} three"  id="three" data-id="{{$product->id}}"></i>
                                     <i class=" {{$rate->stars_rated >=4?'fa fa-star':'fa fa-star-o'}} four"   id="four" data-id="{{$product->id}}"></i>
                                     <i class=" {{$rate->stars_rated >=5?'fa fa-star':'fa fa-star-o'}} five"   id="five" data-id="{{$product->id}}"></i>
+                               @else
+                                        <i class=" fa fa-star-o one"    id="one" data-id="{{$product->id}}"></i>
+                                        <i class=" fa fa-star-o two"    id="two" data-id="{{$product->id}}"></i>
+                                        <i class=" fa fa-star-o three"  id="three" data-id="{{$product->id}}"></i>
+                                        <i class=" fa fa-star-o four"   id="four" data-id="{{$product->id}}"></i>
+                                        <i class=" fa fa-star-o five"   id="five" data-id="{{$product->id}}"></i>
+                                    @endif
                                 </div>
                                 @if($product->quantity>0)
                                     <p class="availability in-stock pull-right">Availability: <span>In Stock</span></p>

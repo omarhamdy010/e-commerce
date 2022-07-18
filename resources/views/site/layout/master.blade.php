@@ -1,37 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <script type="text/javascript" src="{{asset('assets/js/js/jquery.min.js')}}"></script>
+    <head>
 
-    <script>
-        $(function () {
-            $("#top-search-div-2").load("header.html");
-        });
-    </script>
+        {{--    <script type="text/javascript" src="{{asset('assets/js/js/jquery.min.js')}}"></script>--}}
+
+        {{--    <script>--}}
+        {{--        $(function () {--}}
+        {{--            $("#top-search-div-2").load("header.html");--}}
+        {{--        });--}}
+        {{--    </script>--}}
 
 
-    <!-- Basic page needs -->
-    <meta charset="utf-8">
-    <!--[if IE]>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <![endif]-->
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    @yield('title')
-    <meta name="description"
-          content="best template, template free, responsive Template, fashion store, responsive Template, responsive html Template, Premium website templates, web templates, Multi-Purpose Responsive HTML5 Template">
-    <meta name="keywords"
-          content="bootstrap, ecommerce, fashion, layout, responsive, responsive template, responsive template download, responsive Template, retail, shop, shopping, store, Premium website templates, web templates, Multi-Purpose Responsive HTML5 Template"/>
+        <!-- Basic page needs -->
+            <meta charset="utf-8">
+            <!--[if IE]>
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <![endif]-->
+            <meta http-equiv="x-ua-compatible" content="ie=edge">
+            @yield('title')
+            <meta name="description"
+                  content="best template, template free, responsive Template, fashion store, responsive Template, responsive html Template, Premium website templates, web templates, Multi-Purpose Responsive HTML5 Template">
+            <meta name="keywords"
+                  content="bootstrap, ecommerce, fashion, layout, responsive, responsive template, responsive template download, responsive Template, retail, shop, shopping, store, Premium website templates, web templates, Multi-Purpose Responsive HTML5 Template"/>
 
-    <!-- Mobile specific metas  -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+            <!-- Mobile specific metas  -->
+            <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Favicons Icon -->
-    <link rel="icon" type="image/x-icon" href="{{asset('images/shopping-cart.png')}}">
-    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
-    <!-- CSS Style -->
-    <link rel="stylesheet" href="{{asset('assets/style.css')}}">
+            <!-- Favicons Icon -->
+            <link rel="icon" type="image/x-icon" href="{{asset('images/shopping-cart.png')}}">
+        {{--    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>--}}
+        <!-- CSS Style -->
+            <link rel="stylesheet" href="{{asset('assets/style.css')}}">
 
-</head>
+    </head>
 
 <body class="cms-index-index cms-home-page">
 
@@ -95,7 +96,8 @@
                         <!-- Header Logo -->
                         <div class="logo">
                             <a title="e-commerce" href="{{route('site.index')}}">
-                            <img alt="ShopMart" title="ShopMart" src="{{asset('assets/img/logofinal.png')}}" style="width:300px;"></a>
+                                <img alt="ShopMart" title="ShopMart" src="{{asset('assets/img/logofinal.png')}}"
+                                     style="width:300px;"></a>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-5 col-md-6 jtv-top-search">
@@ -108,7 +110,9 @@
                                     @csrf
                                     @method('get')
                                     <div class="input-group">
-                                        <input type="text" id="searchinp" class="form-control" value="{{request()->search}}" placeholder="Enter your search..." name="search">
+                                        <input type="text" id="searchinp" class="form-control"
+                                               value="{{request()->search}}" placeholder="Enter your search..."
+                                               name="search">
                                         <button class="btn-search" type="submit"><i class="fa fa-search"></i></button>
                                     </div>
                                 </form>
@@ -121,7 +125,8 @@
 
 
                     <div class="col-xs-12 col-sm-4 col-md-4 top-cart">
-                        <div class="link-wishlist"><a href="{{route('wishlist')}}"> <i class="fa fa-heart-o"></i><span> Wishlist</span></a></div>
+                        <div class="link-wishlist"><a href="{{route('wishlist')}}"> <i class="fa fa-heart-o"></i><span> Wishlist</span></a>
+                        </div>
                         <!-- top cart -->
                         <a>
                             <div class="top-cart-contain ">
@@ -153,25 +158,37 @@
                                                     }
                                                     ?>
                                                     @foreach(\Illuminate\Support\Facades\Session::get('cart') as $cart)
-                                                        <li class="item odd"><a href="shopping_cart.html" title="Product title here" class="product-image">
-                                                                <img src="{{asset('uploads/products/'.$cart['image'])}}" alt="html Template" width="65"></a>
+                                                        <li class="item odd"><a href="shopping_cart.html"
+                                                                                title="Product title here"
+                                                                                class="product-image">
+                                                                <img src="{{asset('uploads/products/'.$cart['image'])}}"
+                                                                     alt="html Template" width="65"></a>
                                                             <div class="product-details" id="recart">
-                                                                <a href="#" title="Remove This Item" class="remove-cart">
+                                                                <a href="#" title="Remove This Item"
+                                                                   class="remove-cart">
                                                                     <i class="fas fa-window-close"></i>
-                                                                    <input type="hidden" value="{{$cart['id']}}" id="delete">
-                                                                    <input type="hidden" value="{{$cart['quantity']}}" id="quantity">
+                                                                    <input type="hidden" value="{{$cart['id']}}"
+                                                                           id="delete">
+                                                                    <input type="hidden" value="{{$cart['quantity']}}"
+                                                                           id="quantity">
                                                                 </a>
-                                                                <p class="product-name"><a href="shopping_cart.html">{{$cart['title']}}</a></p>
-                                                                <strong>{{$cart['quantity']}}</strong> x <span class="price">{{$cart['price']}}</span></div>
+                                                                <p class="product-name"><a
+                                                                        href="shopping_cart.html">{{$cart['title']}}</a>
+                                                                </p>
+                                                                <strong>{{$cart['quantity']}}</strong> x <span
+                                                                    class="price">{{$cart['price']}}</span></div>
                                                         </li>
                                                     @endforeach
                                                 @endif
                                             </ul>
-                                            <div class="top-subtotal">Subtotal: <span class="price_list_cart">${{$subtotal}}</span></div>
+                                            <div class="top-subtotal">Subtotal: <span
+                                                    class="price_list_cart">${{$subtotal}}</span></div>
                                             <div class="actions">
-                                                <button class="btn-checkout" type="button" onClick="location.href='checkout.html'">
+                                                <button class="btn-checkout" type="button"
+                                                        onClick="location.href='checkout.html'">
                                                     <i class="fa fa-check"></i><span>Checkout</span></button>
-                                                <button class="view-cart" type="button" onClick="location.href='{{route('cart')}}'">
+                                                <button class="view-cart" type="button"
+                                                        onClick="location.href='{{route('cart')}}'">
                                                     <i class="fa fa-shopping-cart"></i><span>View Cart</span></button>
                                             </div>
                                         </div>
@@ -292,9 +309,11 @@
                 if (document.getElementById("cartNo")) {
                     document.getElementById("cartNo").innerHTML = `<i class="fas fa-shopping-cart px-2"></i> <span class=cart-total>${z}</span>`
                 }
-
-                $('#recart').parent().remove();
                 $('#rremove').parent().remove();
+                $('#recart').parent().remove();
+                $('.price_list_cart').html(count.total);
+                $('#total_price_pro').remove();
+                $('.append').append(`<strong id="total_price_pro">$${count.total}</strong>`);
                 // window.location.reload();
             }
         });
