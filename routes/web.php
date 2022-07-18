@@ -27,7 +27,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
         Route::resource('category', \App\Http\Controllers\CategoryController::class)->except(['show', 'edit']);
-        Route::resource('slider', \App\Http\Controllers\SliderController::class)->except(['show', 'edit']);
+        Route::resource('slider', \App\Http\Controllers\SliderController::class)->except(['show']);
         Route::post('category/edit', [\App\Http\Controllers\CategoryController::class, 'edit'])->name('edit.category');
         Route::post('category/create', [\App\Http\Controllers\CategoryController::class, 'create'])->name('create.category');
         Route::get('categoryorder', [\App\Http\Controllers\CategoryController::class, 'getcategoryorder'])->name('category.order');

@@ -52,6 +52,7 @@
                             <th>title</th>
                             <th>image</th>
                             <th>status</th>
+                            <th>action</th>
                         </tr>
                         </thead>
                         <tbody id="table_row">
@@ -119,11 +120,12 @@
                         data: 'action',
                         name: 'action',
                         orderable: true,
-                        searchable: true,
+                        searchable: true
                     },
                 ]
             });
         }
+
 
         function deleteConfirmation(id) {
             swal.fire({

@@ -1,38 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+<head>
 
-        {{--    <script type="text/javascript" src="{{asset('assets/js/js/jquery.min.js')}}"></script>--}}
+{{--    <script type="text/javascript" src="{{asset('assets/js/js/jquery.min.js')}}"></script>--}}
 
-        {{--    <script>--}}
-        {{--        $(function () {--}}
-        {{--            $("#top-search-div-2").load("header.html");--}}
-        {{--        });--}}
-        {{--    </script>--}}
+{{--    <script>--}}
+{{--        $(function () {--}}
+{{--            $("#top-search-div-2").load("header.html");--}}
+{{--        });--}}
+{{--    </script>--}}
 
 
-        <!-- Basic page needs -->
-            <meta charset="utf-8">
-            <!--[if IE]>
-            <meta http-equiv="X-UA-Compatible" content="IE=edge">
-            <![endif]-->
-            <meta http-equiv="x-ua-compatible" content="ie=edge">
-            @yield('title')
-            <meta name="description"
-                  content="best template, template free, responsive Template, fashion store, responsive Template, responsive html Template, Premium website templates, web templates, Multi-Purpose Responsive HTML5 Template">
-            <meta name="keywords"
-                  content="bootstrap, ecommerce, fashion, layout, responsive, responsive template, responsive template download, responsive Template, retail, shop, shopping, store, Premium website templates, web templates, Multi-Purpose Responsive HTML5 Template"/>
+<!-- Basic page needs -->
+    <meta charset="utf-8">
+    <!--[if IE]>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <![endif]-->
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    @yield('title')
+    <meta name="description"
+          content="best template, template free, responsive Template, fashion store, responsive Template, responsive html Template, Premium website templates, web templates, Multi-Purpose Responsive HTML5 Template">
+    <meta name="keywords"
+          content="bootstrap, ecommerce, fashion, layout, responsive, responsive template, responsive template download, responsive Template, retail, shop, shopping, store, Premium website templates, web templates, Multi-Purpose Responsive HTML5 Template"/>
 
-            <!-- Mobile specific metas  -->
-            <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Mobile specific metas  -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-            <!-- Favicons Icon -->
-            <link rel="icon" type="image/x-icon" href="{{asset('images/shopping-cart.png')}}">
-        {{--    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>--}}
-        <!-- CSS Style -->
-            <link rel="stylesheet" href="{{asset('assets/style.css')}}">
+    <!-- Favicons Icon -->
+    <link rel="icon" type="image/x-icon" href="{{asset('images/shopping-cart.png')}}">
+{{--    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>--}}
+<!-- CSS Style -->
+    <link rel="stylesheet" href="{{asset('assets/style.css')}}">
 
-    </head>
+</head>
 
 <body class="cms-index-index cms-home-page">
 
@@ -203,8 +203,13 @@
 
 @include('site.layout._nav')
 
+<?php
+$sliders = \App\Models\Slider::where('status', 1)->get();
+?>
+
 <!-- Slideshow  -->
     @if(\Illuminate\Support\Facades\Request::segment(1)==''|| \Illuminate\Support\Facades\Request::segment(2)=='site')
+
         <div class="main-slider" id="home">
             <div class="container">
                 <div class="row">
@@ -212,15 +217,14 @@
                         <div id="jtv-slideshow">
                             <div id='rev_slider_4_wrapper' class='rev_slider_wrapper fullwidthbanner-container'>
                                 <div id='rev_slider_4' class='rev_slider fullwidthabanner'>
-                                    <ul id="slider-list"
+                                    <ul id=""
                                         style="display: block; overflow: hidden; width: 100%; height: 100%; max-height: none;">
-                                        <li data-transition="fade" data-slotamount="7" data-masterspeed="1000"
-                                            data-thumb="">
-                                        {{--                                        <img src="http://aaaserver-001-site31.ftempurl.com/Uploads/Sliders/1006.jpg?q=-8585714250225824836" data-bgposition="left top" data-bgfit="cover" data-bgrepeat="no-repeat" alt="banner"></li>--}}
-                                        <li data-transition="fade" data-slotamount="7" data-masterspeed="1000"
-                                            data-thumb="">
-                                            {{--                                        <img src="http://aaaserver-001-site31.ftempurl.com/Uploads/Sliders/1004.jpg?q=-8585714250225823169" data-bgposition="left top" data-bgfit="cover" data-bgrepeat="no-repeat" alt="banner"></li> </ul>--}}
-                                            <div class="tp-bannertimer"></div>
+                                        @foreach($sliders as $slider)
+                                            <li data-transition="fade" data-slotamount="7" data-masterspeed="1000" data-thumb="">
+                                                <img src="{{ asset("uploads/slider/$slider->image")}}" data-bgposition="left top" data-bgfit="cover" data-bgrepeat="no-repeat" alt="banner">
+                                            </li>
+                                        @endforeach
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -228,6 +232,34 @@
                 </div>
             </div>
         </div>
+
+
+        {{--        <div id="welcome-carousel" class="carousel slide" data-ride="carousel">--}}
+        {{--            <div class="carousel-inner">--}}
+
+
+        {{--                @foreach($sliders as $gallery)--}}
+
+        {{--         --}}
+        {{--                    <div id="test" class="carousel-item {{ $active }}">--}}
+        {{--                        <img src="{{ asset("uploads/slider/$gallery->image") }}" class="img-fluid d-block w-100" alt="appartments_gallery_carousel">--}}
+        {{--                    </div>--}}
+
+        {{--                    @php $i++ @endphp--}}
+
+        {{--                @endforeach--}}
+
+        {{--            </div>--}}
+        {{--            <a class="carousel-control-prev" href="#welcome-carousel" role="button" data-slide="prev">--}}
+        {{--                <span class="carousel-control-prev-icon" aria-hidden="true"></span>--}}
+        {{--                <span class="sr-only">Previous</span>--}}
+        {{--            </a>--}}
+        {{--            <a class="carousel-control-next" href="#welcome-carousel" role="button" data-slide="next">--}}
+        {{--                <span class="carousel-control-next-icon" aria-hidden="true"></span>--}}
+        {{--                <span class="sr-only">Next</span>--}}
+        {{--            </a>--}}
+        {{--        </div>--}}
+
     @endif
 <!-- All products-->
 
@@ -250,7 +282,7 @@
 <!-- jquery js -->
 <!--<script type="text/javascript" src="js/jquery.min.js"></script> -->
 
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+{{--<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>--}}
 
 <!-- bootstrap js -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -314,10 +346,19 @@
                 $('.price_list_cart').html(count.total);
                 $('#total_price_pro').remove();
                 $('.append').append(`<strong id="total_price_pro">$${count.total}</strong>`);
-                // window.location.reload();
+// window.location.reload();
             }
         });
     });
+
+    (function ($) {
+        $(function () {
+            $('.carousel').carousel({
+                wrap: 'circular'
+            });
+        });
+    })(jQuery)
+
 </script>
 <script type='text/javascript'>
     jQuery(document).ready(function () {

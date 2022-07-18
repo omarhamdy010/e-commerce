@@ -34,10 +34,9 @@ class SliderController extends Controller
                 })->addColumn('image', function ($row) {
                     return '<img src=" ' . $row->image_path . ' " height="75px" width="75px" />';
                 })->addColumn('status', function ($row) {
-                    return '<input data-id="'.$row->id.'" class="toggle-class" type="checkbox" data-onstyle="success"
-                            data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive"  "'.$row->status ? 'checked' : ''.'">';
-                })->rawColumns(['action', 'image' , 'status'])
-                ->make(true);
+                    return '<input class = "toggle-class" type="checkbox" data-onstyle="success" name="status"
+                            data-offstyle = "danger" data-toggle = "toggle" data-on="Active" data-off="InActive" data-id="' . $row->id . '" >';
+                })->rawColumns(['action', 'image', 'status'])->make(true);
         }
     }
 
@@ -54,8 +53,8 @@ class SliderController extends Controller
             'image' => 'required',
         ]);
 
-        $data = $request->except('image','status');
-        $data['status'] = $request->status="on"? 1 :0 ;
+        $data = $request->except('image', 'status');
+        $data['status'] = $request->status = "on" ? 1 : 0;
 
         if ($request->image) {
             $path = $request->file('image')->store('/uploads/slider');
@@ -87,7 +86,7 @@ class SliderController extends Controller
     public function update(Request $request, Slider $slider)
     {
         $request->validate([
-            'title' => 'required|unique:sliders,title,'.$slider->id,
+            'title' => 'required|unique:sliders,title,' . $slider->id,
             'image' => 'required',
             'status' => 'required',
         ]);
@@ -127,6 +126,6 @@ class SliderController extends Controller
         $slider->status = $request->status;
         $slider->save();
 
-        return response()->json(['success'=>'Status change successfully.']);
+        return response()->json(['success' => 'Status change successfully.']);
     }
 }
