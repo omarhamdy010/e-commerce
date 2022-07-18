@@ -64,6 +64,12 @@
                             </a>
                         </li>
                     @endif
+                        <li class="nav-item">
+                            <a href="{{route('slider.index')}}" class="nav-link active">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Slider</p>
+                            </a>
+                        </li>
                 </ul>
             </li>
         </ul>

@@ -270,7 +270,7 @@
 
 <!-- jquery.mobile-menu js -->
 <!-- <script type="text/javascript" src="js/global-methods.js"></script>  -->
-<script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+{{--<script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>--}}
 <script type="text/javascript" src="{{asset('assets/js/js/home.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/js/js/mobile-menu.js')}}"></script>
 

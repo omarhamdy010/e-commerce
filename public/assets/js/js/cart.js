@@ -26,7 +26,7 @@ if (localStorage.getItem("orders")) {
 } else {
     orders = [];
 }
-console.log(lang)
+console.log(lang);
 
 function addtoCart(event) {
     var quant = 1;
