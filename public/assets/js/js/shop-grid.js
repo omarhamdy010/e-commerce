@@ -505,17 +505,17 @@ var y=""
 
 
 function displayDataCartShop(){
-  var x=localStorage.getItem("orders")
-  var z=JSON.parse(x)
-    for( i =0 ;i<z.length ; i++)
-    {
-
-
-    }
+  var x=localStorage.getItem("orders");
+  var z=JSON.parse(x);
+    // for( i =0 ;i<z.length ; i++)
+    // {
+    //
+    //
+    // }
     document.getElementById("yourNumb").innerHTML=`<a href="shopping_cart.html">`+z.length+`</a>`
 
   }
-  displayDataCartShop()
+  displayDataCartShop();
 
 function displayDataCart(){
 

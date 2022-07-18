@@ -103,12 +103,16 @@
                                                                 </div>
                                                                 @php
                                                                     $total = 0;
-                                                                    $count = 0;
+                                                                    $count = 1;
                                                                     $rates=\App\Models\Rating::where('product_id', $product->id)->get();
                                                                     if ($rates->isNotEmpty())
-                                                                        {foreach ($rates as $rate) {
+                                                                        {
+                                                                    $total = 0;
+                                                                    $count = 0;
+                                                                            foreach ($rates as $rate) {
                                                                            $total += $rate->stars_rated;
-                                                                           $count++;}
+                                                                           $count++;
+                                                                                }
                                                                         }
                                                                    $total_rate = $total / $count;
                                                                 @endphp
