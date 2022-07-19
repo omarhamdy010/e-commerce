@@ -62,7 +62,6 @@ class CategoryController extends Controller
 
     public function ajaxstore(Request $request)
     {
-//dd($request->all());
           $request->validate([
         'ar.name' => 'required|unique:category_translations,name',
         'en.name' => 'required|unique:category_translations,name',

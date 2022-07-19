@@ -7,23 +7,21 @@
                 <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel"
                      aria-labelledby="custom-tabs-one-home-tab">
                     <form method="post" action="{{route('slider.store')}}" enctype="multipart/form-data"
-                          id="uploadcatform">
+                          id="upload-cat-form">
                         <input type="hidden" name="_token" id="token2" value="{{csrf_token()}}">
                         <div class="card-body">
                             <div class="form-group">
                                 <label>name</label>
-                                <input name="title" class="form-control value" data-validation="required" type="text"
-                                       value="{{old('title')}}" id="title">
+                                <input name="title" class="form-control value" data-validation="required" type="text" value="{{old('title')}}" id="title">
                             </div>
                             <span class="title"></span>
                             <div class="form-group">
                                 <label for="exampleInputFile">image</label>
                                 <div class="input-group">
                                     <div class="custom-file">
-                                        <input type="file" id="imageajax" data-validation="required" name="image">
+                                        <input type="file" id="imageajax" name="image">
                                         <span class="text-danger" id="image-input-error"></span> <br/>
-                                        <img id="frameajax" src="{{asset('/uploads/slider/default.png')}}"
-                                             style=" width:100px;height:100px; border: 1px solid #ddd;border-radius: 8px;padding: 5px;">
+                                        <img id="frameajax" src="{{asset('/uploads/slider/default.png')}}" style=" width:100px;height:100px; border: 1px solid #ddd;border-radius: 8px;padding: 5px;">
                                     </div>
                                 </div>
                             </div>

@@ -1,13 +1,12 @@
 <div class="col-12">
     <div class="card card-primary card-tabs">
-
         <span class="error1"></span>
         <div class="card-body">
             <div class="tab-content" id="custom-tabs-one-tabContent">
                 <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel"
                      aria-labelledby="custom-tabs-one-home-tab">
                     <form method="post"
-                          action="{{route('admin.update',['admin'=>$admin->id])}}"
+                          action="{{route('slider.update',['slider'=>$slider->id])}}"
                           id="update-category-form"
                           enctype="multipart/form-data">
                         @method('PUT')
@@ -16,36 +15,25 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label>name</label>
-                                <input name="name" class="form-control value" data-validation="required" type="text"
-                                       value="{{$admin->name}}" id="name">
+                                <input name="title" class="form-control value" data-validation="required" type="text"
+                                       value="{{$slider->title}}" id="title">
                             </div>
-                            <span class="name"></span>
-
-                            <div class="form-group">
-                                <label>email</label>
-                                <input name="email" type="email" class="form-control value" data-validation="required"
-                                       value="{{$admin->name}}" id="email">
-                            </div>
-                            <span class="email"></span>
-
+                            <span class="title"></span>
                             <div class="form-group">
                                 <label for="exampleInputFile">image</label>
                                 <div class="input-group">
                                     <div class="custom-file">
-                                        <input type="file" data-validation="required"
-                                               class="@error('image') is-invalid @enderror"
-                                               id="imageajax" name="image">
-                                        <span class="text-danger" id="image-input-error"></span>
-                                        <br/>
-                                        <img id="frameajax" src="{{$admin->image_path}}"
+                                        <input type="file" id="imageajax" name="image">
+                                        <span class="text-danger" id="image-input-error"></span> <br/>
+                                        <img id="frameajax" src="{{$slider->image_path}}"
                                              style=" width:100px;height:100px; border: 1px solid #ddd;border-radius: 8px;padding: 5px;">
-                                        @error('image')
-                                        <div
-                                            class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                                        @enderror
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group">
+                            </div>
+                            <input class="toggle-class" type="checkbox" name="status" {{$slider->status = 1 ?'checked':''}}
+                                   data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive">
                         </div>
                         <div class="card-footer">
                             <button type="submit" class="btn btn-primary btn-submit">Submit</button>

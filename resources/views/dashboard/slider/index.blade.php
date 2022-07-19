@@ -11,7 +11,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                        <li class="breadcrumb-item active">Admins</li>
+                        <li class="breadcrumb-item active">Category</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -25,7 +25,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">slider</h3>
+                        <h3 class="card-title">Category</h3>
 
                         <div class="card-tools">
 
@@ -33,7 +33,7 @@
 
                                 <a class="btn btn-primary btn-sm" data-toggle="modal" id="mediumButton"
                                    data-target="#mediumModal"
-                                   data-attr="{{route('slider.create')}}">Create</a>
+                                   data-attr="{{route('category.create')}}">Create</a>
 
                                 <input type="text" name="search" class="form-control float-right" placeholder="Search">
 
@@ -99,7 +99,6 @@
             </div>
         </div>
 
-
     </section>
 @endsection
 
@@ -116,16 +115,10 @@
                     {data: 'title', name: 'title'},
                     {data: 'image', name: 'image'},
                     {data: 'status', name: 'status'},
-                    {
-                        data: 'action',
-                        name: 'action',
-                        orderable: true,
-                        searchable: true
-                    },
+                    {data: 'action', name: 'action', orderable: true, searchable: true},
                 ]
             });
         }
-
 
         function deleteConfirmation(id) {
             swal.fire({
@@ -171,16 +164,14 @@
 
         $(document).on('click', '#smallButton', function (event) {
             event.preventDefault();
-
             $_token = "{{ csrf_token() }}";
             var id = $(this).data('id');
-            var url = 'admin/' + id
+            var url = 'slider/' + id +'/edit';
             $.ajax({
                 headers: {'X-CSRF-Token': $('meta[name=_token]').attr('content')},
-                url: url,
-                type: 'POST',
+                url: url ,
+                type: 'get',
                 cache: false,
-
                 data: {'_token': $_token, 'id': id},
                 datatype: 'html',
                 beforeSend: function () {
@@ -196,22 +187,15 @@
         $(document).on('click', '#mediumButton', function (event) {
             event.preventDefault();
             $_token = "{{ csrf_token() }}";
-
             $.ajax({
                 headers: {'X-CSRF-Token': $('meta[name=_token]').attr('content')},
                 url: "{{ route('slider.create') }}",
                 type: 'get',
                 cache: false,
-
                 data: {'_token': $_token},
                 datatype: 'html',
-                beforeSend: function () {
-                    //something before send
-                },
                 success: function (data) {
-                    console.log(data);
                     $('#mediumBody').html(data.html);
-
                 }
             });
         });
@@ -236,8 +220,7 @@
                             url: "slider/" + id,
                             type: 'DELETE',
                             data: {
-                                "id": id,
-                                "_token": token,
+                                "id": id, "_token": token,
                             },
                             success: function () {
                                 jQuery(row).fadeOut('slow');
@@ -252,7 +235,7 @@
             })
         });
 
-        $(document).on('submit', '#uploadcatform', function (e) {
+        $(document).on('submit', '#upload-cat-form', function (e) {
             e.preventDefault();
             let formData = new FormData(this);
             $.ajax({
@@ -262,40 +245,19 @@
                 contentType: false,
                 processData: false,
                 success: (response) => {
-                    if (response) {
-                        $(this).reset();
-                        console.log('Image has been uploaded successfully');
-                    }
 
                     $('#mediumModal').toggleClass('show');
                     $('#mediumModal').toggleClass('in');
                     $('.modal-backdrop').css('display', 'none');
-
-                    // $('.modal-backdrop').hide();
-                    // $('#mediumModal').modal('hide'); // Hide modal
-
                     $('.yajra-datatable').DataTable().ajax.reload(null, false);
+
                 },
-                error: function (xhr, status, error) {
-                    console.log(xhr);
-                    $.each(xhr.responseJSON.errors, function (key, item) {
-                        var strArray = key.replace('.', '_');
-                        $('.' + strArray).append("<span class='text-danger'>" + item + "</span><br>")
-                    });
-                }
             });
         });
 
         $(document).on('submit', '#update-category-form', function (e) {
             e.preventDefault();
             let formData = new FormData(this);
-            $('#image-error').text('');
-            var id = $('#catid').val();
-            var name = $('#name').val();
-            var parent_name = $('#parent_name').val();
-            var image = $('#imageajax').attr('src');
-            var category_order = $('#category_order_count_ajax').val();
-
             $.ajax({
                 type: 'POST',
                 url: `/slider/` + id,
@@ -303,25 +265,9 @@
                 contentType: false,
                 processData: false,
                 success: (response) => {
-                    if (response) {
-                        this.reset();
-                        console.log('Image has been uploaded successfully');
-                    }
-                    $('#name').val(name);
-                    $('#parent_name').val(parent_name);
-                    $('#frameajax').attr('src', image);
-                    $('#category_order_count_ajax').val(category_order);
                     $('.yajra-datatable').DataTable().ajax.reload(null, false);
                 },
-                error: function (xhr, status, error) {
-                    console.log(xhr);
-                    $.each(xhr.responseJSON.errors, function (key, item) {
-                        var strArray = key.replace('.', '_');
-                        $('.' + strArray).append("<span class='text-danger'>" + item + "</span><br>")
-                    });
-                }
             });
-
         });
 
         $(document).on('change', '#imageajax', function () {
@@ -331,22 +277,15 @@
             }
         });
 
-        $(function() {
-            $('.toggle-class').change(function() {
-                var status = $(this).prop('checked') == true ? 1 : 0;
-                var slider_id = $(this).data('id');
 
-                $.ajax({
-                    type: "GET",
-                    dataType: "json",
-                    url: '/changeStatus',
-                    data: {'status': status, 'slider_id': slider_id},
-                    success: function(data){
-                        console.log(data.success)
-                    }
-                });
-            })
-        })
+         runDataTable();
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
 
     </script>
 @endsection
