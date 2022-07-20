@@ -166,10 +166,10 @@
             event.preventDefault();
             $_token = "{{ csrf_token() }}";
             var id = $(this).data('id');
-            var url = 'slider/' + id +'/edit';
+            var url = 'slider/' + id + '/edit';
             $.ajax({
                 headers: {'X-CSRF-Token': $('meta[name=_token]').attr('content')},
-                url: url ,
+                url: url,
                 type: 'get',
                 cache: false,
                 data: {'_token': $_token, 'id': id},
@@ -255,16 +255,20 @@
             });
         });
 
-        $(document).on('submit', '#update-category-form', function (e) {
+        $(document).on('submit', '#update-slider-form', function (e) {
             e.preventDefault();
             let formData = new FormData(this);
+            var id = $(this).data('id');
             $.ajax({
                 type: 'POST',
-                url: `/slider/` + id,
+                url: `slider/` + id,
                 data: formData,
                 contentType: false,
                 processData: false,
                 success: (response) => {
+                    $('#smallModal').toggleClass('show');
+                    $('#smallModal').toggleClass('in');
+                    $('.modal-backdrop').css('display', 'none');
                     $('.yajra-datatable').DataTable().ajax.reload(null, false);
                 },
             });
@@ -277,14 +281,39 @@
             }
         });
 
+        $(document).on('click', '#switch', function (event) {
+            event.preventDefault();
+            var slider_id = $(this).data('id');
+            var status = $(this).prop('checked') == true ? 1 : 0;
 
-         runDataTable();
+            var url = 'changeStatus';
+            $.ajax({
+                headers: {'X-CSRF-Token': $('meta[name=_token]').attr('content')},
+                url: url,
+                type: 'get',
+                cache: false,
+                data: {
+                    'slider_id': slider_id ,
+                    'status':status
+                },
+                beforeSend: function () {
+                    //something before send
+                },
+                success: function (data) {
+                    console.log(data);
+                    $('.yajra-datatable').DataTable().ajax.reload(null, false);
 
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+        });
+
+        runDataTable();
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
 
 
     </script>

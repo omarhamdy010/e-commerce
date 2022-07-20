@@ -37,8 +37,13 @@ class SliderController extends Controller
                 })->addColumn('image', function ($row) {
                     return '<img src=" ' . $row->image_path . ' " height="75px" width="75px" name="image" />';
                 })->addColumn('status', function ($row) {
-                    return '<input class = "toggle-class" type="checkbox" data-onstyle="success" name="status"
-                            data-offstyle = "danger" data-toggle = "toggle" data-on="Active" data-off="InActive" data-id="' . $row->id . '" "' . $row->status = 1 ? 'active' : '' . '" >';
+                    $button = ' <label  class="switch" >';
+                    $button .= '  <input type="checkbox" data-id="'.$row->id.'" id="switch" ';
+                    if ($row->status == 1) {
+                        $button .= "checked";
+                    }
+                    $button .= '><span class="slider round"></span></label>';
+                    return $button;
                 })->rawColumns(['action', 'image', 'status'])->make(true);
         }
     }
@@ -56,7 +61,7 @@ class SliderController extends Controller
         ]);
 
         $data = $request->except('image', 'status');
-        $data['status'] = $request->status = "on" ? 1 : 0;
+        $data['status'] = $request->status  ? 1 : 0;
 
         if ($request->image) {
             $path = $request->file('image')->store('/uploads/slider');
@@ -81,42 +86,40 @@ class SliderController extends Controller
 
     public function update(Request $request, Slider $slider)
     {
-        if ($slider->image_path != 'default.png') {
-            Storage::disk('public_upload')->delete('slider/' . $slider->image);
-        }
+//        dd($request->all());
+
         $request->validate([
             'title' => 'required|unique:sliders,title,' . $slider->id,
-            'image' => 'required',
-            'status' => 'required',
         ]);
 
-        $slider->update([
-            'title' => $request->get('title'),
-            'status' => $request->get('status'),
-        ]);
+        $data = $request->except(['image', 'status']);
+//if ($request->status)
+        $data['status'] = $request->status  ? 1 : 0;
+
         if ($request->image) {
-
-            Storage::disk('public_upload')->delete('slider/' . $slider->image);
-
-            $slider->delete();
-
+            if ($slider->image != 'default.png') {
+                Storage::disk('public_upload')->delete('slider/' . $slider->image);
+            }
             Image::make($request->image)->resize(100, 100, function ($constraint) {
                 $constraint->aspectRatio();
             })->save(public_path('/uploads/slider/' . $request->image->hashName()));
-            $path = $request->image->store('/uploads/slider');
-            $insert['path'] = $path;
+            $data['image'] = $request->image->hashName();
         }
+
+        $slider->update($data);
+
         toast('slider updated successfully!', 'success');
+
         return response()->json(['success' => true, 'message' => 'Data updated successfully']);
     }
 
     public function destroy(Slider $slider)
     {
-        if ($slider->image_path != 'default.png') {
+        if ($slider->image != 'default.png') {
             Storage::disk('public_upload')->delete('slider/' . $slider->image);
         }
-
         $slider->delete();
+
 
         toast('slider deleted successfully!', 'success');
         return response()->json([
@@ -126,8 +129,11 @@ class SliderController extends Controller
 
     public function changeStatus(Request $request)
     {
+
         $slider = Slider::find($request->slider_id);
+
         $slider->status = $request->status;
+
         $slider->save();
 
         return response()->json(['success' => 'Status change successfully.']);
