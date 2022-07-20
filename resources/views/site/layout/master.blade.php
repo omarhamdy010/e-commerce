@@ -209,7 +209,7 @@ $sliders = \App\Models\Slider::where('status', 1)->get();
 
 <!-- Slideshow  -->
     @if(\Illuminate\Support\Facades\Request::segment(1)==''|| \Illuminate\Support\Facades\Request::segment(2)=='site')
-
+@if($sliders->isNotEmpty())
         <div class="main-slider" id="home">
             <div class="container">
                 <div class="row">
@@ -221,7 +221,8 @@ $sliders = \App\Models\Slider::where('status', 1)->get();
                                         style="display: block; overflow: hidden; width: 100%; height: 100%; max-height: none;">
                                         @foreach($sliders as $slider)
                                             <li data-transition="fade" data-slotamount="7" data-masterspeed="1000" data-thumb="">
-                                                <img src="{{ asset("uploads/slider/$slider->image")}}" data-bgposition="left top" data-bgfit="cover" data-bgrepeat="no-repeat" alt="banner">
+                                                <img src="{{ asset("uploads/slider/$slider->image")}}" data-bgposition="left top"
+                                                            data-bgfit="cover" data-bgrepeat="no-repeat" alt="banner">
                                             </li>
                                         @endforeach
                                     </ul>
@@ -233,6 +234,7 @@ $sliders = \App\Models\Slider::where('status', 1)->get();
             </div>
         </div>
 
+@endif
 
         {{--        <div id="welcome-carousel" class="carousel slide" data-ride="carousel">--}}
         {{--            <div class="carousel-inner">--}}

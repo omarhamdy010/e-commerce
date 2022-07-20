@@ -24,7 +24,6 @@
                     </div>
                     <div id="smartphone-slider" class="product-flexslider">
                         <div class="slider-items slider-width-col4 ">
-
                             @foreach($category->products()->get() as $product)
                                 <div class="product-item">
                                     <div class="item-inner">
@@ -58,10 +57,11 @@
                                                 {
                                             $total = 0;
                                             $count = 0;
-                                                    foreach ($rates as $rate) {
-                                                   $total += $rate->stars_rated;
-                                                   $count++;
-                                                        }
+                                                    foreach ($rates as $rate)
+                                                    {
+                                                       $total += $rate->stars_rated;
+                                                       $count++;
+                                                    }
                                                 }
                                            $total_rate = $total / $count;
                                         @endphp
@@ -96,6 +96,204 @@
                     </div>
                 </div>
             @endforeach
+                @if($categories->isEmpty())
+                        <div class="tab-title text-left">
+                            <h2>category one</h2>
+                            <ul class="nav home-nav-tabs home-product-tabs" id="top-selling">
+                            </ul>
+                        </div>
+                        <div id="productTabContent" class="tab-content">
+                            <div class="tab-pane active in" id="computer">
+                                <div class="featured-pro">
+                                    <div class="slider-items-products">
+                                        <div id="computer-slider" class="product-flexslider hidden-buttons">
+                                            <div class="slider-items slider-width-col4" id="sellingg">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="smartphone-slider" class="product-flexslider">
+                                <div class="slider-items slider-width-col4 ">
+                    <div class="product-item">
+                        <div class="item-inner">
+                            <div class="product-thumbnail">
+                                <div class="pr-img-area"><a title="example">
+                                        <figure>
+                                            <img class="hover-img" src="{{asset('uploads/products/default.png')}}" alt="HTML template">
+                                            <img class="first-img" src="{{asset('uploads/products/default.png')}}" alt="HTML template">
+                                        </figure>
+                                    </a></div>
+                                <div class="pr-info-area">
+                                    <div class="pr-button">
+                                        <div data-id="0" class="mt-button "><a> <i class="fa fa-heart"></i> </a></div>
+                                        {{--                                                    <div data-id="{{$product->id}}" class="mt-button add_to_compare"><a href="compare.html"> <i class="fa fa-signal"></i> </a></div>--}}
+                                        <div data-id="0" class="mt-button "><a class="quick"> <i class="fa fa-search"></i> </a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            @php
+                                $total = 1;
+                                $count = 1;
+                               $total_rate = $total / $count;
+                            @endphp
+                            <div class="item-info">
+                                <div class="info-inner">
+                                    <div class="item-title"><a title="example">example</a>
+                                    </div>
+                                    <div class="item-content">
+                                        <div class="rating">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            <i class="fa fa-star-o"></i>
+                                        </div>
+                                        <div class="item-price">
+                                            <div class="price-box"><span class="regular-price"> <span class="price">$1500</span> </span></div>
+                                        </div>
+                                        <div class="pro-action">
+                                            <button type="button" data-id="0" class="add-to-cart"><span> Add to Cart</span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-item">
+                        <div class="item-inner">
+                            <div class="product-thumbnail">
+                                <div class="pr-img-area"><a title="example">
+                                        <figure>
+                                            <img class="hover-img" src="{{asset('uploads/products/default.png')}}" alt="HTML template">
+                                            <img class="first-img" src="{{asset('uploads/products/default.png')}}" alt="HTML template">
+                                        </figure>
+                                    </a></div>
+                                <div class="pr-info-area">
+                                    <div class="pr-button">
+                                        <div data-id="0" class="mt-button "><a> <i class="fa fa-heart"></i> </a></div>
+                                        <div data-id="0" class="mt-button "><a class="quick"> <i class="fa fa-search"></i> </a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            @php
+                                $total = 1;
+                                $count = 1;
+                               $total_rate = $total / $count;
+                            @endphp
+                            <div class="item-info">
+                                <div class="info-inner">
+                                    <div class="item-title"><a title="example">example 2</a>
+                                    </div>
+                                    <div class="item-content">
+                                        <div class="rating">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            <i class="fa fa-star-o"></i>
+                                        </div>
+                                        <div class="item-price">
+                                            <div class="price-box"><span class="regular-price"> <span class="price">$1600</span> </span></div>
+                                        </div>
+                                        <div class="pro-action">
+                                            <button type="button" data-id="0" class="add-to-cart"><span> Add to Cart</span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-item">
+                        <div class="item-inner">
+                            <div class="product-thumbnail">
+                                <div class="pr-img-area"><a title="example">
+                                        <figure>
+                                            <img class="hover-img" src="{{asset('uploads/products/default.png')}}" alt="HTML template">
+                                            <img class="first-img" src="{{asset('uploads/products/default.png')}}" alt="HTML template">
+                                        </figure>
+                                    </a></div>
+                                <div class="pr-info-area">
+                                    <div class="pr-button">
+                                        <div data-id="0" class="mt-button "><a> <i class="fa fa-heart"></i> </a></div>
+                                        <div data-id="0" class="mt-button "><a class="quick"> <i class="fa fa-search"></i> </a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            @php
+                                $total = 1;
+                                $count = 1;
+                               $total_rate = $total / $count;
+                            @endphp
+                            <div class="item-info">
+                                <div class="info-inner">
+                                    <div class="item-title"><a title="example">example 3</a>
+                                    </div>
+                                    <div class="item-content">
+                                        <div class="rating">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            <i class="fa fa-star-o"></i>
+                                        </div>
+                                        <div class="item-price">
+                                            <div class="price-box"><span class="regular-price"> <span class="price">$1700</span> </span></div>
+                                        </div>
+                                        <div class="pro-action">
+                                            <button type="button" data-id="0" class="add-to-cart"><span> Add to Cart</span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-item">
+                        <div class="item-inner">
+                            <div class="product-thumbnail">
+                                <div class="pr-img-area"><a title="example">
+                                        <figure>
+                                            <img class="hover-img" src="{{asset('uploads/products/default.png')}}" alt="HTML template">
+                                            <img class="first-img" src="{{asset('uploads/products/default.png')}}" alt="HTML template">
+                                        </figure>
+                                    </a></div>
+                                <div class="pr-info-area">
+                                    <div class="pr-button">
+                                        <div data-id="0" class="mt-button "><a> <i class="fa fa-heart"></i> </a></div>
+                                        {{--                                                    <div data-id="{{$product->id}}" class="mt-button add_to_compare"><a href="compare.html"> <i class="fa fa-signal"></i> </a></div>--}}
+                                        <div data-id="0" class="mt-button "><a class="quick"> <i class="fa fa-search"></i> </a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            @php
+                                $total = 1;
+                                $count = 1;
+                               $total_rate = $total / $count;
+                            @endphp
+                            <div class="item-info">
+                                <div class="info-inner">
+                                    <div class="item-title"><a title="example">example 4</a>
+                                    </div>
+                                    <div class="item-content">
+                                        <div class="rating">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star-o"></i>
+                                        </div>
+                                        <div class="item-price">
+                                            <div class="price-box"><span class="regular-price"> <span class="price">$1800</span> </span></div>
+                                        </div>
+                                        <div class="pro-action">
+                                            <button type="button" data-id="0" class="add-to-cart"><span> Add to Cart</span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
         </div>
     </div>
     <div id="view_view"></div>

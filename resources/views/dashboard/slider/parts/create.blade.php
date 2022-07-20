@@ -12,8 +12,7 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label>name</label>
-                                <input name="title" class="form-control value" data-validation="required" type="text"
-                                       value="{{old('title')}}" id="title">
+                                <input name="title" class="form-control value" data-validation="required" type="text" value="{{old('title')}}" id="title">
                             </div>
                             <span class="title"></span>
                             <div class="form-group">
@@ -22,16 +21,15 @@
                                     <div class="custom-file">
                                         <input type="file" id="imageajax" name="image">
                                         <span class="text-danger" id="image-input-error"></span> <br/>
-                                        <img id="frameajax" src="{{asset('/uploads/slider/default.png')}}"
-                                             style=" width:100px;height:100px; border: 1px solid #ddd;border-radius: 8px;padding: 5px;">
+                                        <img id="frameajax" src="{{asset('/uploads/slider/default.png')}}" style=" width:100px;height:100px; border: 1px solid #ddd;border-radius: 8px;padding: 5px;">
                                     </div>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="switch">
-                                    <input type="checkbox"  name="status" id="switch">
-                                    <span class="slider round"></span></label>';
+                                    <input type="checkbox"  name="status" class="switch">
+                                    <span class="slider round"></span></label>
                             </div>
 
                             <div class="card-footer">

@@ -24,7 +24,7 @@ Auth::routes();
 Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']], function () {
     Route::group(['middleware' => ['authadmin']], function () {
 
-        Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
+        Route::get('/home', [\App\Http\Controllers\HomeController::class , 'index'])->name('home');
 
         Route::resource('category', \App\Http\Controllers\CategoryController::class)->except(['show', 'edit']);
         Route::resource('slider', \App\Http\Controllers\SliderController::class)->except(['show']);
