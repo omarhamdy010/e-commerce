@@ -24,6 +24,7 @@ class ProductController extends Controller
 
     public function getProducts(Request $request)
     {
+//        dd($request->all());
         if ($request->ajax()) {
             $data = Product::with('offer', 'images')->get();
             return Datatables::of($data)

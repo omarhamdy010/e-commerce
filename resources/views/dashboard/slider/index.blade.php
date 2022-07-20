@@ -120,6 +120,7 @@
             });
         }
 
+
         function deleteConfirmation(id) {
             swal.fire({
                 title: "Delete?",
